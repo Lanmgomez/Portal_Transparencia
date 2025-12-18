@@ -1,0 +1,47 @@
+.login-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.login-img,
+.login-div {
+  width: 50% !important;
+}
+
+.login-div {
+  text-align: center;
+}
+
+.titles {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.login-form {
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.label-title {
+  font-weight: bold;
+}
+
+.form-icon {
+  color: blue;
+  font-size: 25px;
+}
+
+.form-input {
+  min-height: 45px;
+  border-radius: 0;
+  border-style: none;
+  border-bottom: 2px solid blue;
+  margin-top: -20px;
+}
+
+.btn {
+  min-height: 45px;
+  border-radius: 0;
+}
