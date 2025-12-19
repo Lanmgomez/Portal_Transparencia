@@ -8,4 +8,23 @@
   height: 100vh;
   background-color: #0b285c;
   padding: 20px;
+  justify-content: space-between;
+}
+
+.btn-sair {
+  background: transparent !important;
+  color: #fff !important;
+  border: none !important;
+  width: 100% !important;
+  text-align: left !important;
+  height: 40px !important;
+  padding-left: 24px !important;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-sair:hover {
+  background-color: #1890ff !important; /* Cor de destaque do AntD */
+  color: white !important;
 }

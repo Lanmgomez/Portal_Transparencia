@@ -1,13 +1,47 @@
+import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Flex, Form, Input } from 'antd'
+import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
+import db from '../api/db.json'
 import './login.css'
 
 export function LoginPage() {
+  const navigate = useNavigate()
+
   const onFinish = (values) => {
-    console.log('login', values)
+    const { email, password } = values
+
+    const user = db.users.find(
+      (u) => u.email === email && u.password === password,
+    )
+
+    if (user) {
+      localStorage.setItem(
+        'user_logged',
+        JSON.stringify({
+          id: user.id,
+          name: user.name,
+          isAuth: true,
+        }),
+      )
+      message.success(`Bem-vindo, ${user.name}!`)
+
+      navigate('/home')
+    } else {
+      message.error('Usuário ou senha inválidos!')
+    }
   }
+
+  function RedirectIfAuthenticated() {
+    const location = useLocation()
+    const isLoggedIn = localStorage.getItem('user_logged')
+
+    if (location.pathname === '/' && isLoggedIn) return <Navigate to='/home' />
+  }
+
   return (
     <div className='login-container'>
+      <RedirectIfAuthenticated />
+
       <div className='login-img' />
 
       <div className='login-div'>

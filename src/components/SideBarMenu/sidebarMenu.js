@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { ConfigProvider, Menu } from 'antd'
+import { Button, ConfigProvider, Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import './sidebarMenu.css'
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons'
 
 const items = [
@@ -64,6 +65,12 @@ export default function SideBarMenu() {
     if (itemClicado && itemClicado.url) {
       navigate(itemClicado.url)
     }
+    return
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_logged')
+    navigate('/')
   }
 
   return (
@@ -90,6 +97,16 @@ export default function SideBarMenu() {
           mode='inline'
           items={items}
         />
+
+        <div style={{ padding: '0 16px 20px 16px' }}>
+          <Button
+            className='btn-sair'
+            onClick={handleLogout}
+            icon={<LogoutOutlined />}
+          >
+            Fazer Log Out / Sair
+          </Button>
+        </div>
       </div>
     </ConfigProvider>
   )

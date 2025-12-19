@@ -1,3 +1,4 @@
+import { PrivateRoutesAuth } from './privateRoutesAuth'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { LoginPage } from '../login/login'
 import HomePage from '../home/home'
@@ -19,8 +20,23 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<LoginPage />} />
-        <Route path='/home' element={<HomePage />} />
-        <Route path='/configuracoes' element={<ConfiguracoesPage />} />
+
+        <Route
+          path='/home'
+          element={
+            <PrivateRoutesAuth>
+              <HomePage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/configuracoes'
+          element={
+            <PrivateRoutesAuth>
+              <ConfiguracoesPage />
+            </PrivateRoutesAuth>
+          }
+        />
       </Routes>
 
       <SidebarWrapper />
