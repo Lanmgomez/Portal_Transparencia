@@ -1,6 +1,5 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Flex, Form, Input } from 'antd'
-import portal_transparencia_login from '../portal_transparencia_login.png'
 import './login.css'
 
 export function LoginPage() {
@@ -9,23 +8,16 @@ export function LoginPage() {
   }
   return (
     <div className='login-container'>
-      <div className='login-img'>
-        <img
-          src={portal_transparencia_login}
-          alt='logo'
-          width={'100%'}
-          height={'107%'}
-        />
-      </div>
+      <div className='login-img' />
 
       <div className='login-div'>
         <div className='titles'>
-          <h1> Bem-vindo ao Portal da Transparência</h1>
+          <h1> Bem-vindo</h1>
           <p>Acesso claro e seguro às informações públicas</p>
         </div>
 
         <div>
-          <h2>Faça login para acessar</h2>
+          <h2>Faça login</h2>
         </div>
 
         <Form

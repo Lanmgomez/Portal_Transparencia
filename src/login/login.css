@@ -9,6 +9,15 @@
   width: 50% !important;
 }
 
+.login-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: url('../portal_transparencia_login.png');
+}
+
 .login-div {
   text-align: center;
 }
