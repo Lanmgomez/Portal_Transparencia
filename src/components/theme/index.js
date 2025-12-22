@@ -5,10 +5,8 @@ const ThemeContext = createContext()
 export const useTheme = () => useContext(ThemeContext)
 
 function ThemeProvider({ children }) {
-  //   const [isDarkMode, setIsDarkMode] = useState(true)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('theme_mode')
-    // Se existir 'true', retorna true. Caso contrário, o padrão é true.
     return savedMode !== null ? JSON.parse(savedMode) : true
   })
 
