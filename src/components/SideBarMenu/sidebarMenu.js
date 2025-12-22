@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Button, ConfigProvider, Menu } from 'antd'
+import { Button, Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '../theme'
 import './sidebarMenu.css'
 import {
   AppstoreOutlined,
@@ -12,11 +13,11 @@ import {
 const items = [
   {
     key: 'sub1',
-    label: 'Navigation One',
+    label: 'Página Inicial',
     icon: <MailOutlined />,
     children: [
-      { key: '1', label: 'Option 1', url: '/home' },
-      { key: '2', label: 'Option 2', url: '/configuracoes' },
+      { key: '1', label: 'Home', url: '/home' },
+      { key: '2', label: 'Option 2' },
       { key: '3', label: 'Option 3' },
       { key: '4', label: 'Option 4' },
     ],
@@ -40,13 +41,11 @@ const items = [
   },
   {
     key: 'sub4',
-    label: 'Navigation Three',
+    label: 'Configurações',
     icon: <SettingOutlined />,
     children: [
-      { key: '9', label: 'Option 9' },
-      { key: '10', label: 'Option 10' },
-      { key: '11', label: 'Option 11' },
-      { key: '12', label: 'Option 12' },
+      { key: '9', label: 'Aparência e Temas', url: '/configuracoes' },
+      { key: '10', label: 'Meu Perfil' },
     ],
   },
 ]
@@ -54,6 +53,8 @@ const items = [
 export default function SideBarMenu() {
   const navigate = useNavigate()
   const [current, setCurrent] = useState('1')
+
+  const { primaryColor } = useTheme()
 
   const onClick = (e) => {
     setCurrent(e.key)
@@ -74,40 +75,24 @@ export default function SideBarMenu() {
   }
 
   return (
-    <ConfigProvider
-      theme={{
-        components: {
-          Menu: {
-            popupBg: '#fff',
-            itemSelectedBg: '#1890ff',
-            itemSelectedColor: '#ffffff',
-            itemColor: '#fff',
-            itemHoverBg: '#1e3a8a',
-            itemHoverColor: '#ffffff',
-          },
-        },
-      }}
-    >
-      <div className='sidebar-menu'>
-        <Menu
-          onClick={onClick}
-          style={{ width: 256, backgroundColor: '#0B285C' }}
-          defaultOpenKeys={['sub1']}
-          selectedKeys={[current]}
-          mode='inline'
-          items={items}
-        />
+    <div className='sidebar-menu' style={{ backgroundColor: primaryColor }}>
+      <Menu
+        onClick={onClick}
+        defaultOpenKeys={['sub1']}
+        selectedKeys={[current]}
+        mode='inline'
+        items={items}
+      />
 
-        <div style={{ padding: '0 16px 20px 16px' }}>
-          <Button
-            className='btn-sair'
-            onClick={handleLogout}
-            icon={<LogoutOutlined />}
-          >
-            Fazer Log Out / Sair
-          </Button>
-        </div>
+      <div style={{ padding: '0 16px 20px 16px' }}>
+        <Button
+          className='btn-sair'
+          onClick={handleLogout}
+          icon={<LogoutOutlined />}
+        >
+          Fazer Log Out / Sair
+        </Button>
       </div>
-    </ConfigProvider>
+    </div>
   )
 }

@@ -1,12 +1,15 @@
 import AppRoutes from './routes/AppRoutes'
+import ThemeProvider from './components/theme'
 import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      <AppRoutes />
-    </div>
-  );
+    <ThemeProvider>
+      <div className='App'>
+        <AppRoutes />
+      </div>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
