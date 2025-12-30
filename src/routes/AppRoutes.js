@@ -4,6 +4,7 @@ import { LoginPage } from '../login/login'
 import HomePage from '../home/home'
 import SideBarMenu from '../components/SideBarMenu/sidebarMenu'
 import ConfiguracoesPage from '../configuracoes/configuracoes'
+import MeuPerfilPage from '../meuPerfil/MeuPerfil'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -34,6 +35,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <ConfiguracoesPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/meu-perfil'
+          element={
+            <PrivateRoutesAuth>
+              <MeuPerfilPage />
             </PrivateRoutesAuth>
           }
         />

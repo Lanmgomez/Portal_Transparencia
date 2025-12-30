@@ -1,0 +1,36 @@
+.password-card {
+  margin-top: 40px;
+}
+
+.label-3 {
+  font-weight: bold;
+}
+
+.label-3 {
+  width: 500px;
+  margin-bottom: 30px;
+}
+
+.ant-form-item-control {
+  flex: 1;
+}
+
+.ant-form-item-label {
+  text-align: left !important;
+  width: 120px;
+}
+
+.btns {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+.save-btn {
+  width: 200px !important;
+  height: 45px;
+  display: flex;
+}

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme'
 import './sidebarMenu.css'
 import {
-  AppstoreOutlined,
+  UserOutlined,
   MailOutlined,
   SettingOutlined,
   LogoutOutlined,
@@ -24,10 +24,10 @@ const items = [
   },
   {
     key: 'sub2',
-    label: 'Navigation Two',
-    icon: <AppstoreOutlined />,
+    label: 'Usuários',
+    icon: <UserOutlined />,
     children: [
-      { key: '5', label: 'Option 5' },
+      { key: '5', label: 'Meu Perfil', url: '/meu-perfil' },
       { key: '6', label: 'Option 6' },
       {
         key: 'sub3',
@@ -43,10 +43,7 @@ const items = [
     key: 'sub4',
     label: 'Configurações',
     icon: <SettingOutlined />,
-    children: [
-      { key: '9', label: 'Aparência e Temas', url: '/configuracoes' },
-      { key: '10', label: 'Meu Perfil' },
-    ],
+    children: [{ key: '9', label: 'Aparência e Temas', url: '/configuracoes' }],
   },
 ]
 
