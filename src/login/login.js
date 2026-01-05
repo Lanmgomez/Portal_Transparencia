@@ -1,41 +1,28 @@
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
-import db from '../api/db.json'
+import { LoginRequest } from '../components/commons/utils'
 import './login.css'
 
 export function LoginPage() {
   const navigate = useNavigate()
 
-  const onFinish = (values) => {
-    const { email, password } = values
+  const onFinish = async (values) => {
+    try {
+      const user = await LoginRequest(values.email, values.password)
 
-    const user = db.users.find(
-      (u) => u.email === email && u.password === password,
-    )
-
-    if (user) {
-      localStorage.setItem(
-        'user_logged',
-        JSON.stringify({
-          id: user.id,
-          name: user.name,
-          isAuth: true,
-        }),
-      )
       message.success(`Bem-vindo, ${user.name}!`)
-
       navigate('/home')
-    } else {
+    } catch (error) {
       message.error('Usuário ou senha inválidos!')
     }
   }
 
   function RedirectIfAuthenticated() {
     const location = useLocation()
-    const isLoggedIn = localStorage.getItem('user_logged')
+    const token = localStorage.getItem('token')
 
-    if (location.pathname === '/' && isLoggedIn) return <Navigate to='/home' />
+    if (location.pathname === '/' && token) return <Navigate to='/home' />
   }
 
   return (
@@ -69,6 +56,7 @@ export function LoginPage() {
           >
             <Input
               className='form-input'
+              style={{ width: 450 }}
               placeholder='Digite seu email...'
               prefix={<UserOutlined className='form-icon' />}
             />
@@ -83,6 +71,7 @@ export function LoginPage() {
             <Input
               type='password'
               className='form-input'
+              style={{ width: 450 }}
               placeholder='Digite sua senha...'
               prefix={<LockOutlined className='form-icon' />}
             />

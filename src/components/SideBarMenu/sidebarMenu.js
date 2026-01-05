@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Menu } from 'antd'
+import { Button, Menu, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme'
 import './sidebarMenu.css'
@@ -9,6 +9,8 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
+import axios from 'axios'
+import { logout_url } from '../commons/utils'
 
 const items = [
   {
@@ -67,8 +69,26 @@ export default function SideBarMenu() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('user_logged')
-    navigate('/')
+    try {
+      const token = localStorage.getItem('token')
+
+      axios.post(
+        logout_url,
+        {},
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+
+      localStorage.removeItem('token')
+      navigate('/')
+    } catch (error) {
+      message.error('Ops, algo deu errado', error)
+    }
   }
 
   return (
