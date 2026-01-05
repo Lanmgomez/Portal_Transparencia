@@ -17,7 +17,7 @@ const items = [
     icon: <MailOutlined />,
     children: [
       { key: '1', label: 'Home', url: '/home' },
-      { key: '2', label: 'Option 2' },
+      { key: '2', label: 'Despesas', url: '/despesas' },
       { key: '3', label: 'Option 3' },
       { key: '4', label: 'Option 4' },
     ],

@@ -1,4 +1,8 @@
-.container {
-  width: 70%;
-  margin-left: 20%;
+.private-layout,
+.public-layout {
+  width: 80%;
+}
+
+.private-layout {
+  margin-left: 27%;
 }
