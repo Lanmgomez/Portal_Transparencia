@@ -5,11 +5,13 @@ import { useTheme } from '../theme'
 import './sidebarMenu.css'
 import {
   UserOutlined,
+  DollarOutlined,
   MailOutlined,
   SettingOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { logout_url } from '../commons/utils'
 
 const items = [
@@ -19,13 +21,22 @@ const items = [
     icon: <MailOutlined />,
     children: [
       { key: '1', label: 'Home', url: '/home' },
-      { key: '2', label: 'Despesas', url: '/despesas' },
       { key: '3', label: 'Option 3' },
       { key: '4', label: 'Option 4' },
     ],
   },
   {
     key: 'sub2',
+    label: 'Despesas',
+    icon: <DollarOutlined />,
+    children: [
+      { key: '2', label: 'Empenhos', url: '/despesas' },
+      { key: '3', label: 'Option 3' },
+      { key: '4', label: 'Option 4' },
+    ],
+  },
+  {
+    key: 'sub3',
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
@@ -70,7 +81,7 @@ export default function SideBarMenu() {
 
   const handleLogout = () => {
     try {
-      const token = localStorage.getItem('token')
+      const token = Cookies.get('token')
 
       axios.post(
         logout_url,
@@ -84,7 +95,8 @@ export default function SideBarMenu() {
         },
       )
 
-      localStorage.removeItem('token')
+      Cookies.remove('token')
+      Cookies.remove('user')
       navigate('/')
     } catch (error) {
       message.error('Ops, algo deu errado', error)

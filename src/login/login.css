@@ -38,7 +38,6 @@
 }
 
 .form-icon {
-  color: blue;
   font-size: 25px;
   margin-left: -10px;
 }
@@ -47,7 +46,7 @@
   min-height: 45px;
   border-radius: 0;
   border-style: none;
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid;
   margin-top: -20px;
 }
 

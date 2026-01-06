@@ -2,6 +2,7 @@ import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
 import { LoginRequest } from '../components/commons/utils'
+import Cookies from 'js-cookie'
 import './login.css'
 
 export function LoginPage() {
@@ -20,7 +21,7 @@ export function LoginPage() {
 
   function RedirectIfAuthenticated() {
     const location = useLocation()
-    const token = localStorage.getItem('token')
+    const token = Cookies.get('token')
 
     if (location.pathname === '/' && token) return <Navigate to='/home' />
   }

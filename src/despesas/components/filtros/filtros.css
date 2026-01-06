@@ -1,7 +1,7 @@
 .ant-input-affix-wrapper {
   border: none;
   border-radius: 0;
-  border-bottom: 2px solid blue;
+  border-bottom: 2px solid;
   height: 38px;
   width: 200px;
 }
