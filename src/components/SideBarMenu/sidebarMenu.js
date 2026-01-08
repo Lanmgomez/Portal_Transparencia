@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Button, Menu, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme'
+import { logout_url } from '../commons/utils'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 import './sidebarMenu.css'
 import {
   UserOutlined,
@@ -10,30 +13,19 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import { logout_url } from '../commons/utils'
 
 const items = [
   {
     key: 'sub1',
     label: 'Página Inicial',
     icon: <MailOutlined />,
-    children: [
-      { key: '1', label: 'Home', url: '/home' },
-      { key: '3', label: 'Option 3' },
-      { key: '4', label: 'Option 4' },
-    ],
+    children: [{ key: '1', label: 'Home', url: '/home' }],
   },
   {
     key: 'sub2',
     label: 'Despesas',
     icon: <DollarOutlined />,
-    children: [
-      { key: '2', label: 'Empenhos', url: '/despesas' },
-      { key: '3', label: 'Option 3' },
-      { key: '4', label: 'Option 4' },
-    ],
+    children: [{ key: '2', label: 'Empenhos', url: '/despesas' }],
   },
   {
     key: 'sub3',
@@ -41,15 +33,15 @@ const items = [
     icon: <UserOutlined />,
     children: [
       { key: '5', label: 'Meu Perfil', url: '/meu-perfil' },
-      { key: '6', label: 'Option 6' },
-      {
-        key: 'sub3',
-        label: 'Submenu',
-        children: [
-          { key: '7', label: 'Option 7' },
-          { key: '8', label: 'Option 8' },
-        ],
-      },
+      { key: '6', label: 'Usuários Cadastrados', url: '/usuarios-cadastrados' },
+      // {
+      //   key: 'sub3',
+      //   label: 'Submenu',
+      //   children: [
+      //     { key: '7', label: 'Option 7' },
+      //     { key: '8', label: 'Option 8' },
+      //   ],
+      // },
     ],
   },
   {

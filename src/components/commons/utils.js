@@ -61,30 +61,28 @@ export default function getCurrentDate() {
   return dataAtual
 }
 
-export async function getData(url) {
+export function HttpRequest(request_method, url, values) {
   const token = Cookies.get('token')
 
-  const data = await axios.get(url, {
+  const Headers = {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-  })
+  }
 
-  return data
-}
+  const methods = {
+    GET: () => axios.get(url, Headers),
+    POST: () => axios.post(url, values, Headers),
+    PUT: () => axios.put(url, values, Headers),
+    DELETE: () => axios.delete(url, Headers),
+  }
 
-export async function updateData(url, values) {
-  const token = Cookies.get('token')
+  if (!methods[request_method]) {
+    throw new Error(`Método HTTP não suportado: ${request_method}`)
+  }
 
-  const data = await axios.put(url, values, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
-
-  return data
+  return methods[request_method]()
 }
 
 export function toast(msg) {

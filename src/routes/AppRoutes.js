@@ -6,6 +6,8 @@ import SideBarMenu from '../components/SideBarMenu/sidebarMenu'
 import ConfiguracoesPage from '../configuracoes/configuracoes'
 import MeuPerfilPage from '../meuPerfil/MeuPerfil'
 import DespesasPage from '../despesas/despesas'
+import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
+import CriarUsuario from '../components/criarUsuario/criarUsuario'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -51,6 +53,22 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <MeuPerfilPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/usuarios-cadastrados'
+          element={
+            <PrivateRoutesAuth>
+              <UsuariosCadastrados />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/criar-novo/usuario'
+          element={
+            <PrivateRoutesAuth>
+              <CriarUsuario />
             </PrivateRoutesAuth>
           }
         />

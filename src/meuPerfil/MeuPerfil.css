@@ -3,12 +3,8 @@
 }
 
 .label-3 {
-  font-weight: bold;
-}
-
-.label-3 {
-  /* width: 600px; */
   margin-bottom: 30px;
+  font-weight: bold;
 }
 
 .ant-form-item-control {

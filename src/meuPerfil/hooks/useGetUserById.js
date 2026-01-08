@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { getData, users_url } from '../../components/commons/utils'
+import { HttpRequest, users_url } from '../../components/commons/utils'
 
 export default function useGetUserById(id) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['users'],
-    queryFn: () => getData(`${users_url}/${id}`),
+    queryFn: () => HttpRequest('GET', `${users_url}/${id}`),
   })
 
   const user = data?.data
