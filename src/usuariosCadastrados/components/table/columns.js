@@ -66,7 +66,10 @@ const columns = ({ onEdit, onDelete }) => [
     // width: 140,
     render: (_, record) => (
       <Space>
-        <Button icon={<EditOutlined />} onClick={() => onEdit(record)}>
+        <Button
+          icon={<EditOutlined />}
+          onClick={() => onEdit?.(`/editar-usuario/${record.id}`)}
+        >
           Editar
         </Button>
 
@@ -74,7 +77,7 @@ const columns = ({ onEdit, onDelete }) => [
           title='Tem certeza que deseja excluir?'
           okText='Sim'
           cancelText='Cancelar'
-          onConfirm={() => onDelete?.(record)}
+          onConfirm={() => onDelete?.(record.id)}
         >
           <Button danger icon={<DeleteOutlined />}>
             Excluir

@@ -40,7 +40,7 @@ export default function UsuarioForm({ form, onFinish, loading, saving }) {
               style={{ width: 300, marginLeft: '-120px' }}
               options={[
                 { value: 'admin', label: 'admin' },
-                { value: 'usuario', label: 'usuario' },
+                // { value: 'usuario', label: 'usuario' },
               ]}
             />
           </Form.Item>

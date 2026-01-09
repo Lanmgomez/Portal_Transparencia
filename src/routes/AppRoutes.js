@@ -8,6 +8,7 @@ import MeuPerfilPage from '../meuPerfil/MeuPerfil'
 import DespesasPage from '../despesas/despesas'
 import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
 import CriarUsuario from '../criarUsuario/criarUsuario'
+import EditarUsuario from '../editar-usuario/editarUsuario'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -69,6 +70,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <CriarUsuario />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/editar-usuario/:id'
+          element={
+            <PrivateRoutesAuth>
+              <EditarUsuario />
             </PrivateRoutesAuth>
           }
         />
