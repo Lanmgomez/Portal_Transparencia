@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
@@ -8,15 +9,22 @@ import './login.css'
 export function LoginPage() {
   const navigate = useNavigate()
 
-  const onFinish = async (values) => {
-    try {
-      const user = await LoginRequest(values.email, values.password)
-
+  const login = useMutation({
+    mutationFn: ({ email, password }) => LoginRequest(email, password),
+    onSuccess: (user) => {
       message.success(`Bem-vindo, ${user.name}!`)
       navigate('/home')
-    } catch (error) {
+    },
+    onError: () => {
       message.error('Usuário ou senha inválidos!')
-    }
+    },
+  })
+
+  const onFinish = (values) => {
+    login.mutate({
+      email: values.email,
+      password: values.password,
+    })
   }
 
   function RedirectIfAuthenticated() {
@@ -69,7 +77,7 @@ export function LoginPage() {
             className='label-title'
             rules={[{ message: 'Senha é obrigatória!', required: true }]}
           >
-            <Input
+            <Input.Password
               type='password'
               className='form-input'
               style={{ width: 450 }}
@@ -89,7 +97,14 @@ export function LoginPage() {
           </Form.Item>
 
           <Form.Item>
-            <Button block type='primary' htmlType='submit' className='btn'>
+            <Button
+              block
+              type='primary'
+              htmlType='submit'
+              className='btn'
+              loading={login.isPending}
+              disabled={login.isPending}
+            >
               Login
             </Button>
             ou <a href='/make-new-account'>Faça uma conta!</a>

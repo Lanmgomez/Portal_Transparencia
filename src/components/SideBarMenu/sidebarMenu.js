@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { Button, Menu, message } from 'antd'
+import { useMutation } from '@tanstack/react-query'
+import { Button, Menu, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme'
-import { logout_url } from '../commons/utils'
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import './sidebarMenu.css'
+import { logout_url, HttpRequest, ErrorMessage } from '../commons/utils'
 import {
   UserOutlined,
   DollarOutlined,
@@ -13,6 +11,8 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
+import Cookies from 'js-cookie'
+import './sidebarMenu.css'
 
 const items = [
   {
@@ -55,6 +55,7 @@ const items = [
 export default function SideBarMenu() {
   const navigate = useNavigate()
   const [current, setCurrent] = useState('1')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { primaryColor } = useTheme()
 
@@ -71,29 +72,18 @@ export default function SideBarMenu() {
     return
   }
 
-  const handleLogout = () => {
-    try {
-      const token = Cookies.get('token')
-
-      axios.post(
-        logout_url,
-        {},
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-
+  const logout = useMutation({
+    mutationFn: () => HttpRequest('POST', logout_url, {}),
+    onSuccess: () => {
       Cookies.remove('token')
       Cookies.remove('user')
       navigate('/')
-    } catch (error) {
-      message.error('Ops, algo deu errado', error)
-    }
-  }
+      setIsModalOpen(false)
+    },
+    onError: (error) => ErrorMessage(error),
+  })
+
+  const handleLogout = () => logout.mutate()
 
   return (
     <div className='sidebar-menu' style={{ backgroundColor: primaryColor }}>
@@ -108,12 +98,24 @@ export default function SideBarMenu() {
       <div style={{ padding: '0 16px 20px 16px' }}>
         <Button
           className='btn-sair'
-          onClick={handleLogout}
+          onClick={() => setIsModalOpen(true)}
           icon={<LogoutOutlined />}
         >
           Fazer Log Out / Sair
         </Button>
       </div>
+
+      <Modal
+        title='Tem certeza que deseja sair?'
+        open={isModalOpen}
+        onOk={handleLogout}
+        onCancel={() => setIsModalOpen(false)}
+        confirmLoading={logout.isPending}
+        cancelText='Cancelar'
+        okText='Sair'
+      >
+        <p>Clique em 'Sair' para fazer logout.</p>
+      </Modal>
     </div>
   )
 }

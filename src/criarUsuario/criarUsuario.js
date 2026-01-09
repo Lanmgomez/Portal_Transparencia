@@ -1,7 +1,12 @@
-import { Form, message } from 'antd'
+import { Form } from 'antd'
 import { useMutation } from '@tanstack/react-query'
-import { toast, users_url, HttpRequest } from '../commons/utils'
-import Container from '../Container/container'
+import {
+  toast,
+  users_url,
+  HttpRequest,
+  ErrorMessage,
+} from '../components/commons/utils'
+import Container from '../components/Container/container'
 import UsuarioForm from './components/usuarioForm'
 
 export default function CriarUsuario() {
@@ -10,7 +15,7 @@ export default function CriarUsuario() {
   const createUser = useMutation({
     mutationFn: (values) => HttpRequest('POST', users_url, values),
     onSuccess: () => toast('Usuário criado com sucesso!'),
-    onError: (error) => message.error(`Erro ao salvar, ${error}`),
+    onError: (error) => ErrorMessage(error),
   })
 
   const onFinish = (values) => createUser.mutate(values)

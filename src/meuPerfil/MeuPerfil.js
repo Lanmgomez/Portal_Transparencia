@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
-import { Form, message } from 'antd'
+import { Form } from 'antd'
 import { useMutation } from '@tanstack/react-query'
 import Container from '../components/Container/container'
 import useGetUserById from './hooks/useGetUserById'
-import UsuarioForm from '../components/criarUsuario/components/usuarioForm'
+import UsuarioForm from '../criarUsuario/components/usuarioForm'
 import {
   userLoggedIn,
   users_url,
   toast,
   HttpRequest,
+  ErrorMessage,
 } from '../components/commons/utils'
 import './MeuPerfil.css'
 
@@ -20,7 +21,7 @@ function MeuPerfilPage() {
   const updateUser = useMutation({
     mutationFn: (values) => HttpRequest('PUT', `${users_url}/${id}`, values),
     onSuccess: () => toast('Dados do usuário salvos com sucesso!'),
-    onError: (error) => message.error(`Erro ao salvar, ${error}`),
+    onError: (error) => ErrorMessage(error),
   })
 
   const onFinish = (values) => updateUser.mutate(values)

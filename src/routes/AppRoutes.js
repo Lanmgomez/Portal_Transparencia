@@ -7,7 +7,7 @@ import ConfiguracoesPage from '../configuracoes/configuracoes'
 import MeuPerfilPage from '../meuPerfil/MeuPerfil'
 import DespesasPage from '../despesas/despesas'
 import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
-import CriarUsuario from '../components/criarUsuario/criarUsuario'
+import CriarUsuario from '../criarUsuario/criarUsuario'
 
 function SidebarWrapper() {
   const location = useLocation()

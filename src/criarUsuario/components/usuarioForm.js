@@ -9,7 +9,18 @@ import {
 export default function UsuarioForm({ form, onFinish, loading, saving }) {
   return (
     <>
-      <Spin spinning={loading} />
+      {loading && (
+        <Spin
+          spinning={loading}
+          style={{
+            display: 'block',
+            marginTop: '30vh',
+            marginLeft: '35%',
+            zIndex: 1,
+            position: 'fixed',
+          }}
+        />
+      )}
 
       <Form form={form} onFinish={onFinish} disabled={loading}>
         <Card title='Dados do usuário'>
@@ -74,7 +85,7 @@ export default function UsuarioForm({ form, onFinish, loading, saving }) {
             className='label-3'
             rules={[{ message: 'Senha é obrigatória!', required: true }]}
           >
-            <Input
+            <Input.Password
               type='password'
               style={{ width: 300, marginLeft: '-100px' }}
               placeholder='Digite a nova senha...'
@@ -91,7 +102,7 @@ export default function UsuarioForm({ form, onFinish, loading, saving }) {
               { message: 'Confirmar a senha é obrigatório!', required: true },
             ]}
           >
-            <Input
+            <Input.Password
               type='password'
               style={{ width: 300, marginLeft: '-100px' }}
               placeholder='Confirme a nova senha...'

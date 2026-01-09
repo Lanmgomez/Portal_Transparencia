@@ -89,3 +89,33 @@ export function toast(msg) {
   message.success(msg)
   window.history.back()
 }
+
+export function ErrorMessage(err) {
+  // Se for erro do axios
+  if (axios.isAxiosError(err)) {
+    const data = err.response?.data
+
+    // 1) Preferir a message do backend
+    if (data?.message) {
+      message.error(data.message)
+      return
+    }
+
+    // 2) Se vier errors por campo, mostrar a primeira mensagem
+    const firstFieldError = data?.errors
+      ? Object.values(data.errors).flat()[0]
+      : undefined
+
+    if (firstFieldError) {
+      message.error(firstFieldError)
+      return
+    }
+
+    // 3) Fallback
+    message.error(err.message)
+    return
+  }
+
+  // Se não for axios, fallback genérico
+  message.error('Erro inesperado ao processar a requisição.')
+}
