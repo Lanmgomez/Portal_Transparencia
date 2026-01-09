@@ -1,21 +1,20 @@
 import { useEffect } from 'react'
-import { Form } from 'antd'
+import { useParams } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import Container from '../components/Container/container'
-import useGetUserById from './hooks/useGetUserById'
-import UsuarioForm from '../criarUsuario/components/usuarioForm'
+import { Form } from 'antd'
 import {
-  userLoggedIn,
-  users_url,
-  toast,
-  HttpRequest,
   ErrorMessage,
+  HttpRequest,
+  toast,
+  users_url,
 } from '../components/commons/utils'
-import './MeuPerfil.css'
+import UsuarioForm from '../criarUsuario/components/usuarioForm'
+import Container from '../components/Container/container'
+import useGetUserById from '../meuPerfil/hooks/useGetUserById'
 
-function MeuPerfilPage() {
+export default function EditarUsuario() {
   const [form] = Form.useForm()
-  const id = String(userLoggedIn?.id)
+  const { id } = useParams()
   const { name, email, role, isError } = useGetUserById(id)
 
   const updateUser = useMutation({
@@ -29,8 +28,6 @@ function MeuPerfilPage() {
   const isDataUser = !!name || !!email || !!role
 
   useEffect(() => {
-    if (!userLoggedIn) return
-
     form.setFieldsValue({
       name: name ?? '',
       email: email ?? '',
@@ -53,5 +50,3 @@ function MeuPerfilPage() {
     </Container>
   )
 }
-
-export default MeuPerfilPage

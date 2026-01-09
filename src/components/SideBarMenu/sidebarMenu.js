@@ -1,42 +1,47 @@
 import { useState } from 'react'
-import { Button, Menu } from 'antd'
+import { useMutation } from '@tanstack/react-query'
+import { Button, Menu, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme'
-import './sidebarMenu.css'
+import { logout_url, HttpRequest, ErrorMessage } from '../commons/utils'
 import {
   UserOutlined,
+  DollarOutlined,
   MailOutlined,
   SettingOutlined,
   LogoutOutlined,
 } from '@ant-design/icons'
+import Cookies from 'js-cookie'
+import './sidebarMenu.css'
 
 const items = [
   {
     key: 'sub1',
     label: 'Página Inicial',
     icon: <MailOutlined />,
-    children: [
-      { key: '1', label: 'Home', url: '/home' },
-      { key: '2', label: 'Option 2' },
-      { key: '3', label: 'Option 3' },
-      { key: '4', label: 'Option 4' },
-    ],
+    children: [{ key: '1', label: 'Home', url: '/home' }],
   },
   {
     key: 'sub2',
+    label: 'Despesas',
+    icon: <DollarOutlined />,
+    children: [{ key: '2', label: 'Empenhos', url: '/despesas' }],
+  },
+  {
+    key: 'sub3',
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
       { key: '5', label: 'Meu Perfil', url: '/meu-perfil' },
-      { key: '6', label: 'Option 6' },
-      {
-        key: 'sub3',
-        label: 'Submenu',
-        children: [
-          { key: '7', label: 'Option 7' },
-          { key: '8', label: 'Option 8' },
-        ],
-      },
+      { key: '6', label: 'Usuários Cadastrados', url: '/usuarios-cadastrados' },
+      // {
+      //   key: 'sub3',
+      //   label: 'Submenu',
+      //   children: [
+      //     { key: '7', label: 'Option 7' },
+      //     { key: '8', label: 'Option 8' },
+      //   ],
+      // },
     ],
   },
   {
@@ -50,6 +55,7 @@ const items = [
 export default function SideBarMenu() {
   const navigate = useNavigate()
   const [current, setCurrent] = useState('1')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { primaryColor } = useTheme()
 
@@ -66,10 +72,18 @@ export default function SideBarMenu() {
     return
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('user_logged')
-    navigate('/')
-  }
+  const logout = useMutation({
+    mutationFn: () => HttpRequest('POST', logout_url, {}),
+    onSuccess: () => {
+      Cookies.remove('token')
+      Cookies.remove('user')
+      navigate('/')
+      setIsModalOpen(false)
+    },
+    onError: (error) => ErrorMessage(error),
+  })
+
+  const handleLogout = () => logout.mutate()
 
   return (
     <div className='sidebar-menu' style={{ backgroundColor: primaryColor }}>
@@ -84,12 +98,24 @@ export default function SideBarMenu() {
       <div style={{ padding: '0 16px 20px 16px' }}>
         <Button
           className='btn-sair'
-          onClick={handleLogout}
+          onClick={() => setIsModalOpen(true)}
           icon={<LogoutOutlined />}
         >
           Fazer Log Out / Sair
         </Button>
       </div>
+
+      <Modal
+        title='Tem certeza que deseja sair?'
+        open={isModalOpen}
+        onOk={handleLogout}
+        onCancel={() => setIsModalOpen(false)}
+        confirmLoading={logout.isPending}
+        cancelText='Cancelar'
+        okText='Sair'
+      >
+        <p>Clique em 'Sair' para fazer logout.</p>
+      </Modal>
     </div>
   )
 }

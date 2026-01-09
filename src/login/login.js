@@ -1,41 +1,37 @@
+import { useMutation } from '@tanstack/react-query'
 import { useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
-import db from '../api/db.json'
+import { LoginRequest } from '../components/commons/utils'
+import Cookies from 'js-cookie'
 import './login.css'
 
 export function LoginPage() {
   const navigate = useNavigate()
 
-  const onFinish = (values) => {
-    const { email, password } = values
-
-    const user = db.users.find(
-      (u) => u.email === email && u.password === password,
-    )
-
-    if (user) {
-      localStorage.setItem(
-        'user_logged',
-        JSON.stringify({
-          id: user.id,
-          name: user.name,
-          isAuth: true,
-        }),
-      )
+  const login = useMutation({
+    mutationFn: ({ email, password }) => LoginRequest(email, password),
+    onSuccess: (user) => {
       message.success(`Bem-vindo, ${user.name}!`)
-
       navigate('/home')
-    } else {
+    },
+    onError: () => {
       message.error('Usuário ou senha inválidos!')
-    }
+    },
+  })
+
+  const onFinish = (values) => {
+    login.mutate({
+      email: values.email,
+      password: values.password,
+    })
   }
 
   function RedirectIfAuthenticated() {
     const location = useLocation()
-    const isLoggedIn = localStorage.getItem('user_logged')
+    const token = Cookies.get('token')
 
-    if (location.pathname === '/' && isLoggedIn) return <Navigate to='/home' />
+    if (location.pathname === '/' && token) return <Navigate to='/home' />
   }
 
   return (
@@ -69,6 +65,7 @@ export function LoginPage() {
           >
             <Input
               className='form-input'
+              style={{ width: 450 }}
               placeholder='Digite seu email...'
               prefix={<UserOutlined className='form-icon' />}
             />
@@ -80,9 +77,10 @@ export function LoginPage() {
             className='label-title'
             rules={[{ message: 'Senha é obrigatória!', required: true }]}
           >
-            <Input
+            <Input.Password
               type='password'
               className='form-input'
+              style={{ width: 450 }}
               placeholder='Digite sua senha...'
               prefix={<LockOutlined className='form-icon' />}
             />
@@ -99,7 +97,14 @@ export function LoginPage() {
           </Form.Item>
 
           <Form.Item>
-            <Button block type='primary' htmlType='submit' className='btn'>
+            <Button
+              block
+              type='primary'
+              htmlType='submit'
+              className='btn'
+              loading={login.isPending}
+              disabled={login.isPending}
+            >
               Login
             </Button>
             ou <a href='/make-new-account'>Faça uma conta!</a>

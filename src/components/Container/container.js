@@ -1,5 +1,11 @@
+import { useLocation } from 'react-router-dom'
 import './container.css'
 
 export default function Container({ children }) {
-  return <div className='container'>{children}</div>
+  const location = useLocation()
+
+  const route =
+    location.pathname === '/despesas' ? 'public-layout' : 'private-layout'
+
+  return <div className={`${route}`}>{children}</div>
 }
