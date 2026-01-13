@@ -19,21 +19,39 @@ const items = [
     key: 'sub1',
     label: 'Página Inicial',
     icon: <MailOutlined />,
-    children: [{ key: '1', label: 'Home', url: '/home' }],
+    children: [{ key: '1', label: 'Home', url: '/home', public: false }],
   },
   {
     key: 'sub2',
     label: 'Despesas',
     icon: <DollarOutlined />,
-    children: [{ key: '2', label: 'Empenhos', url: '/despesas' }],
+    children: [{ key: '2', label: 'Empenhos', url: '/despesas', public: true }],
   },
   {
     key: 'sub3',
+    label: 'Receitas',
+    icon: <DollarOutlined />,
+    children: [
+      {
+        key: '3',
+        label: 'Receitas / Transferências',
+        url: '/receitas-transferencias',
+        public: true,
+      },
+    ],
+  },
+  {
+    key: 'sub4',
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
-      { key: '5', label: 'Meu Perfil', url: '/meu-perfil' },
-      { key: '6', label: 'Usuários Cadastrados', url: '/usuarios-cadastrados' },
+      { key: '5', label: 'Meu Perfil', url: '/meu-perfil', public: false },
+      {
+        key: '6',
+        label: 'Usuários Cadastrados',
+        url: '/usuarios-cadastrados',
+        public: false,
+      },
       // {
       //   key: 'sub3',
       //   label: 'Submenu',
@@ -45,10 +63,17 @@ const items = [
     ],
   },
   {
-    key: 'sub4',
+    key: 'sub5',
     label: 'Configurações',
     icon: <SettingOutlined />,
-    children: [{ key: '9', label: 'Aparência e Temas', url: '/configuracoes' }],
+    children: [
+      {
+        key: '9',
+        label: 'Aparência e Temas',
+        url: '/configuracoes',
+        public: false,
+      },
+    ],
   },
 ]
 
@@ -66,7 +91,9 @@ export default function SideBarMenu() {
       .flatMap((item) => item.children || item)
       .find((child) => child.key === e.key)
 
-    if (itemClicado && itemClicado.url) {
+    if (itemClicado.public) {
+      window.open(itemClicado.url, '_blank', 'noopener,noreferrer')
+    } else {
       navigate(itemClicado.url)
     }
     return

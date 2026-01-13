@@ -1,7 +1,6 @@
 import { Input, Select } from 'antd'
+import { mouthOption, yearOption } from '../../../components/commons/utils'
 import {
-  yearOption,
-  mouthOption,
   unidadeOrcamentariaOptions,
   elementOptions,
   funcaoOptions,

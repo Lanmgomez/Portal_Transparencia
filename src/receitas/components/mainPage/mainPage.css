@@ -1,0 +1,14 @@
+.receita-card {
+  border: 5px solid green;
+  background-color: rgba(203, 233, 157, 0.37);
+}
+
+.receita-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: arial;
+  width: 100%;
+}
