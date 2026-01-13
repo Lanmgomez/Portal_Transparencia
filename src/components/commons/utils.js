@@ -8,7 +8,7 @@ const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
 
-const PUBLIC_ROUTES = ['/', '/despesas', '/receitas-transferencias']
+const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
 
 export function isPublicRoute(pathname) {
   return PUBLIC_ROUTES.includes(pathname)

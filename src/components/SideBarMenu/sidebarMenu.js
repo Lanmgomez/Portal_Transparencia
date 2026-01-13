@@ -36,7 +36,7 @@ const items = [
         key: '3',
         label: 'Receitas / Transferências',
         url: '/receitas-transferencias',
-        public: true,
+        public: false,
       },
     ],
   },

@@ -9,31 +9,31 @@ export default function Filtros({ onSearch }) {
   return (
     <>
       <div className='filtros'>
-        <div>
+        <div className='filtro-item filtro-small'>
           <span className='search-label'>Ano</span>
 
           <Select
             prefix={<CalendarOutlined className='form-icon' />}
             placeholder='Pesquisar...'
             className='form-input'
-            style={{ width: '150px' }}
+            style={{ width: '150px', marginTop: '-6px' }}
             options={yearOption}
           />
         </div>
 
-        <div>
+        <div className='filtro-item filtro-small'>
           <span className='search-label'>Mês</span>
 
           <Select
             prefix={<ScheduleOutlined className='form-icon' />}
             placeholder='Pesquisar...'
             className='form-input'
-            style={{ width: '150px' }}
+            style={{ width: '150px', marginTop: '-6px' }}
             options={mouthOption}
           />
         </div>
 
-        <div>
+        <div className='filtro-item filtro-grow'>
           <span className='search-label'>Texto Livre</span>
 
           <Search

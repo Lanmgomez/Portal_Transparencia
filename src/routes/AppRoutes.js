@@ -11,6 +11,8 @@ import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
 import CriarUsuario from '../criarUsuario/criarUsuario'
 import EditarUsuario from '../editar-usuario/editarUsuario'
 import ReceitasPage from '../receitas/receitas'
+import ReceitasPublicPage from '../receitas/public-route/publicRoute'
+import CadastrarReceitasPage from '../receitas/cadastrar-nova-receita/cadastrarReceita'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -29,7 +31,10 @@ export default function AppRoutes() {
         {/** Public routes */}
         <Route path='/' element={<LoginPage />} />
         <Route path='/despesas' element={<DespesasPage />} />
-        <Route path='/receitas-transferencias' element={<ReceitasPage />} />
+        <Route
+          path='/public-receitas-transferencias'
+          element={<ReceitasPublicPage />}
+        />
 
         {/** Private routes */}
         <Route
@@ -37,6 +42,22 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <HomePage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/receitas-transferencias'
+          element={
+            <PrivateRoutesAuth>
+              <ReceitasPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/cadastrar-nova-receita-transferencia'
+          element={
+            <PrivateRoutesAuth>
+              <CadastrarReceitasPage />
             </PrivateRoutesAuth>
           }
         />
