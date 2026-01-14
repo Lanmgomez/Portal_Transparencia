@@ -6,6 +6,7 @@ export default function ReceitaForm({ form, onFinish, loading }) {
     labelCol: { xs: { span: 24 }, sm: { span: 6 } },
     wrapperCol: { xs: { span: 24 }, sm: { span: 18 } },
     labelWrap: true,
+    colon: false, // tira os ":" padrão do AntD
   }
 
   const config = {
@@ -129,6 +130,22 @@ export default function ReceitaForm({ form, onFinish, loading }) {
           label='Receita Acumulada'
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
+        >
+          <Space.Compact block>
+            <Form.Item name='prefix' noStyle>
+              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
+            </Form.Item>
+
+            <Input style={{ width: '200px' }} />
+          </Space.Compact>
+        </Form.Item>
+
+        <Form.Item
+          name='acumuladaExtraOrcamentaria'
+          label='Acumulada com Extra-Orçamentária'
+          style={{ fontWeight: 'bold' }}
+          rules={[{ required: true, message: 'Campo obrigatório!' }]}
+          // disabled
         >
           <Space.Compact block>
             <Form.Item name='prefix' noStyle>

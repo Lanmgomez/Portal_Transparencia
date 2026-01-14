@@ -23,21 +23,21 @@ const items = [
   },
   {
     key: 'sub2',
-    label: 'Despesas',
-    icon: <DollarOutlined />,
-    children: [{ key: '2', label: 'Empenhos', url: '/despesas' }],
-  },
-  {
-    key: 'sub3',
     label: 'Receitas',
     icon: <DollarOutlined />,
     children: [
       {
-        key: '3',
+        key: '2',
         label: 'Receitas / Transferências',
         url: '/receitas-transferencias',
       },
     ],
+  },
+  {
+    key: 'sub3',
+    label: 'Despesas',
+    icon: <DollarOutlined />,
+    children: [{ key: '3', label: 'Empenhos', url: '/despesas' }],
   },
   {
     key: 'sub4',
