@@ -1,6 +1,7 @@
 import { PrivateRoutesAuth } from './privateRoutesAuth'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { LoginPage } from '../login/login'
+import { isPublicRoute } from '../components/commons/utils'
 import HomePage from '../home/home'
 import SideBarMenu from '../components/SideBarMenu/sidebarMenu'
 import ConfiguracoesPage from '../configuracoes/configuracoes'
@@ -9,15 +10,14 @@ import DespesasPage from '../despesas/despesas'
 import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
 import CriarUsuario from '../criarUsuario/criarUsuario'
 import EditarUsuario from '../editar-usuario/editarUsuario'
+import ReceitasPage from '../receitas/receitas'
+import ReceitasPublicPage from '../receitas/public-route/publicRoute'
+import CadastrarReceitasPage from '../receitas/cadastrar-nova-receita/cadastrarReceita'
 
 function SidebarWrapper() {
   const location = useLocation()
 
-  if (location.pathname === '/') {
-    return null
-  }
-
-  if (location.pathname === '/despesas') {
+  if (isPublicRoute(location.pathname)) {
     return null
   }
 
@@ -31,6 +31,10 @@ export default function AppRoutes() {
         {/** Public routes */}
         <Route path='/' element={<LoginPage />} />
         <Route path='/despesas' element={<DespesasPage />} />
+        <Route
+          path='/public-receitas-transferencias'
+          element={<ReceitasPublicPage />}
+        />
 
         {/** Private routes */}
         <Route
@@ -38,6 +42,22 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <HomePage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/receitas-transferencias'
+          element={
+            <PrivateRoutesAuth>
+              <ReceitasPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/cadastrar-nova-receita-transferencia'
+          element={
+            <PrivateRoutesAuth>
+              <CadastrarReceitasPage />
             </PrivateRoutesAuth>
           }
         />

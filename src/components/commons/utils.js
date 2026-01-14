@@ -8,6 +8,12 @@ const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
 
+const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
+
+export function isPublicRoute(pathname) {
+  return PUBLIC_ROUTES.includes(pathname)
+}
+
 export function setAuthCookies({ token, id, name, email, role }) {
   Cookies.set('token', token, {
     expires: 7,
@@ -118,4 +124,35 @@ export function ErrorMessage(err) {
 
   // Se não for axios, fallback genérico
   message.error('Erro inesperado ao processar a requisição.')
+}
+
+export const yearOption = [
+  { value: '2025', label: '2025' },
+  { value: '2024', label: '2024' },
+  { value: '2023', label: '2023' },
+  { value: '2022', label: '2022' },
+]
+
+export const mouthOption = [
+  { value: 'Janeiro', label: 'Janeiro' },
+  { value: 'Fevereiro', label: 'Fevereiro' },
+  { value: 'Março', label: 'Março' },
+  { value: 'Abril', label: 'Abril' },
+  { value: 'Maio', label: 'Maio' },
+  { value: 'Junho', label: 'Junho' },
+  { value: 'Julho', label: 'Julho' },
+  { value: 'Agosto', label: 'Agosto' },
+  { value: 'Setembro', label: 'Setembro' },
+  { value: 'Outubro', label: 'Outubro' },
+  { value: 'Novembro', label: 'Novembro' },
+  { value: 'Dezembro', label: 'Dezembro' },
+]
+
+export function formatCurrencyBR(value) {
+  if (value == null) return '-'
+
+  return value.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  })
 }

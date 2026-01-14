@@ -29,11 +29,32 @@ const items = [
   },
   {
     key: 'sub3',
+    label: 'Receitas',
+    icon: <DollarOutlined />,
+    children: [
+      {
+        key: '3',
+        label: 'Receitas / Transferências',
+        url: '/receitas-transferencias',
+      },
+    ],
+  },
+  {
+    key: 'sub4',
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
-      { key: '5', label: 'Meu Perfil', url: '/meu-perfil' },
-      { key: '6', label: 'Usuários Cadastrados', url: '/usuarios-cadastrados' },
+      {
+        key: '5',
+        label: 'Meu Perfil',
+        url: '/meu-perfil',
+      },
+      {
+        key: '6',
+        label: 'Usuários Cadastrados',
+        url: '/usuarios-cadastrados',
+        public: false,
+      },
       // {
       //   key: 'sub3',
       //   label: 'Submenu',
@@ -45,10 +66,16 @@ const items = [
     ],
   },
   {
-    key: 'sub4',
+    key: 'sub5',
     label: 'Configurações',
     icon: <SettingOutlined />,
-    children: [{ key: '9', label: 'Aparência e Temas', url: '/configuracoes' }],
+    children: [
+      {
+        key: '9',
+        label: 'Aparência e Temas',
+        url: '/configuracoes',
+      },
+    ],
   },
 ]
 
@@ -66,10 +93,7 @@ export default function SideBarMenu() {
       .flatMap((item) => item.children || item)
       .find((child) => child.key === e.key)
 
-    if (itemClicado && itemClicado.url) {
-      navigate(itemClicado.url)
-    }
-    return
+    if (itemClicado) return navigate(itemClicado.url)
   }
 
   const logout = useMutation({
