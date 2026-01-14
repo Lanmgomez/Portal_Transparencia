@@ -42,14 +42,6 @@
   margin-left: -10px;
 }
 
-.form-input {
-  min-height: 45px;
-  border-radius: 0;
-  border-style: none;
-  border-bottom: 2px solid;
-  margin-top: -20px;
-}
-
 .btn {
   min-height: 45px;
   border-radius: 0;

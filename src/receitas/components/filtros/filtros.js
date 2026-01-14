@@ -1,5 +1,5 @@
 import { Input, Select } from 'antd'
-import { CalendarOutlined, ScheduleOutlined } from '@ant-design/icons'
+import { CalendarOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import './filtros.css'
 
@@ -14,9 +14,8 @@ export default function Filtros({ onSearch }) {
 
           <Select
             prefix={<CalendarOutlined className='form-icon' />}
-            placeholder='Pesquisar...'
+            placeholder='ano...'
             className='form-input'
-            style={{ width: '150px', marginTop: '-6px' }}
             options={yearOption}
           />
         </div>
@@ -25,10 +24,9 @@ export default function Filtros({ onSearch }) {
           <span className='search-label'>Mês</span>
 
           <Select
-            prefix={<ScheduleOutlined className='form-icon' />}
-            placeholder='Pesquisar...'
+            prefix={<CalendarOutlined className='form-icon' />}
+            placeholder='mês...'
             className='form-input'
-            style={{ width: '150px', marginTop: '-6px' }}
             options={mouthOption}
           />
         </div>
@@ -39,6 +37,7 @@ export default function Filtros({ onSearch }) {
           <Search
             allowClear
             enterButton
+            style={{ width: '300px' }}
             placeholder='Faça uma pesquisa...'
             onSearch={onSearch}
           />

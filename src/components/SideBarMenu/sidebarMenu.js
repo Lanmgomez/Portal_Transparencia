@@ -19,13 +19,13 @@ const items = [
     key: 'sub1',
     label: 'Página Inicial',
     icon: <MailOutlined />,
-    children: [{ key: '1', label: 'Home', url: '/home', public: false }],
+    children: [{ key: '1', label: 'Home', url: '/home' }],
   },
   {
     key: 'sub2',
     label: 'Despesas',
     icon: <DollarOutlined />,
-    children: [{ key: '2', label: 'Empenhos', url: '/despesas', public: true }],
+    children: [{ key: '2', label: 'Empenhos', url: '/despesas' }],
   },
   {
     key: 'sub3',
@@ -36,7 +36,6 @@ const items = [
         key: '3',
         label: 'Receitas / Transferências',
         url: '/receitas-transferencias',
-        public: false,
       },
     ],
   },
@@ -45,7 +44,11 @@ const items = [
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
-      { key: '5', label: 'Meu Perfil', url: '/meu-perfil', public: false },
+      {
+        key: '5',
+        label: 'Meu Perfil',
+        url: '/meu-perfil',
+      },
       {
         key: '6',
         label: 'Usuários Cadastrados',
@@ -71,7 +74,6 @@ const items = [
         key: '9',
         label: 'Aparência e Temas',
         url: '/configuracoes',
-        public: false,
       },
     ],
   },
@@ -91,12 +93,7 @@ export default function SideBarMenu() {
       .flatMap((item) => item.children || item)
       .find((child) => child.key === e.key)
 
-    if (itemClicado.public) {
-      window.open(itemClicado.url, '_blank', 'noopener,noreferrer')
-    } else {
-      navigate(itemClicado.url)
-    }
-    return
+    if (itemClicado) return navigate(itemClicado.url)
   }
 
   const logout = useMutation({
