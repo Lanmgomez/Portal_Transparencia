@@ -11,6 +11,7 @@ export default function useReceitasData() {
       receitaExtraOrçamentaria: 15000.0,
       receitaRealizada: 265000.0,
       receitaAcumulada: 265000.0,
+      receitaAcumuladaComExtraOrcamentaria: 100000.0,
     },
     {
       key: '2',
@@ -23,6 +24,7 @@ export default function useReceitasData() {
       receitaExtraOrçamentaria: 8000.0,
       receitaRealizada: 278000.0,
       receitaAcumulada: 543000.0,
+      receitaAcumuladaComExtraOrcamentaria: 100000.0,
     },
     {
       key: '3',
@@ -35,6 +37,7 @@ export default function useReceitasData() {
       receitaExtraOrçamentaria: 20000.0,
       receitaRealizada: 320000.0,
       receitaAcumulada: 863000.0,
+      receitaAcumuladaComExtraOrcamentaria: 100000.0,
     },
     {
       key: '4',
@@ -47,6 +50,7 @@ export default function useReceitasData() {
       receitaExtraOrçamentaria: 12000.0,
       receitaRealizada: 292000.0,
       receitaAcumulada: 1155000.0,
+      receitaAcumuladaComExtraOrcamentaria: 100000.0,
     },
     {
       key: '5',
@@ -59,6 +63,7 @@ export default function useReceitasData() {
       receitaExtraOrçamentaria: 10000.0,
       receitaRealizada: 320000.0,
       receitaAcumulada: 1475000.0,
+      receitaAcumuladaComExtraOrcamentaria: 100000.0,
     },
   ]
 

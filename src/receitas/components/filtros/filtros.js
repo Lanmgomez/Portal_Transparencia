@@ -1,48 +1,71 @@
-import { Input, Select } from 'antd'
+import { Select, Form, Button, Input } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import './filtros.css'
 
-export default function Filtros({ onSearch }) {
-  const { Search } = Input
-
+export default function Filtros({ form, onFinish, loading }) {
   return (
-    <>
-      <div className='filtros'>
-        <div className='filtro-item filtro-small'>
-          <span className='search-label'>Ano</span>
+    <Form
+      form={form}
+      onFinish={onFinish}
+      layout='vertical'
+      style={{ display: 'flex', gap: 20, marginTop: 50 }}
+    >
+      <Form.Item name='ano' label='Ano' style={{ fontWeight: 'bold' }}>
+        <Select
+          prefix={<CalendarOutlined />}
+          style={{ minHeight: 40, width: 165 }}
+          placeholder='Escolha o ano...'
+          options={yearOption}
+        />
+      </Form.Item>
 
-          <Select
-            prefix={<CalendarOutlined className='form-icon' />}
-            placeholder='ano...'
-            className='form-input'
-            options={yearOption}
-          />
-        </div>
+      <Form.Item name='mes' label='Mês' style={{ fontWeight: 'bold' }}>
+        <Select
+          prefix={<CalendarOutlined />}
+          style={{ minHeight: 40, width: 165 }}
+          placeholder='Escolha o mês...'
+          options={mouthOption}
+        />
+      </Form.Item>
 
-        <div className='filtro-item filtro-small'>
-          <span className='search-label'>Mês</span>
+      <Form.Item
+        name='textoLivre'
+        label='Texto Livre'
+        style={{ fontWeight: 'bold' }}
+      >
+        <Input style={{ minHeight: 40 }} placeholder='Faça uma pesquisa...' />
+      </Form.Item>
 
-          <Select
-            prefix={<CalendarOutlined className='form-icon' />}
-            placeholder='mês...'
-            className='form-input'
-            options={mouthOption}
-          />
-        </div>
+      <Button
+        block
+        type='primary'
+        htmlType='submit'
+        style={{ width: 100, marginTop: 30 }}
+        disabled={loading}
+      >
+        Pesquisar
+      </Button>
 
-        <div className='filtro-item filtro-grow'>
-          <span className='search-label'>Texto Livre</span>
+      <Button
+        block
+        type='secondary'
+        htmlType='button'
+        style={{ width: 100, marginTop: 30 }}
+        onClick={() => form.resetFields()}
+      >
+        Limpar Filtros
+      </Button>
 
-          <Search
-            allowClear
-            enterButton
-            style={{ width: '300px' }}
-            placeholder='Faça uma pesquisa...'
-            onSearch={onSearch}
-          />
-        </div>
-      </div>
-    </>
+      <Button
+        block
+        type='secondary'
+        htmlType='button'
+        style={{ width: 100, marginTop: 30 }}
+        onClick={() => {}}
+      >
+        Baixar CRV
+      </Button>
+    </Form>
   )
 }

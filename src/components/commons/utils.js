@@ -127,6 +127,7 @@ export function ErrorMessage(err) {
 }
 
 export const yearOption = [
+  { value: '2026', label: '2026' },
   { value: '2025', label: '2025' },
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
@@ -156,3 +157,17 @@ export function formatCurrencyBR(value) {
     currency: 'BRL',
   })
 }
+
+export const toNumber = (v) => {
+  if (v == null || v === '') return 0
+  // se vier como texto com "1.234,56"
+  const normalized = String(v).replace(/\./g, '').replace(',', '.')
+  const n = Number(normalized)
+  return Number.isNaN(n) ? 0 : n
+}
+
+export const formatBR = (value) =>
+  Number(value).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })

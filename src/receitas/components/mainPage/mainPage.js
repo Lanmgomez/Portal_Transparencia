@@ -1,4 +1,5 @@
-import { Card } from 'antd'
+import { Form } from 'antd'
+import { ReceitaPrevistaCard } from '../card/card'
 import useReceitasData from '../hooks/useReceitasData'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import ReceitasTable from '../table/columns'
@@ -7,6 +8,7 @@ import HoverMe from '../hoverMe/hoverMe'
 import './mainPage.css'
 
 export default function MainPage() {
+  const [form] = Form.useForm()
   const { mockData } = useReceitasData()
 
   const onSearch = (value, _e, info) => console.log(info?.source, value)
@@ -22,14 +24,9 @@ export default function MainPage() {
 
       <PageTitle title='Receitas / Transferências' />
 
-      <Card className='receita-card'>
-        <div className='receita-card-content'>
-          <div>Receita Prevista em 2026</div>
-          <span>R$ 2.964.088,32</span>
-        </div>
-      </Card>
+      <ReceitaPrevistaCard hide={hide} />
 
-      <Filtros onSearch={onSearch} />
+      <Filtros form={form} onSearch={onSearch} />
 
       <h3>Informações</h3>
       <ReceitasTable data={mockData} />
