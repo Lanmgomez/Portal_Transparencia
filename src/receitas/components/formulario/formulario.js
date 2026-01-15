@@ -1,17 +1,33 @@
-import { mouthOption, yearOption } from '../../../components/commons/utils'
+import { useState, useEffect } from 'react'
 import { Button, Card, DatePicker, Form, Input, Select, Space } from 'antd'
+import {
+  formatBR,
+  mouthOption,
+  toNumber,
+  yearOption,
+} from '../../../components/commons/utils'
+
+const formItemLayout = {
+  labelCol: { xs: { span: 24 }, sm: { span: 6 } },
+  wrapperCol: { xs: { span: 24 }, sm: { span: 18 } },
+  labelWrap: true,
+  colon: false, // tira os ":" padrão do AntD
+}
 
 export default function ReceitaForm({ form, onFinish, loading }) {
-  const formItemLayout = {
-    labelCol: { xs: { span: 24 }, sm: { span: 6 } },
-    wrapperCol: { xs: { span: 24 }, sm: { span: 18 } },
-    labelWrap: true,
-    colon: false, // tira os ":" padrão do AntD
-  }
+  const [acumuladaComExtraOrç, setAcumuladaComExtraOrç] = useState(0)
 
-  const config = {
-    rules: [{ type: 'object', required: true, message: 'Escolha uma data!' }],
-  }
+  const receitaAcumulada = Form.useWatch('receitaAcumulada', form)
+  const receitaExtraOrç = Form.useWatch('receitaExtraOrcamentaria', form)
+
+  useEffect(() => {
+    if (receitaAcumulada && receitaExtraOrç) {
+      const receitaFinal =
+        toNumber(receitaAcumulada) + toNumber(receitaExtraOrç)
+
+      return setAcumuladaComExtraOrç(formatBR(receitaFinal))
+    }
+  }, [receitaAcumulada, receitaExtraOrç, form])
 
   return (
     <Card title='Preencha o formulário abaixo'>
@@ -75,9 +91,11 @@ export default function ReceitaForm({ form, onFinish, loading }) {
           name='dataRecebimento'
           label='Data Recebimento'
           style={{ fontWeight: 'bold' }}
-          {...config}
+          rules={[
+            { type: 'object', required: true, message: 'Escolha uma data!' },
+          ]}
         >
-          <DatePicker style={{ width: '200px' }} />
+          <DatePicker format='DD/MM/YYYY' style={{ width: '200px' }} />
         </Form.Item>
 
         <Form.Item
@@ -145,14 +163,17 @@ export default function ReceitaForm({ form, onFinish, loading }) {
           label='Acumulada com Extra-Orçamentária'
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
-          // disabled
         >
           <Space.Compact block>
             <Form.Item name='prefix' noStyle>
               <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
             </Form.Item>
 
-            <Input style={{ width: '200px' }} />
+            <Input
+              style={{ width: '200px' }}
+              value={acumuladaComExtraOrç}
+              disabled
+            />
           </Space.Compact>
         </Form.Item>
 
