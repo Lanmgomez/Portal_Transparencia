@@ -1,7 +1,24 @@
-import { Select, Form, Button, Input } from 'antd'
-import { CalendarOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { Select, Form, Button, Input, Dropdown } from 'antd'
+import { CalendarOutlined, DownOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import './filtros.css'
+import '../hoverMe/hoverMe.css'
+
+const items = [
+  {
+    key: '1',
+    label: <Link to='#'>Baixar em Excel (.CSV)</Link>,
+  },
+  {
+    key: '2',
+    label: <Link to='#'>Baixar em PDF</Link>,
+  },
+  {
+    key: '3',
+    label: <Link to='#'>Baixar em Word (.docx)</Link>,
+  },
+]
 
 export default function Filtros({ form, onFinish, loading }) {
   return (
@@ -57,15 +74,13 @@ export default function Filtros({ form, onFinish, loading }) {
         Limpar Filtros
       </Button>
 
-      <Button
-        block
-        type='secondary'
-        htmlType='button'
-        style={{ width: 100, marginTop: 30 }}
-        onClick={() => {}}
-      >
-        Baixar CRV
-      </Button>
+      <div className='download-options'>
+        <Dropdown menu={{ items }}>
+          <a onClick={(e) => e.preventDefault()}>
+            Downloads <DownOutlined />
+          </a>
+        </Dropdown>
+      </div>
     </Form>
   )
 }
