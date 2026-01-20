@@ -9,7 +9,7 @@ import './mainPage.css'
 
 export default function MainPage() {
   const [form] = Form.useForm()
-  const { mockData } = useReceitasData()
+  const { receitas } = useReceitasData()
 
   const onSearch = (value, _e, info) => console.log(info?.source, value)
 
@@ -29,7 +29,7 @@ export default function MainPage() {
       <Filtros form={form} onSearch={onSearch} />
 
       <h3>Informações</h3>
-      <ReceitasTable data={mockData} />
+      <ReceitasTable data={receitas} />
     </div>
   )
 }

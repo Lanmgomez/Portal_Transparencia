@@ -7,6 +7,7 @@ const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
 const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
+export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
 
 const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
 
@@ -127,32 +128,34 @@ export function ErrorMessage(err) {
 }
 
 export const yearOption = [
-  { value: '2026', label: '2026' },
-  { value: '2025', label: '2025' },
-  { value: '2024', label: '2024' },
-  { value: '2023', label: '2023' },
-  { value: '2022', label: '2022' },
+  { value: 2026, label: '2026' },
+  { value: 2025, label: '2025' },
+  { value: 2024, label: '2024' },
+  { value: 2023, label: '2023' },
+  { value: 2022, label: '2022' },
 ]
 
 export const mouthOption = [
-  { value: 'Janeiro', label: 'Janeiro' },
-  { value: 'Fevereiro', label: 'Fevereiro' },
-  { value: 'Março', label: 'Março' },
-  { value: 'Abril', label: 'Abril' },
-  { value: 'Maio', label: 'Maio' },
-  { value: 'Junho', label: 'Junho' },
-  { value: 'Julho', label: 'Julho' },
-  { value: 'Agosto', label: 'Agosto' },
-  { value: 'Setembro', label: 'Setembro' },
-  { value: 'Outubro', label: 'Outubro' },
-  { value: 'Novembro', label: 'Novembro' },
-  { value: 'Dezembro', label: 'Dezembro' },
+  { value: 1, label: 'Janeiro' },
+  { value: 2, label: 'Fevereiro' },
+  { value: 3, label: 'Março' },
+  { value: 4, label: 'Abril' },
+  { value: 5, label: 'Maio' },
+  { value: 6, label: 'Junho' },
+  { value: 7, label: 'Julho' },
+  { value: 8, label: 'Agosto' },
+  { value: 9, label: 'Setembro' },
+  { value: 10, label: 'Outubro' },
+  { value: 11, label: 'Novembro' },
+  { value: 12, label: 'Dezembro' },
 ]
 
 export function formatCurrencyBR(value) {
   if (value == null) return '-'
 
-  return value.toLocaleString('pt-BR', {
+  const valor = Number(value)
+
+  return valor.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   })
@@ -171,3 +174,27 @@ export const formatBR = (value) =>
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
+
+export const formatDecimal = (value) => Number(value).toFixed(2)
+
+export const parseBRMoneyToNumber = (value) => {
+  if (value === null || value === undefined || value === '') return 0
+
+  // Se já for number, ok:
+  if (typeof value === 'number') return Number(value.toFixed(2))
+
+  // Se for string (ex: "1.234,56" ou "1234,56" ou "1234.56")
+  const str = String(value).trim()
+
+  // remove tudo que não for número, vírgula, ponto, sinal negativo
+  const cleaned = str.replace(/[^\d,.-]/g, '')
+
+  // padrão BR: "." milhar e "," decimal
+  // transforma "1.234,56" -> "1234.56"
+  const normalized = cleaned.replace(/\./g, '').replace(',', '.')
+
+  const num = Number(normalized)
+  if (Number.isNaN(num)) return 0
+
+  return Number(num.toFixed(2))
+}

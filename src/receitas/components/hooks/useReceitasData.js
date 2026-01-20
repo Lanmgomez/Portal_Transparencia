@@ -1,71 +1,39 @@
-export default function useReceitasData() {
-  const mockData = [
-    {
-      key: '1',
-      ano: 2025,
-      mes: 'Janeiro',
-      unidadeRecebedora: 'Secretaria de Finanças',
-      descricao: 'Arrecadação de IPTU',
-      dataRecebimento: '2025-01-10',
-      receitaMensalPrevista: 250000.0,
-      receitaExtraOrçamentaria: 15000.0,
-      receitaRealizada: 265000.0,
-      receitaAcumulada: 265000.0,
-      receitaAcumuladaComExtraOrcamentaria: 100000.0,
-    },
-    {
-      key: '2',
-      ano: 2025,
-      mes: 'Fevereiro',
-      unidadeRecebedora: 'Secretaria de Finanças',
-      descricao: 'Arrecadação de ISS',
-      dataRecebimento: '2025-02-12',
-      receitaMensalPrevista: 270000.0,
-      receitaExtraOrçamentaria: 8000.0,
-      receitaRealizada: 278000.0,
-      receitaAcumulada: 543000.0,
-      receitaAcumuladaComExtraOrcamentaria: 100000.0,
-    },
-    {
-      key: '3',
-      ano: 2025,
-      mes: 'Março',
-      unidadeRecebedora: 'Secretaria de Finanças',
-      descricao: 'Transferência Estadual',
-      dataRecebimento: '2025-03-15',
-      receitaMensalPrevista: 300000.0,
-      receitaExtraOrçamentaria: 20000.0,
-      receitaRealizada: 320000.0,
-      receitaAcumulada: 863000.0,
-      receitaAcumuladaComExtraOrcamentaria: 100000.0,
-    },
-    {
-      key: '4',
-      ano: 2025,
-      mes: 'Abril',
-      unidadeRecebedora: 'Secretaria de Saúde',
-      descricao: 'Repasse SUS',
-      dataRecebimento: '2025-04-18',
-      receitaMensalPrevista: 280000.0,
-      receitaExtraOrçamentaria: 12000.0,
-      receitaRealizada: 292000.0,
-      receitaAcumulada: 1155000.0,
-      receitaAcumuladaComExtraOrcamentaria: 100000.0,
-    },
-    {
-      key: '5',
-      ano: 2025,
-      mes: 'Maio',
-      unidadeRecebedora: 'Secretaria de Educação',
-      descricao: 'Repasse FUNDEB',
-      dataRecebimento: '2025-05-20',
-      receitaMensalPrevista: 310000.0,
-      receitaExtraOrçamentaria: 10000.0,
-      receitaRealizada: 320000.0,
-      receitaAcumulada: 1475000.0,
-      receitaAcumuladaComExtraOrcamentaria: 100000.0,
-    },
-  ]
+import { useQuery } from '@tanstack/react-query'
+import {
+  formatDecimal,
+  HttpRequest,
+  receita_transp_url,
+} from '../../../components/commons/utils'
 
-  return { mockData }
+export default function useReceitasData() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => HttpRequest('GET', `${receita_transp_url}`),
+  })
+
+  const receitas = (data?.data?.data || []).map((item) => ({
+    id: item.id,
+    ano: item.ano,
+    mes: item.mes,
+    descricao: item.descricao,
+    unidade_recebedora: item.unidade_recebedora,
+    data_recebimento: item.data_recebimento,
+    receita_mensal_prevista: formatDecimal(item.receita_mensal_prevista),
+    receita_extra_orcamentaria: formatDecimal(item.receita_extra_orcamentaria),
+    receita_realizada: formatDecimal(item.receita_realizada),
+    receita_acumulada: formatDecimal(item.receita_acumulada),
+    acumulada_com_extra_orcamentaria: formatDecimal(
+      item.acumulada_com_extra_orcamentaria,
+    ),
+    created_at: item.created_at,
+    updated_at: item.updated_at,
+  }))
+
+  console.log(receitas)
+
+  return {
+    receitas,
+    isLoading,
+    isError,
+  }
 }
