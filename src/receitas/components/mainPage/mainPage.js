@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { Form, Skeleton } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { Form, Skeleton, Modal } from 'antd'
 import { ReceitaPrevistaCard } from '../card/card'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import ReceitasTable from '../table/columns'
 import Filtros from '../filtros/filtros'
 import HoverMe from '../hoverMe/hoverMe'
 import useReceitasData from '../hooks/useReceitasData'
+import ModalContent from '../ModalContent/ModalContent'
 import './mainPage.css'
 
 export const filters_values = {
@@ -17,8 +19,11 @@ export const filters_values = {
 }
 
 export default function MainPage() {
+  const navigate = useNavigate()
   const [form] = Form.useForm()
   const [filters, setFilters] = useState(filters_values)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [id, setId] = useState('')
 
   const { receitas, refetch, isLoading } = useReceitasData(filters)
 
@@ -52,7 +57,26 @@ export default function MainPage() {
       <Filtros form={form} onSearch={onSearch} setFilters={setFilters} />
 
       <h3>Informações</h3>
-      {isLoading ? <Skeleton /> : <ReceitasTable data={receitas} />}
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        <ReceitasTable
+          data={receitas}
+          onEdit={navigate}
+          openModal={setIsModalOpen}
+          setId={setId}
+        />
+      )}
+
+      <Modal
+        title='Informações Gerais'
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        okText='Fechar'
+      >
+        <ModalContent id={id} />
+      </Modal>
     </div>
   )
 }

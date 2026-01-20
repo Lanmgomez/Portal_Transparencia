@@ -89,7 +89,7 @@ export default function ReceitaForm({ form, onFinish, saving }) {
               <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
             </Form.Item>
 
-            <Input style={{ width: '200px' }} />
+            <Input style={{ width: '200px' }} type='number' />
           </Space.Compact>
         </Form.Item>
 
@@ -104,7 +104,7 @@ export default function ReceitaForm({ form, onFinish, saving }) {
               <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
             </Form.Item>
 
-            <Input style={{ width: '200px' }} />
+            <Input style={{ width: '200px' }} type='number' />
           </Space.Compact>
         </Form.Item>
 
@@ -119,7 +119,7 @@ export default function ReceitaForm({ form, onFinish, saving }) {
               <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
             </Form.Item>
 
-            <Input style={{ width: '200px' }} />
+            <Input style={{ width: '200px' }} type='number' />
           </Space.Compact>
         </Form.Item>
 

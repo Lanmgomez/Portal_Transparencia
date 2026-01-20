@@ -92,10 +92,7 @@ export default function Filtros({ form, onSearch, setFilters, loading }) {
 
           <Button
             htmlType='button'
-            style={{
-              width: 120,
-              height: 40,
-            }}
+            style={{ width: 120, height: 40 }}
             onClick={() => {
               form.resetFields()
               setFilters(filters_values)

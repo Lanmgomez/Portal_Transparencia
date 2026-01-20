@@ -1,8 +1,9 @@
-import { Table } from 'antd'
-import dayjs from 'dayjs'
+import { Table, Space, Button, Popconfirm } from 'antd'
+import { EditOutlined, DeleteOutlined, BarsOutlined } from '@ant-design/icons'
 import { formatCurrencyBR } from '../../../components/commons/utils'
+import dayjs from 'dayjs'
 
-const columns = [
+const columns = ({ onEdit, onDelete, openModal, setId }) => [
   {
     title: 'Ano',
     dataIndex: 'ano',
@@ -69,14 +70,59 @@ const columns = [
     align: 'center',
     render: (value) => (value ? formatCurrencyBR(value) : ''),
   },
+  {
+    title: 'Ações',
+    dataIndex: 'updated_at',
+    key: 'updated_at',
+    render: (_, record) => (
+      <Space>
+        <Button
+          icon={<BarsOutlined />}
+          onClick={() => {
+            setId?.(record.id)
+            openModal?.(true)
+          }}
+        >
+          Ver mais
+        </Button>
+
+        <Button
+          icon={<EditOutlined />}
+          onClick={() => onEdit?.(`/editar-receita-transferencia/${record.id}`)}
+        >
+          Editar
+        </Button>
+
+        <Popconfirm
+          title='Tem certeza que deseja excluir?'
+          okText='Sim'
+          cancelText='Cancelar'
+          onConfirm={() => onDelete?.(record.id)}
+        >
+          <Button danger icon={<DeleteOutlined />}>
+            Excluir
+          </Button>
+        </Popconfirm>
+      </Space>
+    ),
+  },
 ]
 
-export default function ReceitasTable({ data }) {
+export default function ReceitasTable({
+  data,
+  loading,
+  onEdit,
+  onDelete,
+  openModal,
+  setId,
+}) {
   return (
     <Table
       dataSource={data}
-      columns={columns}
+      columns={columns({ onEdit, onDelete, openModal, setId })}
+      loading={loading}
       scroll={{ x: 'max-content' }}
+      size='small'
       pagination={{ pageSize: 20 }}
     />
   )
