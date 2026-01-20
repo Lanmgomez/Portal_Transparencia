@@ -5,10 +5,26 @@ import {
   receita_transp_url,
 } from '../../../components/commons/utils'
 
-export default function useReceitasData() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['users'],
-    queryFn: () => HttpRequest('GET', `${receita_transp_url}`),
+const buildSearchUrl = (baseUrl, params) => {
+  const qr_params = new URLSearchParams()
+
+  // só adiciona se tiver valor
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === '') return
+    qr_params.append(key, String(value))
+  })
+
+  const query = qr_params.toString()
+  return query ? `${baseUrl}?${query}` : baseUrl
+}
+
+export default function useReceitasData(params) {
+  const url = buildSearchUrl(receita_transp_url, params)
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['receitas', url],
+    queryFn: () => HttpRequest('GET', url),
+    enabled: true,
   })
 
   const receitas = (data?.data?.data || []).map((item) => ({
@@ -29,11 +45,10 @@ export default function useReceitasData() {
     updated_at: item.updated_at,
   }))
 
-  console.log(receitas)
-
   return {
     receitas,
     isLoading,
     isError,
+    refetch,
   }
 }

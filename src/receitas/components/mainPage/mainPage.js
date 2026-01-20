@@ -1,17 +1,40 @@
-import { Form } from 'antd'
+import { useState } from 'react'
+import { Form, Skeleton } from 'antd'
 import { ReceitaPrevistaCard } from '../card/card'
-import useReceitasData from '../hooks/useReceitasData'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import ReceitasTable from '../table/columns'
 import Filtros from '../filtros/filtros'
 import HoverMe from '../hoverMe/hoverMe'
+import useReceitasData from '../hooks/useReceitasData'
 import './mainPage.css'
+
+export const filters_values = {
+  ano: '',
+  mes: '',
+  descricao: '',
+  unidade_recebedora: '',
+  per_page: 10,
+}
 
 export default function MainPage() {
   const [form] = Form.useForm()
-  const { receitas } = useReceitasData()
+  const [filters, setFilters] = useState(filters_values)
 
-  const onSearch = (value, _e, info) => console.log(info?.source, value)
+  const { receitas, refetch, isLoading } = useReceitasData(filters)
+
+  const onSearch = async (values) => {
+    if (!values) return
+
+    setFilters({
+      ano: values.ano ?? '',
+      mes: values.mes ?? '',
+      descricao: values.descricao ?? '',
+      unidade_recebedora: values.unidade_recebedora ?? '',
+      per_page: values.per_page ?? 10,
+    })
+
+    await refetch()
+  }
 
   const hide =
     window.location.pathname === '/public-receitas-transferencias'
@@ -26,10 +49,10 @@ export default function MainPage() {
 
       <ReceitaPrevistaCard hide={hide} />
 
-      <Filtros form={form} onSearch={onSearch} />
+      <Filtros form={form} onSearch={onSearch} setFilters={setFilters} />
 
       <h3>Informações</h3>
-      <ReceitasTable data={receitas} />
+      {isLoading ? <Skeleton /> : <ReceitasTable data={receitas} />}
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Select, Form, Button, Input, Dropdown } from 'antd'
 import { CalendarOutlined, DownOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
+import { filters_values } from '../mainPage/mainPage'
 import './filtros.css'
 import '../hoverMe/hoverMe.css'
 
@@ -20,59 +21,90 @@ const items = [
   },
 ]
 
-export default function Filtros({ form, onFinish, loading }) {
+export default function Filtros({ form, onSearch, setFilters, loading }) {
   return (
-    <Form
-      form={form}
-      onFinish={onFinish}
-      layout='vertical'
-      style={{ display: 'flex', gap: 20, marginTop: 50 }}
-    >
-      <Form.Item name='ano' label='Ano' style={{ fontWeight: 'bold' }}>
-        <Select
-          prefix={<CalendarOutlined />}
-          style={{ minHeight: 40, width: 165 }}
-          placeholder='Escolha o ano...'
-          options={yearOption}
-        />
-      </Form.Item>
-
-      <Form.Item name='mes' label='Mês' style={{ fontWeight: 'bold' }}>
-        <Select
-          prefix={<CalendarOutlined />}
-          style={{ minHeight: 40, width: 165 }}
-          placeholder='Escolha o mês...'
-          options={mouthOption}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name='textoLivre'
-        label='Texto Livre'
-        style={{ fontWeight: 'bold' }}
+    <>
+      <Form
+        form={form}
+        onFinish={onSearch}
+        layout='vertical'
+        style={{
+          display: 'flex',
+          gap: 20,
+          marginTop: 50,
+          alignItems: 'center',
+        }}
       >
-        <Input style={{ minHeight: 40 }} placeholder='Faça uma pesquisa...' />
-      </Form.Item>
+        <Form.Item name='ano' label='Ano' style={{ fontWeight: 'bold' }}>
+          <Select
+            prefix={<CalendarOutlined />}
+            style={{ minHeight: 40, width: 165 }}
+            placeholder='Escolher ano...'
+            options={yearOption}
+          />
+        </Form.Item>
 
-      <Button
-        block
-        type='primary'
-        htmlType='submit'
-        style={{ width: 100, marginTop: 30 }}
-        disabled={loading}
-      >
-        Pesquisar
-      </Button>
+        <Form.Item name='mes' label='Mês' style={{ fontWeight: 'bold' }}>
+          <Select
+            prefix={<CalendarOutlined />}
+            style={{ minHeight: 40, width: 165 }}
+            placeholder='Escolher mês...'
+            options={mouthOption}
+          />
+        </Form.Item>
 
-      <Button
-        block
-        type='secondary'
-        htmlType='button'
-        style={{ width: 100, marginTop: 30 }}
-        onClick={() => form.resetFields()}
-      >
-        Limpar Filtros
-      </Button>
+        <Form.Item
+          name='descricao'
+          label='Descrição'
+          style={{ fontWeight: 'bold' }}
+        >
+          <Input style={{ minHeight: 40 }} placeholder='Pesquisar...' />
+        </Form.Item>
+
+        <Form.Item
+          name='unidade_recebedora'
+          label={
+            <span style={{ whiteSpace: 'nowrap', overflow: 'visible' }}>
+              Uni. Recebedora
+            </span>
+          }
+          style={{ fontWeight: 'bold' }}
+        >
+          <Input style={{ minHeight: 40 }} placeholder='Pesquisar...' />
+        </Form.Item>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: 10,
+            justifyContent: 'flex-end',
+            marginTop: 5,
+          }}
+        >
+          <Button
+            type='primary'
+            htmlType='submit'
+            style={{ width: 120, height: 40 }}
+            disabled={loading}
+          >
+            Pesquisar
+          </Button>
+
+          <Button
+            htmlType='button'
+            style={{
+              width: 120,
+              height: 40,
+            }}
+            onClick={() => {
+              form.resetFields()
+              setFilters(filters_values)
+            }}
+          >
+            Limpar Filtros
+          </Button>
+        </div>
+      </Form>
 
       <div className='download-options'>
         <Dropdown menu={{ items }}>
@@ -81,6 +113,6 @@ export default function Filtros({ form, onFinish, loading }) {
           </a>
         </Dropdown>
       </div>
-    </Form>
+    </>
   )
 }
