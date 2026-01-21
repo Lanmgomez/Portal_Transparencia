@@ -78,6 +78,7 @@ export default function MainPage() {
           onDelete={() => deleteReceita.mutate()}
           openModal={setIsModalOpen}
           setId={setId}
+          hide={hide}
         />
       )}
 

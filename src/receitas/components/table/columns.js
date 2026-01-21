@@ -3,7 +3,7 @@ import { EditOutlined, DeleteOutlined, BarsOutlined } from '@ant-design/icons'
 import { formatCurrencyBR } from '../../../components/commons/utils'
 import dayjs from 'dayjs'
 
-const columns = ({ onEdit, onDelete, openModal, setId }) => [
+const columns = ({ onEdit, onDelete, openModal, setId, hide }) => [
   {
     title: 'Ano',
     dataIndex: 'ano',
@@ -70,45 +70,49 @@ const columns = ({ onEdit, onDelete, openModal, setId }) => [
     align: 'center',
     render: (value) => (value ? formatCurrencyBR(value) : ''),
   },
-  {
-    title: 'Ações',
-    dataIndex: 'updated_at',
-    key: 'updated_at',
-    render: (_, record) => (
-      <Space>
-        <Button
-          icon={<BarsOutlined />}
-          onClick={() => {
-            setId?.(record.id)
-            openModal?.(true)
-          }}
-        >
-          Ver mais
-        </Button>
-
-        <Button
-          icon={<EditOutlined />}
-          onClick={() => onEdit?.(`/editar-receita-transferencia/${record.id}`)}
-        >
-          Editar
-        </Button>
-
-        <Popconfirm
-          title='Tem certeza que deseja excluir?'
-          okText='Sim'
-          cancelText='Cancelar'
-          onConfirm={() => {
-            setId?.(record.id)
-            onDelete()
-          }}
-        >
-          <Button danger icon={<DeleteOutlined />}>
-            Excluir
-          </Button>
-        </Popconfirm>
-      </Space>
-    ),
-  },
+  ...(!hide
+    ? [
+        {
+          title: 'Ações',
+          dataIndex: 'updated_at',
+          key: 'updated_at',
+          render: (_, record) => (
+            <Space>
+              <Button
+                icon={<BarsOutlined />}
+                onClick={() => {
+                  setId?.(record.id)
+                  openModal?.(true)
+                }}
+              >
+                Ver mais
+              </Button>
+              <Button
+                icon={<EditOutlined />}
+                onClick={() =>
+                  onEdit?.(`/editar-receita-transferencia/${record.id}`)
+                }
+              >
+                Editar
+              </Button>
+              <Popconfirm
+                title='Tem certeza que deseja excluir?'
+                okText='Sim'
+                cancelText='Cancelar'
+                onConfirm={() => {
+                  setId?.(record.id)
+                  onDelete()
+                }}
+              >
+                <Button danger icon={<DeleteOutlined />}>
+                  Excluir
+                </Button>
+              </Popconfirm>
+            </Space>
+          ),
+        },
+      ]
+    : []),
 ]
 
 export default function ReceitasTable({
@@ -118,11 +122,12 @@ export default function ReceitasTable({
   onDelete,
   openModal,
   setId,
+  hide,
 }) {
   return (
     <Table
       dataSource={data}
-      columns={columns({ onEdit, onDelete, openModal, setId })}
+      columns={columns({ onEdit, onDelete, openModal, setId, hide })}
       loading={loading}
       scroll={{ x: 'max-content' }}
       size='small'
