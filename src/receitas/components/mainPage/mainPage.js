@@ -9,6 +9,12 @@ import HoverMe from '../hoverMe/hoverMe'
 import useReceitasData from '../hooks/useReceitasData'
 import ModalContent from '../ModalContent/ModalContent'
 import './mainPage.css'
+import { useMutation } from '@tanstack/react-query'
+import {
+  ErrorMessage,
+  HttpRequest,
+  receita_transp_url,
+} from '../../../components/commons/utils'
 
 export const filters_values = {
   ano: '',
@@ -26,6 +32,12 @@ export default function MainPage() {
   const [id, setId] = useState('')
 
   const { receitas, refetch, isLoading } = useReceitasData(filters)
+
+  const deleteReceita = useMutation({
+    mutationFn: () => HttpRequest('DELETE', `${receita_transp_url}/${id}`),
+    onSuccess: () => window.location.reload(),
+    onError: (error) => ErrorMessage(error),
+  })
 
   const onSearch = async (values) => {
     if (!values) return
@@ -63,6 +75,7 @@ export default function MainPage() {
         <ReceitasTable
           data={receitas}
           onEdit={navigate}
+          onDelete={() => deleteReceita.mutate()}
           openModal={setIsModalOpen}
           setId={setId}
         />

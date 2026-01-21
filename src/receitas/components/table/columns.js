@@ -97,7 +97,10 @@ const columns = ({ onEdit, onDelete, openModal, setId }) => [
           title='Tem certeza que deseja excluir?'
           okText='Sim'
           cancelText='Cancelar'
-          onConfirm={() => onDelete?.(record.id)}
+          onConfirm={() => {
+            setId?.(record.id)
+            onDelete()
+          }}
         >
           <Button danger icon={<DeleteOutlined />}>
             Excluir
