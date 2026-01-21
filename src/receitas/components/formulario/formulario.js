@@ -1,11 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Button, Card, DatePicker, Form, Input, Select, Space } from 'antd'
-import {
-  formatBR,
-  mouthOption,
-  toNumber,
-  yearOption,
-} from '../../../components/commons/utils'
+import { Button, Card, DatePicker, Form, Input, Select } from 'antd'
+import { mouthOption, yearOption } from '../../../components/commons/utils'
 
 const formItemLayout = {
   labelCol: { xs: { span: 24 }, sm: { span: 6 } },
@@ -14,28 +8,14 @@ const formItemLayout = {
   colon: false, // tira os ":" padrão do AntD
 }
 
-export default function ReceitaForm({ form, onFinish, loading }) {
-  const [acumuladaComExtraOrç, setAcumuladaComExtraOrç] = useState(0)
-
-  const receitaAcumulada = Form.useWatch('receitaAcumulada', form)
-  const receitaExtraOrç = Form.useWatch('receitaExtraOrcamentaria', form)
-
-  useEffect(() => {
-    if (receitaAcumulada && receitaExtraOrç) {
-      const receitaFinal =
-        toNumber(receitaAcumulada) + toNumber(receitaExtraOrç)
-
-      return setAcumuladaComExtraOrç(formatBR(receitaFinal))
-    }
-  }, [receitaAcumulada, receitaExtraOrç, form])
-
+export default function ReceitaForm({ form, onFinish, saving }) {
   return (
     <Card title='Preencha o formulário abaixo'>
       <Form
         {...formItemLayout}
         form={form}
         onFinish={onFinish}
-        disabled={loading}
+        disabled={saving}
       >
         <Form.Item
           name='ano'
@@ -76,7 +56,7 @@ export default function ReceitaForm({ form, onFinish, loading }) {
         </Form.Item>
 
         <Form.Item
-          name='unidadeRecebedora'
+          name='unidade_recebedora'
           label='Unidade Recebedora'
           style={{ fontWeight: 'bold' }}
           rules={[{ message: 'Campo obirgatório!', required: true }]}
@@ -88,7 +68,7 @@ export default function ReceitaForm({ form, onFinish, loading }) {
         </Form.Item>
 
         <Form.Item
-          name='dataRecebimento'
+          name='data_recebimento'
           label='Data Recebimento'
           style={{ fontWeight: 'bold' }}
           rules={[
@@ -99,82 +79,42 @@ export default function ReceitaForm({ form, onFinish, loading }) {
         </Form.Item>
 
         <Form.Item
-          name='receitaMensalPrevista'
+          name='receita_mensal_prevista'
           label='Receita Mensal Prevista'
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <Form.Item
-          name='receitaExtraOrcamentaria'
+          name='receita_extra_orcamentaria'
           label='Receita Extra-Orçamentária'
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <Form.Item
-          name='receitaRealizada'
+          name='receita_realizada'
           label='Receita Realizada'
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} />
-          </Space.Compact>
-        </Form.Item>
-
-        <Form.Item
-          name='receitaAcumulada'
-          label='Receita Acumulada'
-          style={{ fontWeight: 'bold' }}
-          rules={[{ required: true, message: 'Campo obrigatório!' }]}
-        >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} />
-          </Space.Compact>
-        </Form.Item>
-
-        <Form.Item
-          name='acumuladaExtraOrcamentaria'
-          label='Acumulada com Extra-Orçamentária'
-          style={{ fontWeight: 'bold' }}
-          rules={[{ required: true, message: 'Campo obrigatório!' }]}
-        >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input
-              style={{ width: '200px' }}
-              value={acumuladaComExtraOrç}
-              disabled
-            />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <div className='btns'>
@@ -193,8 +133,8 @@ export default function ReceitaForm({ form, onFinish, loading }) {
             type='primary'
             htmlType='submit'
             className='save-btn'
-            // loading={saving || loading}
-            // disabled={saving}
+            loading={saving}
+            disabled={saving}
           >
             Salvar
           </Button>
