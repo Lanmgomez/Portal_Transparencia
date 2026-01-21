@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Form, Input, Select, Space } from 'antd'
+import { Button, Card, DatePicker, Form, Input, Select } from 'antd'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 
 const formItemLayout = {
@@ -84,13 +84,11 @@ export default function ReceitaForm({ form, onFinish, saving }) {
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} type='number' />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <Form.Item
@@ -99,13 +97,11 @@ export default function ReceitaForm({ form, onFinish, saving }) {
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} type='number' />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <Form.Item
@@ -114,13 +110,11 @@ export default function ReceitaForm({ form, onFinish, saving }) {
           style={{ fontWeight: 'bold' }}
           rules={[{ required: true, message: 'Campo obrigatório!' }]}
         >
-          <Space.Compact block>
-            <Form.Item name='prefix' noStyle>
-              <Select style={{ width: 60 }} defaultValue={'R$'} disabled />
-            </Form.Item>
-
-            <Input style={{ width: '200px' }} type='number' />
-          </Space.Compact>
+          <Input
+            type='number'
+            style={{ width: '250px' }}
+            addonBefore={<Select style={{ width: 60 }} value='R$' disabled />}
+          />
         </Form.Item>
 
         <div className='btns'>

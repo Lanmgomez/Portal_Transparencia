@@ -13,6 +13,7 @@ import EditarUsuario from '../editar-usuario/editarUsuario'
 import ReceitasPage from '../receitas/receitas'
 import ReceitasPublicPage from '../receitas/public-route/publicRoute'
 import CadastrarReceitasPage from '../receitas/cadastrar-nova-receita/cadastrarReceita'
+import EditarReceita from '../receitas/editar-receita/editarReceita'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -58,6 +59,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <CadastrarReceitasPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/editar-receita-transferencia/:id'
+          element={
+            <PrivateRoutesAuth>
+              <EditarReceita />
             </PrivateRoutesAuth>
           }
         />
