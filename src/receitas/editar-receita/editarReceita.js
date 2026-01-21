@@ -46,9 +46,9 @@ export default function EditarReceita() {
 
   const onFinish = (values) => {
     const data_recebimento = values.data_recebimento?.format('YYYY-MM-DD')
-    const mensal_prevista = parseBRMoneyToNumber(values.receita_mensal_prevista)
-    const extra = parseBRMoneyToNumber(values.receita_extra_orcamentaria)
-    const receita_realizada = parseBRMoneyToNumber(values.receita_realizada)
+    const mensal_prevista = values.receita_mensal_prevista
+    const extra = values.receita_extra_orcamentaria
+    const receita_realizada = values.receita_realizada
 
     const mes = mouthOption.find((m) => m.label === values.mes)?.value ?? '-'
 
