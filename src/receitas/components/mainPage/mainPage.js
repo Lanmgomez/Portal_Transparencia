@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 import { Form, Skeleton, Modal } from 'antd'
 import { ReceitaPrevistaCard } from '../card/card'
 import PageTitle from '../../../components/PageTitle/pageTitle'
@@ -9,7 +10,6 @@ import HoverMe from '../hoverMe/hoverMe'
 import useReceitasData from '../hooks/useReceitasData'
 import ModalContent from '../ModalContent/ModalContent'
 import './mainPage.css'
-import { useMutation } from '@tanstack/react-query'
 import {
   ErrorMessage,
   HttpRequest,
@@ -66,7 +66,13 @@ export default function MainPage() {
 
       <ReceitaPrevistaCard hide={hide} />
 
-      <Filtros form={form} onSearch={onSearch} setFilters={setFilters} />
+      <Filtros
+        form={form}
+        onSearch={onSearch}
+        setFilters={setFilters}
+        data={receitas}
+        loading={isLoading}
+      />
 
       <h3>Informações</h3>
       {isLoading ? (

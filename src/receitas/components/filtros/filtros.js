@@ -1,27 +1,32 @@
-import { Link } from 'react-router-dom'
 import { Select, Form, Button, Input, Dropdown } from 'antd'
 import { CalendarOutlined, DownOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import { filters_values } from '../mainPage/mainPage'
+import { PDFDownload } from '../downloads/pdf-download'
+import { ExcelDownload } from '../downloads/excel-download'
+import { WORD_Download } from '../downloads/word-download'
 import './filtros.css'
 import '../hoverMe/hoverMe.css'
 
-const items = [
-  {
-    key: '1',
-    label: <Link to='#'>Baixar em Excel (.CSV)</Link>,
-  },
-  {
-    key: '2',
-    label: <Link to='#'>Baixar em PDF</Link>,
-  },
-  {
-    key: '3',
-    label: <Link to='#'>Baixar em Word (.docx)</Link>,
-  },
-]
+export default function Filtros({ form, onSearch, setFilters, loading, data }) {
+  const items = [
+    {
+      key: '1',
+      label: 'Baixar em Excel (.CSV)',
+      onClick: () => ExcelDownload(data),
+    },
+    {
+      key: '2',
+      label: 'Baixar em PDF',
+      onClick: () => PDFDownload(data),
+    },
+    {
+      key: '3',
+      label: 'Baixar em Word (.docx)',
+      onClick: () => WORD_Download(data),
+    },
+  ]
 
-export default function Filtros({ form, onSearch, setFilters, loading }) {
   return (
     <>
       <Form

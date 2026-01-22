@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { ErrorMessage, HttpRequest } from '../../../components/commons/utils.js'
 import { ArrowUpOutlined, CalendarOutlined } from '@ant-design/icons'
 import {
   Card,
@@ -9,6 +11,7 @@ import {
   Button,
   Form,
   Input,
+  message,
 } from 'antd'
 import {
   cardStyles,
@@ -22,6 +25,28 @@ const { Text } = Typography
 
 export function ReceitaPrevistaCard({ hide }) {
   const [openForm, setOpenForm] = useState(false)
+  const [btnMsg, setBtnMsg] = useState('Editar')
+
+  const createTitleReceita = useMutation({
+    mutationFn: (values) => HttpRequest('POST', 'url', values),
+    onSuccess: () => message.success('Salvo com sucesso!'),
+    onError: (err) => ErrorMessage(err),
+  })
+
+  const onFinish = (values) => {
+    setOpenForm(false)
+    return createTitleReceita.mutate(values)
+  }
+
+  const ButtonAction = () => {
+    if (!openForm) {
+      setOpenForm(true)
+      setBtnMsg('Cancelar')
+    } else {
+      setOpenForm(false)
+      setBtnMsg('Editar')
+    }
+  }
 
   return (
     <div>
@@ -29,31 +54,46 @@ export function ReceitaPrevistaCard({ hide }) {
         <div style={divBtn}>
           <Button
             block
-            type='primary'
+            type={!openForm ? 'primary' : 'secondary'}
             htmlType='button'
             style={{ width: 100 }}
-            onClick={() => setOpenForm(true)}
+            onClick={ButtonAction}
           >
-            Editar
+            {btnMsg}
           </Button>
         </div>
       )}
 
       {openForm && (
         <Card styles={{ body: { padding: 20 } }} style={cardStyles}>
-          <Form layout='vertical' style={{ display: 'flex', gap: 20 }}>
+          <Form
+            style={{ display: 'flex', gap: 20 }}
+            layout='vertical'
+            onFinish={onFinish}
+          >
+            <Form.Item
+              name='ano'
+              label='Ano'
+              style={{ fontWeight: 'bold' }}
+              rules={[{ message: 'Campo obirgatório!', required: true }]}
+            >
+              <Input style={{ minHeight: 40 }} />
+            </Form.Item>
+
             <Form.Item
               name='titulo'
-              label='Título do card'
+              label='Título'
               style={{ fontWeight: 'bold' }}
+              rules={[{ message: 'Campo obirgatório!', required: true }]}
             >
               <Input style={{ minHeight: 40, width: 300 }} />
             </Form.Item>
 
             <Form.Item
               name='valor'
-              label='Valor estimado'
+              label='Valor'
               style={{ fontWeight: 'bold' }}
+              rules={[{ message: 'Campo obirgatório!', required: true }]}
             >
               <Input style={{ minHeight: 40, width: 300 }} />
             </Form.Item>
@@ -63,7 +103,6 @@ export function ReceitaPrevistaCard({ hide }) {
               type='primary'
               htmlType='submit'
               style={{ width: 100, marginTop: 30 }}
-              onClick={() => setOpenForm(false)}
             >
               Salvar
             </Button>

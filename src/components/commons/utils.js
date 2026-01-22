@@ -1,4 +1,5 @@
 import { message } from 'antd'
+import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
@@ -159,6 +160,20 @@ export function formatCurrencyBR(value) {
     style: 'currency',
     currency: 'BRL',
   })
+}
+
+export function formatDateBR(value) {
+  if (!value) return ''
+  // ISO -> DD/MM/YYYY
+  const d = dayjs(value)
+  return d.isValid() ? d.format('DD/MM/YYYY') : ''
+}
+
+// seu data pode ser objeto indexado OU array:
+export function normalizeData(data) {
+  if (Array.isArray(data)) return data
+  if (data && typeof data === 'object') return Object.values(data)
+  return []
 }
 
 export const toNumber = (v) => {
