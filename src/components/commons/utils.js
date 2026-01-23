@@ -9,6 +9,7 @@ const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
 export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
+export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
 
 const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
 
