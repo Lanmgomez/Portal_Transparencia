@@ -1,6 +1,7 @@
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import Filtros from '../filtros/filtros'
 import useDespesasData from '../hooks/useDespesasData'
+import HoverMe from '../hoverMe/hoverMe'
 import DespesasTable from '../table/columns'
 
 export default function MainPage() {
@@ -9,9 +10,12 @@ export default function MainPage() {
 
   const onSearch = (value, _e, info) => console.log(info?.source, value)
 
+  const hide = window.location.pathname === '/public-empenhos' ? true : false
+
   return (
     <div>
-      <PageTitle title='Despesas' />
+      {!hide && <HoverMe />}
+      <PageTitle title='Empenhos' />
 
       <h4>
         Para acessar mais informações vá até o final da página, existe uma barra

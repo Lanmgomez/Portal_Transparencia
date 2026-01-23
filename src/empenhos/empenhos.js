@@ -1,7 +1,7 @@
 import Container from '../components/Container/container'
 import MainPage from './components/mainPage/mainPage'
 
-export default function DespesasPage() {
+export default function EmpenhosPage() {
   return (
     <Container>
       <MainPage />

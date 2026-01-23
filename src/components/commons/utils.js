@@ -11,7 +11,12 @@ export const users_url = `${BASE_URL}/users`
 export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
 export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
 
-const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
+const PUBLIC_ROUTES = [
+  '/',
+  '/despesas',
+  '/public-receitas-transferencias',
+  '/public-empenhos',
+]
 
 export function isPublicRoute(pathname) {
   return PUBLIC_ROUTES.includes(pathname)
