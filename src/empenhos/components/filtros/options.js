@@ -28,7 +28,7 @@ export const unidadeOrcamentariaOptions = [
 export const elementOptions = [
   {
     value: 'Vencimentos e Vantagens Fixas - Pessoa Civil',
-    label: 'Vencimentos e Vantagens Fixas - Pessoa Civil',
+    label: 'Venci.(s) e Vantagens Fixas - Pessoa Civil',
   },
   {
     value: 'Vencimentos e Vantagens Fixas',

@@ -1,4 +1,4 @@
-import { Input, Select } from 'antd'
+import { Input, Select, Form, Button } from 'antd'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import {
   unidadeOrcamentariaOptions,
@@ -10,7 +10,6 @@ import {
 import './filtros.css'
 import {
   CalendarOutlined,
-  ScheduleOutlined,
   BankOutlined,
   NodeIndexOutlined,
   UserSwitchOutlined,
@@ -19,102 +18,140 @@ import {
 } from '@ant-design/icons'
 
 export default function Filtros({ onSearch }) {
-  const { Search } = Input
-
   return (
-    <>
-      <h3>Filtros</h3>
-      <div className='filtros'>
-        <div>
-          <span className='search-label'>Ano</span>
+    <Form
+      // form={form}
+      onFinish={onSearch}
+      layout='vertical'
+      style={{
+        display: 'flex',
+        gap: 20,
+        marginTop: 30,
+        marginBottom: 50,
+        alignItems: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      <Form.Item name='ano' label='Ano' style={{ fontWeight: 'bold' }}>
+        <Select
+          prefix={<CalendarOutlined />}
+          style={{ minHeight: 40, width: 165 }}
+          placeholder='Escolher ano...'
+          options={yearOption}
+        />
+      </Form.Item>
 
-          <Select
-            prefix={<CalendarOutlined className='form-icon' />}
-            placeholder='Escolha o ano...'
-            className='form-input'
-            options={yearOption}
-          />
-        </div>
+      <Form.Item name='mes' label='Mês' style={{ fontWeight: 'bold' }}>
+        <Select
+          prefix={<CalendarOutlined />}
+          style={{ minHeight: 40, width: 165 }}
+          placeholder='Escolher mês...'
+          options={mouthOption}
+        />
+      </Form.Item>
 
-        <div>
-          <span className='search-label'>Mês</span>
+      <Form.Item
+        name='unidade_orcamentaria'
+        style={{ fontWeight: 'bold' }}
+        label='Unidade Orçamentária'
+        labelCol={{ style: { width: 180 } }}
+        wrapperCol={{ style: { width: 200 } }}
+      >
+        <Select
+          prefix={<BankOutlined />}
+          placeholder='Escolha uma opção...'
+          style={{ minHeight: 40, width: 200 }}
+          options={unidadeOrcamentariaOptions}
+        />
+      </Form.Item>
 
-          <Select
-            prefix={<ScheduleOutlined className='form-icon' />}
-            placeholder='Escolha o mês...'
-            className='form-input'
-            options={mouthOption}
-          />
-        </div>
+      <Form.Item
+        name='elemento'
+        style={{ fontWeight: 'bold' }}
+        label='Elemento'
+        wrapperCol={{ style: { width: 300 } }}
+      >
+        <Select
+          prefix={<NodeIndexOutlined />}
+          placeholder='Escolha uma opção...'
+          style={{ minHeight: 40, width: 300 }}
+          options={elementOptions}
+        />
+      </Form.Item>
 
-        <div className='search-wrapper'>
-          <span className='search-label'>Unidade Orçamentária</span>
+      <Form.Item name='funcao' style={{ fontWeight: 'bold' }} label='Função'>
+        <Select
+          prefix={<UserSwitchOutlined />}
+          placeholder='Escolha uma opção...'
+          style={{ minHeight: 40 }}
+          options={funcaoOptions}
+        />
+      </Form.Item>
 
-          <Select
-            prefix={<BankOutlined className='form-icon' />}
-            placeholder='Escolha uma opção...'
-            className='form-input'
-            options={unidadeOrcamentariaOptions}
-          />
-        </div>
+      <Form.Item
+        name='sub_funcao'
+        style={{ fontWeight: 'bold' }}
+        label='Sub-Função'
+      >
+        <Select
+          prefix={<UsergroupAddOutlined />}
+          placeholder='Escolha uma opção...'
+          style={{ minHeight: 40 }}
+          options={subFuncaoOptions}
+        />
+      </Form.Item>
 
-        <div>
-          <span className='search-label'>Elemento</span>
+      <Form.Item
+        name='natureza'
+        style={{ fontWeight: 'bold' }}
+        label='Natureza'
+      >
+        <Select
+          prefix={<SnippetsOutlined />}
+          placeholder='Escolha uma opção...'
+          style={{ minHeight: 40, width: 200 }}
+          options={naturezaOptions}
+        />
+      </Form.Item>
 
-          <Select
-            prefix={<NodeIndexOutlined className='form-icon' />}
-            placeholder='Escolha uma opção...'
-            className='form-input'
-            style={{ width: 350 }}
-            options={elementOptions}
-          />
-        </div>
+      <Form.Item
+        name='text_livre'
+        style={{ fontWeight: 'bold' }}
+        label='Texto Livre'
+      >
+        <Input
+          style={{ minHeight: 40, width: 235 }}
+          placeholder='Pesquise algo...'
+        />
+      </Form.Item>
 
-        <div>
-          <span className='search-label'>Função</span>
+      <div
+        style={{
+          display: 'flex',
+          gap: 10,
+          marginTop: 5,
+        }}
+      >
+        <Button
+          type='primary'
+          htmlType='submit'
+          style={{ width: 120, height: 40 }}
+          // disabled={loading}
+        >
+          Pesquisar
+        </Button>
 
-          <Select
-            prefix={<UserSwitchOutlined className='form-icon' />}
-            placeholder='Escolha uma opção...'
-            className='form-input'
-            options={funcaoOptions}
-          />
-        </div>
-
-        <div>
-          <span className='search-label'>Sub-Função</span>
-
-          <Select
-            prefix={<UsergroupAddOutlined className='form-icon' />}
-            placeholder='Escolha uma opção...'
-            className='form-input'
-            options={subFuncaoOptions}
-          />
-        </div>
-
-        <div>
-          <span className='search-label'>Natureza</span>
-
-          <Select
-            prefix={<SnippetsOutlined className='form-icon' />}
-            placeholder='Escolha uma opção...'
-            style={{ width: 250 }}
-            className='form-input'
-            options={naturezaOptions}
-          />
-        </div>
-
-        <div>
-          <span className='search-label'>Texto Livre</span>
-
-          <Search
-            allowClear
-            enterButton
-            placeholder='Pesquisa...'
-            onSearch={onSearch}
-          />
-        </div>
+        <Button
+          htmlType='button'
+          style={{ width: 120, height: 40 }}
+          // onClick={() => {
+          //   form.resetFields()
+          //   setFilters(filters_values)
+          // }}
+        >
+          Limpar Filtros
+        </Button>
       </div>
-    </>
+    </Form>
   )
 }
