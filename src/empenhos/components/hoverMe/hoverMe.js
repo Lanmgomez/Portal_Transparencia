@@ -16,11 +16,7 @@ const items = [
   {
     key: '2',
     icon: <PlusOutlined />,
-    label: (
-      <Link to='/cadastrar-nova-receita-transferencia'>
-        Cadastrar nova Receita/Transferência
-      </Link>
-    ),
+    label: <Link to='/cadastrar-nova-remessa'>Cadastrar nova Remessa</Link>,
   },
 ]
 

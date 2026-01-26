@@ -15,8 +15,8 @@ const columns = [
   },
   {
     title: 'N° Empenho',
-    dataIndex: 'empenho',
-    key: 'emprenho',
+    dataIndex: 'numero_empenho',
+    key: 'numero_empenho',
     align: 'center',
   },
   {
@@ -27,26 +27,26 @@ const columns = [
   },
   {
     title: 'CPF/CNPJ',
-    dataIndex: 'cpfCnpj',
-    key: 'cpfCnpj',
+    dataIndex: 'cpf_cnpj_credor',
+    key: 'cpf_cnpj_credor',
     align: 'center',
   },
   {
     title: 'Histórico',
-    dataIndex: 'historico',
-    key: 'historico',
+    dataIndex: 'descricao',
+    key: 'descricao',
     align: 'center',
   },
   {
     title: 'Valor Empenhado',
-    dataIndex: 'valorEmpenhado',
-    key: 'valorEmpenhado',
+    dataIndex: 'valor_empenhado',
+    key: 'valor_empenhado',
     align: 'center',
   },
   {
     title: 'Data/Empenho',
-    dataIndex: 'dataEmpenho',
-    key: 'dataEmpenho',
+    dataIndex: 'data_empenho',
+    key: 'data_empenho',
     align: 'center',
   },
   {
@@ -93,14 +93,14 @@ const columns = [
   },
   {
     title: 'Fonte/Recursos',
-    dataIndex: 'recursos',
-    key: 'recursos',
+    dataIndex: 'fonte_recurso',
+    key: 'fonte_recurso',
     align: 'center',
   },
   {
     title: 'Grupo/Natureza',
-    dataIndex: 'grupoNatureza',
-    key: 'grupoNatureza',
+    dataIndex: 'natureza_despesa',
+    key: 'natureza_despesa',
     align: 'center',
   },
   {
@@ -111,13 +111,13 @@ const columns = [
   },
   {
     title: 'Unidade Orçamentária',
-    dataIndex: 'unidadeOrcamentaria',
-    key: 'unidadeOrcamentaria',
+    dataIndex: 'unidade_codigo',
+    key: 'unidade_codigo',
     align: 'center',
   },
 ]
 
-export default function DespesasTable({ data }) {
+export default function EmpenhosTable({ data }) {
   return (
     <Table
       dataSource={data}

@@ -10,6 +10,8 @@ export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
 export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
 export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
+export const remessas_api = `${BASE_URL}/remessas`
+export const empenhos_api = `${BASE_URL}/empenhos`
 
 const PUBLIC_ROUTES = [
   '/',
@@ -97,6 +99,18 @@ export function HttpRequest(request_method, url, values) {
   }
 
   return methods[request_method]()
+}
+
+export function postFormData(url, values) {
+  const token = Cookies.get('token')
+
+  const Headers = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  return axios.post(url, values, Headers)
 }
 
 export function toast(msg) {

@@ -1,12 +1,11 @@
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import Filtros from '../filtros/filtros'
-import useDespesasData from '../hooks/useDespesasData'
+import useEmpenhosData from '../hooks/useEmpenhosData'
 import HoverMe from '../hoverMe/hoverMe'
-import DespesasTable from '../table/columns'
+import EmpenhosTable from '../table/columns'
 
 export default function MainPage() {
-  // TODO - mock data
-  const { data } = useDespesasData()
+  const { empenhos } = useEmpenhosData()
 
   const onSearch = (value, _e, info) => console.log(info?.source, value)
 
@@ -27,7 +26,8 @@ export default function MainPage() {
 
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>
-      <DespesasTable data={data} />
+      {/** TODO - Fazer paginação */}
+      <EmpenhosTable data={empenhos} />
     </div>
   )
 }
