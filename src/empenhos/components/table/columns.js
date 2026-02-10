@@ -36,6 +36,19 @@ const columns = [
     dataIndex: 'descricao',
     key: 'descricao',
     align: 'center',
+    width: 400,
+    render: (text) => (
+      <div
+        style={{
+          textAlign: 'justify',
+          textJustify: 'inter-word',
+          whiteSpace: 'normal',
+          wordBreak: 'break-word',
+        }}
+      >
+        {text}
+      </div>
+    ),
   },
   {
     title: 'Valor Empenhado',
@@ -117,13 +130,29 @@ const columns = [
   },
 ]
 
-export default function EmpenhosTable({ data }) {
+export default function EmpenhosTable({
+  data,
+  loading,
+  page,
+  perPage,
+  total,
+  onChange,
+}) {
   return (
     <Table
       dataSource={data}
       columns={columns}
+      loading={loading}
       scroll={{ x: 'max-content' }}
-      pagination={{ pageSize: 20 }}
+      onChange={onChange}
+      pagination={{
+        current: page,
+        pageSize: perPage,
+        total,
+        showSizeChanger: true,
+        pageSizeOptions: ['5', '10', '20', '50'],
+        showTotal: (t, range) => `${range[0]}-${range[1]} de ${t}`,
+      }}
     />
   )
 }
