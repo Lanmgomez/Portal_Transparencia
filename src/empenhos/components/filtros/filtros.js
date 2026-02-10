@@ -17,10 +17,11 @@ import {
   SnippetsOutlined,
 } from '@ant-design/icons'
 
-export default function Filtros({ onSearch }) {
+export default function Filtros({ onSearch, setFilters }) {
+  const [form] = Form.useForm()
+
   return (
     <Form
-      // form={form}
       onFinish={onSearch}
       layout='vertical'
       style={{
@@ -114,11 +115,7 @@ export default function Filtros({ onSearch }) {
         />
       </Form.Item>
 
-      <Form.Item
-        name='text_livre'
-        style={{ fontWeight: 'bold' }}
-        label='Texto Livre'
-      >
+      <Form.Item name='q' style={{ fontWeight: 'bold' }} label='Texto Livre'>
         <Input
           style={{ minHeight: 40, width: 235 }}
           placeholder='Pesquise algo...'
@@ -136,7 +133,6 @@ export default function Filtros({ onSearch }) {
           type='primary'
           htmlType='submit'
           style={{ width: 120, height: 40 }}
-          // disabled={loading}
         >
           Pesquisar
         </Button>
@@ -144,10 +140,10 @@ export default function Filtros({ onSearch }) {
         <Button
           htmlType='button'
           style={{ width: 120, height: 40 }}
-          // onClick={() => {
-          //   form.resetFields()
-          //   setFilters(filters_values)
-          // }}
+          onClick={() => {
+            form.resetFields()
+            setFilters({ q: null })
+          }}
         >
           Limpar Filtros
         </Button>

@@ -245,3 +245,26 @@ export function maskCNPJ(value) {
     .replace(/\.(\d{3})(\d)/, '.$1/$2')
     .replace(/(\d{4})(\d)/, '$1-$2')
 }
+
+const formatEmpenho = (item) => {
+  const [ano, mes] = item.data_empenho.split('-')
+
+  return {
+    ...item,
+    ano,
+    mes,
+    cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
+    data_empenho: formatDateBR(item.data_empenho),
+    valor_empenhado: `R$ ${item.valor_empenhado}`,
+    receita_mensal_prevista: `R$ ${item.receita_mensal_prevista}`,
+    receita_realizada: formatDecimal(item.receita_realizada),
+    receita_acumulada: formatDecimal(item.receita_acumulada),
+    acumulada_com_extra_orcamentaria: formatDecimal(
+      item.acumulada_com_extra_orcamentaria,
+    ),
+    receita_extra_orcamentaria: formatDecimal(item.receita_extra_orcamentaria),
+  }
+}
+
+export const mapEmpenhos = (list) =>
+  Array.isArray(list) ? list.map(formatEmpenho) : []

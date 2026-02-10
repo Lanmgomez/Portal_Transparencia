@@ -1,4 +1,10 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import {
+  empenhos_api,
+  HttpRequest,
+  mapEmpenhos,
+} from '../../../components/commons/utils'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import Filtros from '../filtros/filtros'
 import useEmpenhosData from '../hooks/useEmpenhosData'
@@ -8,6 +14,7 @@ import EmpenhosTable from '../table/columns'
 export default function MainPage() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(20)
+  const [filters, setFilters] = useState({ q: null })
 
   const { empenhos, total, isLoading } = useEmpenhosData(page, perPage)
 
@@ -24,9 +31,41 @@ export default function MainPage() {
     setPage(nextPage)
   }
 
-  const onSearch = (value, _e, info) => console.log(info?.source, value)
+  // search
+  const query = useMemo(() => {
+    const params = new URLSearchParams()
+
+    if (filters.q) params.set('q', filters.q)
+
+    const q = params.toString()
+    return q ? `?${q}` : ''
+  }, [filters])
+
+  const { data, isLoading: searchLoading } = useQuery({
+    queryKey: ['search_empenho', filters.q],
+    queryFn: () => HttpRequest('GET', `${empenhos_api}${query}`),
+    enabled: !!filters.q && String(filters.q).trim().length > 0, // ativa só se tiver busca
+  })
+
+  const onSearch = (values) => {
+    if (!values) return
+
+    setFilters({
+      q: values.q || null,
+    })
+    setPage(1) // sempre voltar pra página 1 quando pesquisar
+  }
 
   const hide = window.location.pathname === '/public-empenhos' ? true : false
+
+  const searchedRaw = data?.data?.data || []
+  const searched = useMemo(() => mapEmpenhos(searchedRaw), [searchedRaw])
+
+  const isSearching = !!filters.q
+
+  const tableData = isSearching ? searched : empenhos
+
+  const tableTotal = isSearching ? searched : total
 
   return (
     <div>
@@ -39,17 +78,17 @@ export default function MainPage() {
         pesquisada
       </h4>
 
-      <Filtros onSearch={onSearch} />
+      <Filtros onSearch={onSearch} setFilters={setFilters} />
 
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>
 
       <EmpenhosTable
-        data={empenhos}
-        loading={isLoading}
+        data={tableData}
+        loading={isLoading || searchLoading}
         page={page}
         perPage={perPage}
-        total={total}
+        total={tableTotal}
         onChange={handleTableChange}
       />
     </div>
