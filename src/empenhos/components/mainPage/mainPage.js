@@ -1,15 +1,10 @@
-import { useMemo, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import {
-  empenhos_api,
-  HttpRequest,
-  mapEmpenhos,
-} from '../../../components/commons/utils'
+import { useState } from 'react'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import Filtros from '../filtros/filtros'
 import useEmpenhosData from '../hooks/useEmpenhosData'
 import HoverMe from '../hoverMe/hoverMe'
 import EmpenhosTable from '../table/columns'
+import useSearchQuery from '../hooks/useSearchQuery'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
@@ -17,6 +12,7 @@ export default function MainPage() {
   const [filters, setFilters] = useState({ q: null })
 
   const { empenhos, total, isLoading } = useEmpenhosData(page, perPage)
+  const { searched, searchLoading } = useSearchQuery(filters)
 
   const handleTableChange = (pagination) => {
     const nextPage = pagination.current
@@ -31,22 +27,6 @@ export default function MainPage() {
     setPage(nextPage)
   }
 
-  // search
-  const query = useMemo(() => {
-    const params = new URLSearchParams()
-
-    if (filters.q) params.set('q', filters.q)
-
-    const q = params.toString()
-    return q ? `?${q}` : ''
-  }, [filters])
-
-  const { data, isLoading: searchLoading } = useQuery({
-    queryKey: ['search_empenho', filters.q],
-    queryFn: () => HttpRequest('GET', `${empenhos_api}${query}`),
-    enabled: !!filters.q && String(filters.q).trim().length > 0, // ativa só se tiver busca
-  })
-
   const onSearch = (values) => {
     if (!values) return
 
@@ -56,16 +36,24 @@ export default function MainPage() {
     setPage(1) // sempre voltar pra página 1 quando pesquisar
   }
 
+  const renderEmpenhosTable = () => {
+    const isSearching = !!filters.q
+    const tableData = isSearching ? searched : empenhos
+    const tableTotal = isSearching ? searched : total
+
+    return (
+      <EmpenhosTable
+        data={tableData}
+        loading={isLoading || searchLoading}
+        page={page}
+        perPage={perPage}
+        total={tableTotal}
+        onChange={handleTableChange}
+      />
+    )
+  }
+
   const hide = window.location.pathname === '/public-empenhos' ? true : false
-
-  const searchedRaw = data?.data?.data || []
-  const searched = useMemo(() => mapEmpenhos(searchedRaw), [searchedRaw])
-
-  const isSearching = !!filters.q
-
-  const tableData = isSearching ? searched : empenhos
-
-  const tableTotal = isSearching ? searched : total
 
   return (
     <div>
@@ -83,14 +71,7 @@ export default function MainPage() {
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>
 
-      <EmpenhosTable
-        data={tableData}
-        loading={isLoading || searchLoading}
-        page={page}
-        perPage={perPage}
-        total={tableTotal}
-        onChange={handleTableChange}
-      />
+      {renderEmpenhosTable()}
     </div>
   )
 }

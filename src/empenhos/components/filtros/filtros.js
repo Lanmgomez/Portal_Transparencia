@@ -22,6 +22,7 @@ export default function Filtros({ onSearch, setFilters }) {
 
   return (
     <Form
+      form={form}
       onFinish={onSearch}
       layout='vertical'
       style={{
@@ -141,7 +142,7 @@ export default function Filtros({ onSearch, setFilters }) {
           htmlType='button'
           style={{ width: 120, height: 40 }}
           onClick={() => {
-            form.resetFields()
+            form.resetFields(['q'])
             setFilters({ q: null })
           }}
         >
