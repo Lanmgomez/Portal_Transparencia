@@ -9,8 +9,16 @@ const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
 export const users_url = `${BASE_URL}/users`
 export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
+export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
+export const remessas_api = `${BASE_URL}/remessas`
+export const empenhos_api = `${BASE_URL}/empenhos`
 
-const PUBLIC_ROUTES = ['/', '/despesas', '/public-receitas-transferencias']
+const PUBLIC_ROUTES = [
+  '/',
+  '/despesas',
+  '/public-receitas-transferencias',
+  '/public-empenhos',
+]
 
 export function isPublicRoute(pathname) {
   return PUBLIC_ROUTES.includes(pathname)
@@ -91,6 +99,18 @@ export function HttpRequest(request_method, url, values) {
   }
 
   return methods[request_method]()
+}
+
+export function postFormData(url, values) {
+  const token = Cookies.get('token')
+
+  const Headers = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  return axios.post(url, values, Headers)
 }
 
 export function toast(msg) {
@@ -212,4 +232,57 @@ export const parseBRMoneyToNumber = (value) => {
   if (Number.isNaN(num)) return 0
 
   return Number(num.toFixed(2))
+}
+
+export function maskCNPJ(value) {
+  if (!value) return ''
+
+  const cnpj = value.replace(/\D/g, '')
+
+  return cnpj
+    .replace(/^(\d{2})(\d)/, '$1.$2')
+    .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+    .replace(/\.(\d{3})(\d)/, '.$1/$2')
+    .replace(/(\d{4})(\d)/, '$1-$2')
+}
+
+export function maskCPF(value) {
+  if (!value) return ''
+
+  const cpf = value.replace(/\D/g, '')
+
+  return cpf
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+}
+
+const formatEmpenho = (item) => {
+  const [ano, mes] = item.data_empenho.split('-')
+
+  return {
+    ...item,
+    ano,
+    mes,
+    cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
+    data_empenho: formatDateBR(item.data_empenho),
+    valor_empenhado: `R$ ${item.valor_empenhado}`,
+    receita_mensal_prevista: `R$ ${item.receita_mensal_prevista}`,
+    receita_realizada: formatDecimal(item.receita_realizada),
+    receita_acumulada: formatDecimal(item.receita_acumulada),
+    acumulada_com_extra_orcamentaria: formatDecimal(
+      item.acumulada_com_extra_orcamentaria,
+    ),
+    receita_extra_orcamentaria: formatDecimal(item.receita_extra_orcamentaria),
+  }
+}
+
+export const mapEmpenhos = (list) =>
+  Array.isArray(list) ? list.map(formatEmpenho) : []
+
+export function formatYearMonth(value) {
+  if (!value) return ''
+
+  const [year, month] = value.split('-')
+  return `${month}/${year}`
 }

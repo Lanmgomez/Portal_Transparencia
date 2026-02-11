@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { ErrorMessage, HttpRequest } from '../../../components/commons/utils.js'
 import { ArrowUpOutlined, CalendarOutlined } from '@ant-design/icons'
+import useCardReceitasData from '../hooks/useCardReceitasData.js'
+import {
+  ErrorMessage,
+  parseBRMoneyToNumber,
+  HttpRequest,
+  receitas_prevista_url,
+} from '../../../components/commons/utils.js'
 import {
   Card,
   Statistic,
@@ -24,11 +30,15 @@ import {
 const { Text } = Typography
 
 export function ReceitaPrevistaCard({ hide }) {
+  const [form] = Form.useForm()
   const [openForm, setOpenForm] = useState(false)
   const [btnMsg, setBtnMsg] = useState('Editar')
 
+  const { id, ano, titulo, valor_estimado } = useCardReceitasData()
+
   const createTitleReceita = useMutation({
-    mutationFn: (values) => HttpRequest('POST', 'url', values),
+    mutationFn: (values) =>
+      HttpRequest('PUT', `${receitas_prevista_url}/${id}`, values),
     onSuccess: () => message.success('Salvo com sucesso!'),
     onError: (err) => ErrorMessage(err),
   })
@@ -47,6 +57,16 @@ export function ReceitaPrevistaCard({ hide }) {
       setBtnMsg('Editar')
     }
   }
+
+  useEffect(() => {
+    if (id) {
+      form.setFieldsValue({
+        ano,
+        titulo,
+        valor_estimado: parseBRMoneyToNumber(valor_estimado),
+      })
+    }
+  }, [form, id, ano, titulo, valor_estimado])
 
   return (
     <div>
@@ -67,6 +87,7 @@ export function ReceitaPrevistaCard({ hide }) {
       {openForm && (
         <Card styles={{ body: { padding: 20 } }} style={cardStyles}>
           <Form
+            form={form}
             style={{ display: 'flex', gap: 20 }}
             layout='vertical'
             onFinish={onFinish}
@@ -90,12 +111,12 @@ export function ReceitaPrevistaCard({ hide }) {
             </Form.Item>
 
             <Form.Item
-              name='valor'
+              name='valor_estimado'
               label='Valor'
               style={{ fontWeight: 'bold' }}
               rules={[{ message: 'Campo obirgatório!', required: true }]}
             >
-              <Input style={{ minHeight: 40, width: 300 }} />
+              <Input type='number' style={{ minHeight: 40, width: 300 }} />
             </Form.Item>
 
             <Button
@@ -116,18 +137,18 @@ export function ReceitaPrevistaCard({ hide }) {
             <Space direction='vertical' size={6}>
               <Space size={8} align='center'>
                 <Tag icon={<CalendarOutlined />} style={tagStyles}>
-                  2026
+                  {ano}
                 </Tag>
                 <Text>Receita prevista</Text>
               </Space>
 
-              <Text style={textStyles}>Receita Prevista em 2026</Text>
+              <Text style={textStyles}>{titulo}</Text>
 
               <Text>Total consolidado das transferências e receitas</Text>
             </Space>
 
             <div style={{ textAlign: 'right' }}>
-              <Statistic value='2.964.088,32' precision={2} prefix='R$' />
+              <Statistic value={valor_estimado} precision={2} />
 
               <Text>
                 <ArrowUpOutlined /> atualizado hoje

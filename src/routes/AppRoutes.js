@@ -6,14 +6,16 @@ import HomePage from '../home/home'
 import SideBarMenu from '../components/SideBarMenu/sidebarMenu'
 import ConfiguracoesPage from '../configuracoes/configuracoes'
 import MeuPerfilPage from '../meuPerfil/MeuPerfil'
-import DespesasPage from '../despesas/despesas'
 import UsuariosCadastrados from '../usuariosCadastrados/usuariosCadastrados'
 import CriarUsuario from '../criarUsuario/criarUsuario'
 import EditarUsuario from '../editar-usuario/editarUsuario'
 import ReceitasPage from '../receitas/receitas'
-import ReceitasPublicPage from '../receitas/public-route/publicRoute'
+import ReceitasPublicPage from '../receitas/public-route/receitasPage'
 import CadastrarReceitasPage from '../receitas/cadastrar-nova-receita/cadastrarReceita'
 import EditarReceita from '../receitas/editar-receita/editarReceita'
+import EmpenhosPage from '../empenhos/empenhos'
+import EmpenhosPublicPage from '../empenhos/public-route/empenhosPublic'
+import CadastrarRemessa from '../empenhos/cadastrar-nova-remessa/cadastrarRemessa'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -31,12 +33,11 @@ export default function AppRoutes() {
       <Routes>
         {/** Public routes */}
         <Route path='/' element={<LoginPage />} />
-        <Route path='/despesas' element={<DespesasPage />} />
+        <Route path='/public-empenhos' element={<EmpenhosPublicPage />} />
         <Route
           path='/public-receitas-transferencias'
           element={<ReceitasPublicPage />}
         />
-
         {/** Private routes */}
         <Route
           path='/home'
@@ -67,6 +68,22 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <EditarReceita />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/empenhos'
+          element={
+            <PrivateRoutesAuth>
+              <EmpenhosPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/cadastrar-nova-remessa'
+          element={
+            <PrivateRoutesAuth>
+              <CadastrarRemessa />
             </PrivateRoutesAuth>
           }
         />

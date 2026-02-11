@@ -5,6 +5,7 @@ import { filters_values } from '../mainPage/mainPage'
 import { PDFDownload } from '../downloads/pdf-download'
 import { ExcelDownload } from '../downloads/excel-download'
 import { WORD_Download } from '../downloads/word-download'
+import { TXT_Download } from '../downloads/txt-download'
 import './filtros.css'
 import '../hoverMe/hoverMe.css'
 
@@ -12,7 +13,7 @@ export default function Filtros({ form, onSearch, setFilters, loading, data }) {
   const items = [
     {
       key: '1',
-      label: 'Baixar em Excel (.CSV)',
+      label: 'Baixar em .CSV',
       onClick: () => ExcelDownload(data),
     },
     {
@@ -22,8 +23,13 @@ export default function Filtros({ form, onSearch, setFilters, loading, data }) {
     },
     {
       key: '3',
-      label: 'Baixar em Word (.docx)',
+      label: 'Baixar em .ODT',
       onClick: () => WORD_Download(data),
+    },
+    {
+      key: '4',
+      label: 'Baixar em .TXT',
+      onClick: () => TXT_Download(data),
     },
   ]
 
