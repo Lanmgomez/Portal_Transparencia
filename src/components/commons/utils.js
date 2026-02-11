@@ -246,6 +246,17 @@ export function maskCNPJ(value) {
     .replace(/(\d{4})(\d)/, '$1-$2')
 }
 
+export function maskCPF(value) {
+  if (!value) return ''
+
+  const cpf = value.replace(/\D/g, '')
+
+  return cpf
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+}
+
 const formatEmpenho = (item) => {
   const [ano, mes] = item.data_empenho.split('-')
 
@@ -268,3 +279,10 @@ const formatEmpenho = (item) => {
 
 export const mapEmpenhos = (list) =>
   Array.isArray(list) ? list.map(formatEmpenho) : []
+
+export function formatYearMonth(value) {
+  if (!value) return ''
+
+  const [year, month] = value.split('-')
+  return `${month}/${year}`
+}

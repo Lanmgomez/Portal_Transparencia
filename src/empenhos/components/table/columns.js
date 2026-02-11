@@ -1,6 +1,7 @@
-import { Table } from 'antd'
+import { Button, Table, Space } from 'antd'
+import { BarsOutlined } from '@ant-design/icons'
 
-const columns = [
+const columns = ({ setId, openModal }) => [
   {
     title: 'Ano',
     dataIndex: 'ano',
@@ -128,6 +129,24 @@ const columns = [
     key: 'unidade_codigo',
     align: 'center',
   },
+  {
+    title: 'Ações',
+    dataIndex: 'updated_at',
+    key: 'updated_at',
+    render: (_, record) => (
+      <Space>
+        <Button
+          icon={<BarsOutlined />}
+          onClick={() => {
+            setId?.(record.id)
+            openModal?.(true)
+          }}
+        >
+          Ver mais
+        </Button>
+      </Space>
+    ),
+  },
 ]
 
 export default function EmpenhosTable({
@@ -137,11 +156,13 @@ export default function EmpenhosTable({
   perPage,
   total,
   onChange,
+  setId,
+  openModal,
 }) {
   return (
     <Table
       dataSource={data}
-      columns={columns}
+      columns={columns({ setId, openModal })}
       loading={loading}
       scroll={{ x: 'max-content' }}
       onChange={onChange}
