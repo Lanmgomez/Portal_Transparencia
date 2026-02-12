@@ -5,6 +5,7 @@ import {
   formatDecimal,
   formatDateBR,
   maskCNPJ,
+  formatCurrencyBR,
 } from '../../../components/commons/utils'
 
 export default function useEmpenhosData(page, perPage) {
@@ -25,14 +26,14 @@ export default function useEmpenhosData(page, perPage) {
       mes,
       cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
       data_empenho: formatDateBR(item.data_empenho),
-      valor_empenhado: `R$ ${item.valor_empenhado}`,
-      receita_mensal_prevista: `R$ ${item.receita_mensal_prevista}`,
-      receita_realizada: formatDecimal(item.receita_realizada),
-      receita_acumulada: formatDecimal(item.receita_acumulada),
-      acumulada_com_extra_orcamentaria: formatDecimal(
+      valor_empenhado: formatCurrencyBR(item.valor_empenhado),
+      receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
+      receita_realizada: formatCurrencyBR(item.receita_realizada),
+      receita_acumulada: formatCurrencyBR(item.receita_acumulada),
+      acumulada_com_extra_orcamentaria: formatCurrencyBR(
         item.acumulada_com_extra_orcamentaria,
       ),
-      receita_extra_orcamentaria: formatDecimal(
+      receita_extra_orcamentaria: formatCurrencyBR(
         item.receita_extra_orcamentaria,
       ),
     }
