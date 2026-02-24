@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
+export const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
 
 const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
