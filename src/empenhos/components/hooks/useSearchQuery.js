@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import {
   empenhos_api,
   HttpRequest,
@@ -10,17 +10,26 @@ export default function useSearchQuery(filters) {
   const query = useMemo(() => {
     const params = new URLSearchParams()
 
-    // TODO - adicionar mais filtros
-    if (filters.q) params.set('q', filters.q)
+    Object.entries(filters).forEach(([key, value]) => {
+      const dateType = key === 'data_ini' || key === 'data_fim'
 
-    const q = params.toString()
-    return q ? `?${q}` : ''
+      if (!value) return
+
+      if (dateType && typeof value?.format === 'function') {
+        params.set(key, value.format('YYYY-MM-DD'))
+        return
+      }
+
+      params.set(key, value)
+    })
+
+    return params.toString()
   }, [filters])
 
   const { data, isLoading: searchLoading } = useQuery({
-    queryKey: ['search_empenho', filters.q],
-    queryFn: () => HttpRequest('GET', `${empenhos_api}${query}`),
-    enabled: !!filters.q && String(filters.q).trim().length > 0, // ativa só se tiver busca
+    queryKey: ['search_empenho', query],
+    queryFn: () => HttpRequest('GET', `${empenhos_api}?${query}`),
+    enabled: Object.values(filters).some((v) => v), // ativa se tiver algum filtro
   })
 
   const searchedRaw = data?.data?.data || []

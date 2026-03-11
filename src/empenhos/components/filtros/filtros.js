@@ -1,21 +1,30 @@
-import { Input, Select, Form, Button } from 'antd'
+import { Input, Select, Form, Button, DatePicker } from 'antd'
+import { CalendarOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
-import {
-  unidadeOrcamentariaOptions,
-  elementOptions,
-  funcaoOptions,
-  subFuncaoOptions,
-  naturezaOptions,
-} from './options'
+import { mask } from 'remask'
 import './filtros.css'
-import {
-  CalendarOutlined,
-  BankOutlined,
-  NodeIndexOutlined,
-  UserSwitchOutlined,
-  UsergroupAddOutlined,
-  SnippetsOutlined,
-} from '@ant-design/icons'
+
+export const FiltersOptions = {
+  ano: null,
+  mes: null,
+  unidade_codigo: null,
+  numero_empenho: null,
+  cpf_cnpj: null,
+  data_ini: null,
+  data_fim: null,
+  q: null,
+}
+
+const resetFilters = [
+  'q',
+  'ano',
+  'mes',
+  'unidade_codigo',
+  'numero_empenho',
+  'cpf_cnpj',
+  'data_ini',
+  'data_fim',
+]
 
 export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()
@@ -53,66 +62,66 @@ export default function Filtros({ onSearch, setFilters }) {
       </Form.Item>
 
       <Form.Item
-        name='unidade_orcamentaria'
+        name='unidade_codigo'
         style={{ fontWeight: 'bold' }}
-        label='Unidade Orçamentária'
+        label='Unidade Código'
         labelCol={{ style: { width: 180 } }}
         wrapperCol={{ style: { width: 200 } }}
       >
-        <Select
-          prefix={<BankOutlined />}
-          placeholder='Escolha uma opção...'
-          style={{ minHeight: 40, width: 200 }}
-          options={unidadeOrcamentariaOptions}
-        />
+        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
       </Form.Item>
 
       <Form.Item
-        name='elemento'
+        name='numero_empenho'
         style={{ fontWeight: 'bold' }}
-        label='Elemento'
+        label='N° Empenho'
         wrapperCol={{ style: { width: 300 } }}
       >
-        <Select
-          prefix={<NodeIndexOutlined />}
-          placeholder='Escolha uma opção...'
-          style={{ minHeight: 40, width: 300 }}
-          options={elementOptions}
-        />
+        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
       </Form.Item>
 
-      <Form.Item name='funcao' style={{ fontWeight: 'bold' }} label='Função'>
-        <Select
-          prefix={<UserSwitchOutlined />}
-          placeholder='Escolha uma opção...'
+      <Form.Item
+        name='cpf_cnpj'
+        style={{ fontWeight: 'bold' }}
+        label='CPF ou CNPJ'
+      >
+        <Input
           style={{ minHeight: 40 }}
-          options={funcaoOptions}
+          placeholder='Pesquise...'
+          onChange={(e) => {
+            const digits = e.target.value.replace(/\D/g, '')
+
+            const masked = mask(
+              digits,
+              digits.length <= 11 ? '999.999.999-99' : '99.999.999/9999-99',
+            )
+
+            form.setFieldValue('cpf_cnpj', masked)
+          }}
         />
       </Form.Item>
 
       <Form.Item
-        name='sub_funcao'
+        name='data_ini'
         style={{ fontWeight: 'bold' }}
-        label='Sub-Função'
+        label='Data Inicial'
       >
-        <Select
-          prefix={<UsergroupAddOutlined />}
-          placeholder='Escolha uma opção...'
+        <DatePicker
           style={{ minHeight: 40 }}
-          options={subFuncaoOptions}
+          format='DD/MM/YYYY'
+          placeholder='Pesquisar...'
         />
       </Form.Item>
 
       <Form.Item
-        name='natureza'
+        name='data_fim'
         style={{ fontWeight: 'bold' }}
-        label='Natureza'
+        label='Data Final'
       >
-        <Select
-          prefix={<SnippetsOutlined />}
-          placeholder='Escolha uma opção...'
-          style={{ minHeight: 40, width: 200 }}
-          options={naturezaOptions}
+        <DatePicker
+          style={{ minHeight: 40 }}
+          format='DD/MM/YYYY'
+          placeholder='Pesquisar...'
         />
       </Form.Item>
 
@@ -142,8 +151,8 @@ export default function Filtros({ onSearch, setFilters }) {
           htmlType='button'
           style={{ width: 120, height: 40 }}
           onClick={() => {
-            form.resetFields(['q'])
-            setFilters({ q: null })
+            form.resetFields(resetFilters)
+            setFilters(FiltersOptions)
           }}
         >
           Limpar Filtros

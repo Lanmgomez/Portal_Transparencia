@@ -67,6 +67,55 @@ export default function ModalContent({ id }) {
           </Col>
 
           <Col span={12}>
+            <Text strong>Número Empenho:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{numero_empenho}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>Beneficiário:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{''}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>CPF/CNPJ:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{maskCNPJ(cpf_cnpj_credor)}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>Descrição:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{descricao}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>Valor Empenhado:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{`R$ ${valor_empenhado}`}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>Data Empenho:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{formatDateBR(data_empenho)}</Text>
+          </Col>
+
+          <Col span={12}>
+            <Text strong>Liquidação:</Text>
+          </Col>
+          <Col span={12}>
+            <Text>{''}</Text>
+          </Col>
+
+          <Col span={12}>
             <Text strong>Competência:</Text>
           </Col>
           <Col span={12}>
@@ -95,13 +144,6 @@ export default function ModalContent({ id }) {
           </Col>
 
           <Col span={12}>
-            <Text strong>Número Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{numero_empenho}</Text>
-          </Col>
-
-          <Col span={12}>
             <Text strong>Tipo Empenho:</Text>
           </Col>
           <Col span={12}>
@@ -120,27 +162,6 @@ export default function ModalContent({ id }) {
           </Col>
           <Col span={12}>
             <Text>{empenho_key}</Text>
-          </Col>
-
-          <Col span={12}>
-            <Text strong>Data Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{formatDateBR(data_empenho)}</Text>
-          </Col>
-
-          <Col span={12}>
-            <Text strong>Valor Empenhado:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{`R$ ${valor_empenhado}`}</Text>
-          </Col>
-
-          <Col span={12}>
-            <Text strong>CPF/CNPJ:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{maskCNPJ(cpf_cnpj_credor)}</Text>
           </Col>
 
           <Col span={12}>
@@ -232,13 +253,6 @@ export default function ModalContent({ id }) {
           </Col>
           <Col span={12}>
             <Text>{formatDateBR(created_at)}</Text>
-          </Col>
-
-          <Col span={12}>
-            <Text strong>Descrição:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{descricao}</Text>
           </Col>
         </Row>
       )}

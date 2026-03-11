@@ -6,6 +6,7 @@ import {
   formatDateBR,
   maskCNPJ,
   formatCurrencyBR,
+  nomeMes,
 } from '../../../components/commons/utils'
 
 export default function useEmpenhosData(page, perPage) {
@@ -26,14 +27,12 @@ export default function useEmpenhosData(page, perPage) {
   const { fornecedoresById } = useFornecedoresData(cpfCnpjs)
 
   const empenhos = raw.map((item) => {
-    const [ano, mes] = item.data_empenho.split('-')
     const doc = normalizeDoc(item.cpf_cnpj_credor)
     const beneficiario = fornecedoresById[doc]
 
     return {
       ...item,
-      ano,
-      mes,
+      mes: nomeMes(item.mes),
       beneficiario,
       cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
       data_empenho: formatDateBR(item.data_empenho),

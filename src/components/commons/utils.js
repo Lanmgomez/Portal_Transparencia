@@ -2,6 +2,7 @@ import { message } from 'antd'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { mask } from 'remask'
 
 export const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
 
@@ -263,17 +264,19 @@ const formatEmpenho = (item) => {
   return {
     ...item,
     ano,
-    mes,
+    mes: nomeMes(item.mes),
     cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
     data_empenho: formatDateBR(item.data_empenho),
-    valor_empenhado: `R$ ${item.valor_empenhado}`,
-    receita_mensal_prevista: `R$ ${item.receita_mensal_prevista}`,
-    receita_realizada: formatDecimal(item.receita_realizada),
-    receita_acumulada: formatDecimal(item.receita_acumulada),
-    acumulada_com_extra_orcamentaria: formatDecimal(
+    valor_empenhado: formatCurrencyBR(item.valor_empenhado),
+    receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
+    receita_realizada: formatCurrencyBR(item.receita_realizada),
+    receita_acumulada: formatCurrencyBR(item.receita_acumulada),
+    acumulada_com_extra_orcamentaria: formatCurrencyBR(
       item.acumulada_com_extra_orcamentaria,
     ),
-    receita_extra_orcamentaria: formatDecimal(item.receita_extra_orcamentaria),
+    receita_extra_orcamentaria: formatCurrencyBR(
+      item.receita_extra_orcamentaria,
+    ),
   }
 }
 
@@ -285,4 +288,21 @@ export function formatYearMonth(value) {
 
   const [year, month] = value.split('-')
   return `${month}/${year}`
+}
+
+export const nomeMes = (value) => {
+  if (value === 1) return 'Janeiro'
+  if (value === 2) return 'Fevereiro'
+  if (value === 3) return 'Março'
+  if (value === 4) return 'Abril'
+  if (value === 5) return 'Maio'
+  if (value === 6) return 'Junho'
+  if (value === 7) return 'Julho'
+  if (value === 8) return 'Agosto'
+  if (value === 9) return 'Setembro'
+  if (value === 10) return 'Outubro'
+  if (value === 11) return 'Novembro'
+  if (value === 12) return 'Dezembro'
+
+  return ''
 }
