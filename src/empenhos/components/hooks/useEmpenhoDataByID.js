@@ -14,6 +14,7 @@ export default function useEmpenhoDataByID({ id }) {
   const empenho = data?.data
   const ano = empenho?.ano
   const mes = empenho?.mes
+  const fornecedor = empenho?.fornecedor?.nome
   const competencia = empenho?.competencia
   const unidade_codigo = empenho?.unidade_codigo
   const funcao = empenho?.funcao
@@ -40,6 +41,11 @@ export default function useEmpenhoDataByID({ id }) {
   const subelemento_despesa = empenho?.subelemento_despesa
   const created_at = empenho?.created_at
 
+  const total_liquidado = empenho?.liquidacoes?.reduce(
+    (acc, item) => acc + Number(item.valor_liquidado || 0),
+    0,
+  )
+
   // liquidação
   const liquidacao = empenho?.liquidacoes?.map((item) => ({
     ano: item.ano,
@@ -50,16 +56,23 @@ export default function useEmpenhoDataByID({ id }) {
 
   // pagamentos
   const pagamentos = empenho?.pagamentos?.map((item) => ({
-    ano: item.numero_empenho,
+    ano: item.ano,
+    empenho: item.numero_empenho,
     data_pagamento: formatDateBR(item.data_pagamento),
     numero_parcela: item.numero_parcela,
     valor_pago: item.valor_pago,
+  }))
+
+  // items_pagamento
+  const valor_parcela = empenho?.itens_pagamento?.map((item) => ({
+    valor_pago: item.valor_pagamento,
   }))
 
   return {
     ano,
     mes,
     competencia,
+    fornecedor,
     unidade_codigo,
     funcao,
     subfuncao,
@@ -84,6 +97,8 @@ export default function useEmpenhoDataByID({ id }) {
     elemento_despesa,
     subelemento_despesa,
     liquidacao,
+    total_liquidado,
+    valor_parcela,
     pagamentos,
     created_at,
     isLoading,

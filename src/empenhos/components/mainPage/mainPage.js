@@ -7,12 +7,14 @@ import HoverMe from '../hoverMe/hoverMe'
 import EmpenhosTable from '../table/columns'
 import useSearchQuery from '../hooks/useSearchQuery'
 import ModalContent from '../modalContent/modalContent'
+import LiquidacaoPagamentoModal from '../modalContent/LiquidacaoPagamentoModal'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(20)
   const [filters, setFilters] = useState(FiltersOptions)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [liqPgtModal, setIsLiqPgtModal] = useState(false)
   const [id, setId] = useState('')
 
   const { empenhos, total, isLoading } = useEmpenhosData(page, perPage)
@@ -59,6 +61,7 @@ export default function MainPage() {
         total={tableTotal}
         onChange={handleTableChange}
         openModal={setIsModalOpen}
+        openLiqPgtModal={setIsLiqPgtModal}
         setId={setId}
       />
     )
@@ -100,6 +103,24 @@ export default function MainPage() {
         }}
       >
         <ModalContent id={id} />
+      </Modal>
+
+      <Modal
+        title='Registro de Liquidação e Pagamento'
+        open={liqPgtModal}
+        onOk={() => setIsLiqPgtModal(false)}
+        onCancel={() => setIsLiqPgtModal(false)}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        okText='Fechar'
+        style={{ top: 24 }}
+        width={820}
+        bodyStyle={{
+          maxHeight: '70vh', // 👈 limita altura
+          overflowY: 'auto', // 👈 scroll interno
+          padding: 16,
+        }}
+      >
+        <LiquidacaoPagamentoModal id={id} />
       </Modal>
     </div>
   )

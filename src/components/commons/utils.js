@@ -259,18 +259,20 @@ export function maskCPF(value) {
 }
 
 const formatEmpenho = (item) => {
-  const [ano, mes] = item.data_empenho.split('-')
+  const [ano] = item.data_empenho.split('-')
 
   return {
     ...item,
     ano,
     mes: nomeMes(item.mes),
+    beneficiario: item.fornecedor.nome,
     cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
     data_empenho: formatDateBR(item.data_empenho),
     valor_empenhado: formatCurrencyBR(item.valor_empenhado),
     receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
     receita_realizada: formatCurrencyBR(item.receita_realizada),
     receita_acumulada: formatCurrencyBR(item.receita_acumulada),
+    valor_liquidaçao: formatCurrencyBR(item.resumo_liquidacao.saldo_a_liquidar),
     acumulada_com_extra_orcamentaria: formatCurrencyBR(
       item.acumulada_com_extra_orcamentaria,
     ),

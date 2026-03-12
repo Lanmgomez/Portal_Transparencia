@@ -1,7 +1,7 @@
 import { Button, Table, Space } from 'antd'
 import { BarsOutlined } from '@ant-design/icons'
 
-const columns = ({ setId, openModal }) => [
+const columns = ({ setId, openModal, openLiqPgtModal }) => [
   {
     title: 'Ações',
     dataIndex: 'updated_at',
@@ -43,6 +43,7 @@ const columns = ({ setId, openModal }) => [
     dataIndex: 'beneficiario',
     key: 'beneficiario',
     align: 'center',
+    width: 300,
   },
   {
     title: 'CPF/CNPJ',
@@ -75,16 +76,32 @@ const columns = ({ setId, openModal }) => [
     key: 'valor_empenhado',
     align: 'center',
   },
+  // {
+  //   title: 'Data/Empenho',
+  //   dataIndex: 'data_empenho',
+  //   key: 'data_empenho',
+  //   align: 'center',
+  // },
   {
-    title: 'Data/Empenho',
-    dataIndex: 'data_empenho',
-    key: 'data_empenho',
-    align: 'center',
+    width: 120,
+    dataIndex: 'updated_at',
+    key: 'updated_at',
+    render: (_, record) => (
+      <a
+        style={{ color: '#8B0000', fontWeight: 'bold' }}
+        onClick={() => {
+          setId?.(record.id)
+          openLiqPgtModal?.(true)
+        }}
+      >
+        Ver registro Liquidação e Pagamento
+      </a>
+    ),
   },
   {
     title: 'Liquidação',
-    dataIndex: 'liquidacao',
-    key: 'liquidacao',
+    dataIndex: 'valor_liquidaçao',
+    key: 'valor_liquidaçao',
     align: 'center',
   },
   {
@@ -158,11 +175,12 @@ export default function EmpenhosTable({
   onChange,
   setId,
   openModal,
+  openLiqPgtModal,
 }) {
   return (
     <Table
       dataSource={data}
-      columns={columns({ setId, openModal })}
+      columns={columns({ setId, openModal, openLiqPgtModal })}
       loading={loading}
       scroll={{ x: 'max-content', y: 400 }}
       onChange={onChange}

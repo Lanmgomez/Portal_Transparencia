@@ -8,6 +8,7 @@ import {
   maskCNPJ,
   maskCPF,
   formatCurrencyBR,
+  nomeMes,
 } from '../../../components/commons/utils'
 
 const { Text, Paragraph } = Typography
@@ -17,6 +18,7 @@ export default function ModalContent({ id }) {
     ano,
     mes,
     competencia,
+    fornecedor,
     unidade_codigo,
     funcao,
     subfuncao,
@@ -41,6 +43,7 @@ export default function ModalContent({ id }) {
     elemento_despesa,
     subelemento_despesa,
     liquidacao,
+    total_liquidado,
     pagamentos,
     created_at,
     isLoading,
@@ -68,12 +71,18 @@ export default function ModalContent({ id }) {
             }}
           >
             <Descriptions.Item label='Ano'>{ano || '-'}</Descriptions.Item>
-            <Descriptions.Item label='Mês'>{mes || '-'}</Descriptions.Item>
+            <Descriptions.Item label='Mês'>
+              {nomeMes(mes) || '-'}
+            </Descriptions.Item>
+
             <Descriptions.Item label='Número Empenho'>
               {numero_empenho || '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Beneficiário'>-</Descriptions.Item>
+            <Descriptions.Item label='Beneficiário'>
+              {fornecedor || '-'}
+            </Descriptions.Item>
+
             <Descriptions.Item label='CPF/CNPJ'>
               {cpf_cnpj_credor ? maskCNPJ(cpf_cnpj_credor) : '-'}
             </Descriptions.Item>
@@ -95,7 +104,9 @@ export default function ModalContent({ id }) {
               {data_empenho ? formatDateBR(data_empenho) : '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Liquidação'>-</Descriptions.Item>
+            <Descriptions.Item label='Liquidação'>
+              {formatCurrencyBR(total_liquidado)}
+            </Descriptions.Item>
             <Descriptions.Item label='Data de Pagamento'>-</Descriptions.Item>
             <Descriptions.Item label='Valor do Pagamento'>-</Descriptions.Item>
             <Descriptions.Item label='Identificação da Licitação'>
@@ -199,7 +210,7 @@ export default function ModalContent({ id }) {
           {/** Tables */}
           <LiquidacaoTable data={liquidacao} />
 
-          <PagamentosTable data={pagamentos} />
+          <PagamentosTable data={pagamentos} id={id} />
         </Space>
       )}
     </div>

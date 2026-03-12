@@ -1,5 +1,6 @@
 import { Card, Col, Row, Table, Typography } from 'antd'
 import { formatCurrencyBR } from '../../../components/commons/utils'
+import useEmpenhoDataByID from '../hooks/useEmpenhoDataByID'
 
 const { Title } = Typography
 
@@ -36,8 +37,15 @@ const columns = [
   },
 ]
 
-export default function PagamentosTable({ data }) {
-  const totalPago = data.reduce(
+export default function PagamentosTable({ data, id }) {
+  const { valor_parcela } = useEmpenhoDataByID({ id })
+
+  const newData = data?.map((item, index) => ({
+    ...item,
+    valor_pago: valor_parcela?.[index]?.valor_pago ?? null,
+  }))
+
+  const totalPago = newData.reduce(
     (acc, item) => acc + Number(item.valor_pago || 0),
     0,
   )
@@ -55,7 +63,7 @@ export default function PagamentosTable({ data }) {
         >
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={newData}
             rowKey={(record, index) => `pag-${index}`}
             pagination={false}
             size='small'

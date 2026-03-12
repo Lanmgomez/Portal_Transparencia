@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { normalizeDoc, useFornecedoresData } from './useFornecedorData'
 import {
   empenhos_api,
   HttpRequest,
@@ -20,24 +19,18 @@ export default function useEmpenhosData(page, perPage) {
 
   const raw = data?.data?.data || []
 
-  // pega todos os cpfs/cnpjs da página atual
-  const cpfCnpjs = raw.map((i) => i.cpf_cnpj_credor)
-
-  // busca fornecedores em paralelo (no topo do hook, sem map chamando hook)
-  const { fornecedoresById } = useFornecedoresData(cpfCnpjs)
-
   const empenhos = raw.map((item) => {
-    const doc = normalizeDoc(item.cpf_cnpj_credor)
-    const beneficiario = fornecedoresById[doc]
-
     return {
       ...item,
       mes: nomeMes(item.mes),
-      beneficiario,
       cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
+      beneficiario: item.fornecedor.nome,
       data_empenho: formatDateBR(item.data_empenho),
       valor_empenhado: formatCurrencyBR(item.valor_empenhado),
       receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
+      valor_liquidaçao: formatCurrencyBR(
+        item.resumo_liquidacao.saldo_a_liquidar,
+      ),
       receita_realizada: formatCurrencyBR(item.receita_realizada),
       receita_acumulada: formatCurrencyBR(item.receita_acumulada),
       acumulada_com_extra_orcamentaria: formatCurrencyBR(
