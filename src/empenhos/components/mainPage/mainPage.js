@@ -92,7 +92,7 @@ export default function MainPage() {
         cancelButtonProps={{ style: { display: 'none' } }}
         okText='Fechar'
         style={{ top: 24 }}
-        width={620}
+        width={820}
         bodyStyle={{
           maxHeight: '70vh', // 👈 limita altura
           overflowY: 'auto', // 👈 scroll interno

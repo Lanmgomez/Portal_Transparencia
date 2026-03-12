@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-import { empenhos_api, HttpRequest } from '../../../components/commons/utils'
+import {
+  empenhos_api,
+  formatDateBR,
+  HttpRequest,
+} from '../../../components/commons/utils'
 
 export default function useEmpenhoDataByID({ id }) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['empenhos_id', id],
     queryFn: () => HttpRequest('GET', `${empenhos_api}/${id}`),
   })
-
-  console.log(`${empenhos_api}/${id}`)
 
   const empenho = data?.data
   const ano = empenho?.ano
@@ -38,6 +40,22 @@ export default function useEmpenhoDataByID({ id }) {
   const subelemento_despesa = empenho?.subelemento_despesa
   const created_at = empenho?.created_at
 
+  // liquidação
+  const liquidacao = empenho?.liquidacoes?.map((item) => ({
+    ano: item.ano,
+    numero: item.numero_liquidacao,
+    data_liquidacao: formatDateBR(item.data_liquidacao),
+    valor_liquidado: item.valor_liquidado,
+  }))
+
+  // pagamentos
+  const pagamentos = empenho?.pagamentos?.map((item) => ({
+    ano: item.numero_empenho,
+    data_pagamento: formatDateBR(item.data_pagamento),
+    numero_parcela: item.numero_parcela,
+    valor_pago: item.valor_pago,
+  }))
+
   return {
     ano,
     mes,
@@ -65,6 +83,8 @@ export default function useEmpenhoDataByID({ id }) {
     modalidade_aplicacao,
     elemento_despesa,
     subelemento_despesa,
+    liquidacao,
+    pagamentos,
     created_at,
     isLoading,
     isError,
