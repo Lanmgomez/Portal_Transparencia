@@ -65,10 +65,6 @@ export default function ModalContent({ id }) {
             labelStyle={{
               width: 190,
               fontWeight: 600,
-              color: '#bfbfbf',
-            }}
-            contentStyle={{
-              color: '#f5f5f5',
             }}
           >
             <Descriptions.Item label='Ano'>{ano || '-'}</Descriptions.Item>
@@ -117,10 +113,6 @@ export default function ModalContent({ id }) {
             labelStyle={{
               width: 190,
               fontWeight: 600,
-              color: '#bfbfbf',
-            }}
-            contentStyle={{
-              color: '#f5f5f5',
             }}
           >
             <Descriptions.Item label='Competência'>
