@@ -3,6 +3,24 @@ import { BarsOutlined } from '@ant-design/icons'
 
 const columns = ({ setId, openModal }) => [
   {
+    title: 'Ações',
+    dataIndex: 'updated_at',
+    key: 'updated_at',
+    render: (_, record) => (
+      <Space>
+        <Button
+          icon={<BarsOutlined />}
+          onClick={() => {
+            setId?.(record.id)
+            openModal?.(true)
+          }}
+        >
+          Ver mais
+        </Button>
+      </Space>
+    ),
+  },
+  {
     title: 'Ano',
     dataIndex: 'ano',
     key: 'ano',
@@ -129,24 +147,6 @@ const columns = ({ setId, openModal }) => [
     key: 'unidade_codigo',
     align: 'center',
   },
-  {
-    title: 'Ações',
-    dataIndex: 'updated_at',
-    key: 'updated_at',
-    render: (_, record) => (
-      <Space>
-        <Button
-          icon={<BarsOutlined />}
-          onClick={() => {
-            setId?.(record.id)
-            openModal?.(true)
-          }}
-        >
-          Ver mais
-        </Button>
-      </Space>
-    ),
-  },
 ]
 
 export default function EmpenhosTable({
@@ -164,7 +164,7 @@ export default function EmpenhosTable({
       dataSource={data}
       columns={columns({ setId, openModal })}
       loading={loading}
-      scroll={{ x: 'max-content' }}
+      scroll={{ x: 'max-content', y: 400 }}
       onChange={onChange}
       pagination={{
         current: page,

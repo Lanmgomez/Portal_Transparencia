@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Modal } from 'antd'
 import PageTitle from '../../../components/PageTitle/pageTitle'
-import Filtros from '../filtros/filtros'
+import Filtros, { FiltersOptions } from '../filtros/filtros'
 import useEmpenhosData from '../hooks/useEmpenhosData'
 import HoverMe from '../hoverMe/hoverMe'
 import EmpenhosTable from '../table/columns'
@@ -11,7 +11,7 @@ import ModalContent from '../modalContent/modalContent'
 export default function MainPage() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(20)
-  const [filters, setFilters] = useState({ q: null })
+  const [filters, setFilters] = useState(FiltersOptions)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [id, setId] = useState('')
 
@@ -34,14 +34,19 @@ export default function MainPage() {
   const onSearch = (values) => {
     if (!values) return
 
-    setFilters({
-      q: values.q || null,
-    })
-    setPage(1) // sempre voltar pra página 1 quando pesquisar
+    setFilters((prev) => ({
+      ...prev,
+      ...values,
+    }))
+
+    setPage(1)
   }
 
   const renderEmpenhosTable = () => {
-    const isSearching = !!filters.q
+    const isSearching = Object.values(filters).some(
+      (v) => v !== undefined && v !== null && v !== '',
+    )
+
     const tableData = isSearching ? searched : empenhos
     const tableTotal = isSearching ? searched : total
 
@@ -83,10 +88,11 @@ export default function MainPage() {
         title='Informações Gerais'
         open={isModalOpen}
         onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
         cancelButtonProps={{ style: { display: 'none' } }}
         okText='Fechar'
         style={{ top: 24 }}
-        width={620}
+        width={820}
         bodyStyle={{
           maxHeight: '70vh', // 👈 limita altura
           overflowY: 'auto', // 👈 scroll interno

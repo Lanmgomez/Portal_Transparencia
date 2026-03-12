@@ -1,13 +1,16 @@
-import { Col, Row, Skeleton, Typography } from 'antd'
+import { Skeleton, Typography, Descriptions, Divider, Space } from 'antd'
+import LiquidacaoTable from '../table/liquidacaoColumns'
 import useEmpenhoDataByID from '../hooks/useEmpenhoDataByID'
+import PagamentosTable from '../table/pagamentoColumns'
 import {
   formatYearMonth,
   formatDateBR,
   maskCNPJ,
   maskCPF,
+  formatCurrencyBR,
 } from '../../../components/commons/utils'
 
-const { Text } = Typography
+const { Text, Paragraph } = Typography
 
 export default function ModalContent({ id }) {
   const {
@@ -37,6 +40,8 @@ export default function ModalContent({ id }) {
     modalidade_aplicacao,
     elemento_despesa,
     subelemento_despesa,
+    liquidacao,
+    pagamentos,
     created_at,
     isLoading,
     isError,
@@ -51,196 +56,159 @@ export default function ModalContent({ id }) {
       {isLoading ? (
         <Skeleton />
       ) : (
-        <Row gutter={[16, 12]}>
-          <Col span={12}>
-            <Text strong>Ano:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{ano}</Text>
-          </Col>
+        <Space direction='vertical' size={20} style={{ width: '100%' }}>
+          <Descriptions
+            title='Dados principais'
+            bordered
+            size='middle'
+            column={1}
+            labelStyle={{
+              width: 190,
+              fontWeight: 600,
+              color: '#bfbfbf',
+            }}
+            contentStyle={{
+              color: '#f5f5f5',
+            }}
+          >
+            <Descriptions.Item label='Ano'>{ano || '-'}</Descriptions.Item>
+            <Descriptions.Item label='Mês'>{mes || '-'}</Descriptions.Item>
+            <Descriptions.Item label='Número Empenho'>
+              {numero_empenho || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Mês:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{mes}</Text>
-          </Col>
+            <Descriptions.Item label='Beneficiário'>-</Descriptions.Item>
+            <Descriptions.Item label='CPF/CNPJ'>
+              {cpf_cnpj_credor ? maskCNPJ(cpf_cnpj_credor) : '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Competência:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{formatYearMonth(competencia)}</Text>
-          </Col>
+            <Descriptions.Item label='Descrição'>
+              <Paragraph
+                style={{ marginBottom: 0, color: 'inherit' }}
+                ellipsis={{ rows: 4, expandable: true, symbol: 'ver mais' }}
+              >
+                {descricao || '-'}
+              </Paragraph>
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Unidade Código:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{unidade_codigo}</Text>
-          </Col>
+            <Descriptions.Item label='Valor Empenhado'>
+              {valor_empenhado ? formatCurrencyBR(valor_empenhado) : '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Função:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{funcao}</Text>
-          </Col>
+            <Descriptions.Item label='Data Empenho'>
+              {data_empenho ? formatDateBR(data_empenho) : '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Sub-Função:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{subfuncao}</Text>
-          </Col>
+            <Descriptions.Item label='Liquidação'>-</Descriptions.Item>
+            <Descriptions.Item label='Data de Pagamento'>-</Descriptions.Item>
+            <Descriptions.Item label='Valor do Pagamento'>-</Descriptions.Item>
+            <Descriptions.Item label='Identificação da Licitação'>
+              -
+            </Descriptions.Item>
+          </Descriptions>
 
-          <Col span={12}>
-            <Text strong>Número Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{numero_empenho}</Text>
-          </Col>
+          <Divider style={{ margin: 0 }} />
 
-          <Col span={12}>
-            <Text strong>Tipo Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{tipo_empenho}</Text>
-          </Col>
+          <Descriptions
+            title='Informações complementares'
+            bordered
+            size='middle'
+            column={1}
+            labelStyle={{
+              width: 190,
+              fontWeight: 600,
+              color: '#bfbfbf',
+            }}
+            contentStyle={{
+              color: '#f5f5f5',
+            }}
+          >
+            <Descriptions.Item label='Competência'>
+              {competencia ? formatYearMonth(competencia) : '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Modalidade Licitação:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{modalidade_licitacao}</Text>
-          </Col>
+            <Descriptions.Item label='Unidade Código'>
+              {unidade_codigo || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Chave Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{empenho_key}</Text>
-          </Col>
+            <Descriptions.Item label='Função'>
+              {funcao || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Data Empenho:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{formatDateBR(data_empenho)}</Text>
-          </Col>
+            <Descriptions.Item label='Sub-Função'>
+              {subfuncao || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Valor Empenhado:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{`R$ ${valor_empenhado}`}</Text>
-          </Col>
+            <Descriptions.Item label='Tipo Empenho'>
+              {tipo_empenho || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>CPF/CNPJ:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{maskCNPJ(cpf_cnpj_credor)}</Text>
-          </Col>
+            <Descriptions.Item label='Modalidade Licitação'>
+              {modalidade_licitacao || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Procedência Licitação:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{proced_licitacao_ref}</Text>
-          </Col>
+            <Descriptions.Item label='Chave Empenho'>
+              <Text copyable>{empenho_key || '-'}</Text>
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Natureza Despesa:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{natureza_despesa}</Text>
-          </Col>
+            <Descriptions.Item label='Procedência Licitação'>
+              {proced_licitacao_ref || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Fonte Recurso:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{fonte_recurso}</Text>
-          </Col>
+            <Descriptions.Item label='Natureza Despesa'>
+              {natureza_despesa || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>CPF Ordenador:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{maskCPF(cpf_ordenador)}</Text>
-          </Col>
+            <Descriptions.Item label='Fonte Recurso'>
+              {fonte_recurso || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Elemento Despesa:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{elemento_despesa_emp}</Text>
-          </Col>
+            <Descriptions.Item label='CPF Ordenador'>
+              {cpf_ordenador ? maskCPF(cpf_ordenador) : '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Programa Código:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{programa_codigo}</Text>
-          </Col>
+            <Descriptions.Item label='Elemento Despesa'>
+              {elemento_despesa_emp || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Ação Código:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{acao_codigo}</Text>
-          </Col>
+            <Descriptions.Item label='Programa Código'>
+              {programa_codigo || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Categoria Econômica:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{categoria_economica}</Text>
-          </Col>
+            <Descriptions.Item label='Ação Código'>
+              {acao_codigo || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Grupo Natureza:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{grupo_natureza}</Text>
-          </Col>
+            <Descriptions.Item label='Categoria Econômica'>
+              {categoria_economica || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Modalidade Aplicação:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{modalidade_aplicacao}</Text>
-          </Col>
+            <Descriptions.Item label='Grupo Natureza'>
+              {grupo_natureza || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Elemento Despesa:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{elemento_despesa}</Text>
-          </Col>
+            <Descriptions.Item label='Modalidade Aplicação'>
+              {modalidade_aplicacao || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Sub-Elemento Despesa:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{subelemento_despesa}</Text>
-          </Col>
+            <Descriptions.Item label='Elemento Despesa'>
+              {elemento_despesa || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Data Criação:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{formatDateBR(created_at)}</Text>
-          </Col>
+            <Descriptions.Item label='Sub-Elemento Despesa'>
+              {subelemento_despesa || '-'}
+            </Descriptions.Item>
 
-          <Col span={12}>
-            <Text strong>Descrição:</Text>
-          </Col>
-          <Col span={12}>
-            <Text>{descricao}</Text>
-          </Col>
-        </Row>
+            <Descriptions.Item label='Data Criação'>
+              {created_at ? formatDateBR(created_at) : '-'}
+            </Descriptions.Item>
+          </Descriptions>
+
+          {/** Tables */}
+          <LiquidacaoTable data={liquidacao} />
+
+          <PagamentosTable data={pagamentos} />
+        </Space>
       )}
     </div>
   )
