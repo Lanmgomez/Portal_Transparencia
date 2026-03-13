@@ -13,6 +13,7 @@ export const receita_transp_url = `${BASE_URL}/receitas-transferencias`
 export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
 export const remessas_api = `${BASE_URL}/remessas`
 export const empenhos_api = `${BASE_URL}/empenhos`
+export const fornecedores_api = `${BASE_URL}/fornecedores`
 
 const PUBLIC_ROUTES = [
   '/',
@@ -307,4 +308,14 @@ export const nomeMes = (value) => {
   if (value === 12) return 'Dezembro'
 
   return ''
+}
+
+export const hideCpf = (value) => {
+  if (!value) return ''
+
+  if (value.length === 11) {
+    return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.***.$3-**')
+  }
+
+  return maskCNPJ(value)
 }

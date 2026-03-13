@@ -18,7 +18,11 @@ export default function MainPage() {
   const [id, setId] = useState('')
 
   const { empenhos, total, isLoading } = useEmpenhosData(page, perPage)
-  const { searched, searchLoading } = useSearchQuery(filters)
+  const { searched, searchLoading, searchedTotal } = useSearchQuery(
+    filters,
+    page,
+    perPage,
+  )
 
   const handleTableChange = (pagination) => {
     const nextPage = pagination.current
@@ -50,7 +54,7 @@ export default function MainPage() {
     )
 
     const tableData = isSearching ? searched : empenhos
-    const tableTotal = isSearching ? searched : total
+    const tableTotal = isSearching ? searchedTotal : total
 
     return (
       <EmpenhosTable

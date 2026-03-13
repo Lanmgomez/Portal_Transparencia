@@ -1,5 +1,6 @@
 import { Button, Table, Space } from 'antd'
 import { BarsOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const columns = ({ setId, openModal, openLiqPgtModal }) => [
   {
@@ -44,6 +45,15 @@ const columns = ({ setId, openModal, openLiqPgtModal }) => [
     key: 'beneficiario',
     align: 'center',
     width: 300,
+    render: (_, record) =>
+      record.beneficiario === null &&
+      window.location.pathname !== '/public-empenhos' ? (
+        <Link to='/criar-fornecedores' style={{ padding: 0 }}>
+          Cadastrar beneficiário
+        </Link>
+      ) : (
+        record.beneficiario
+      ),
   },
   {
     title: 'CPF/CNPJ',
@@ -182,7 +192,7 @@ export default function EmpenhosTable({
       dataSource={data}
       columns={columns({ setId, openModal, openLiqPgtModal })}
       loading={loading}
-      scroll={{ x: 'max-content', y: 400 }}
+      scroll={{ x: 'max-content', y: 600 }}
       onChange={onChange}
       pagination={{
         current: page,

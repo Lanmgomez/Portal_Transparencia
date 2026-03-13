@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Skeleton, Typography, Descriptions, Divider, Space } from 'antd'
 import LiquidacaoTable from '../table/liquidacaoColumns'
 import useEmpenhoDataByID from '../hooks/useEmpenhoDataByID'
@@ -14,6 +15,8 @@ import {
 const { Text, Paragraph } = Typography
 
 export default function ModalContent({ id }) {
+  const [totalPago, setTotalPago] = useState()
+
   const {
     ano,
     mes,
@@ -107,8 +110,13 @@ export default function ModalContent({ id }) {
             <Descriptions.Item label='Liquidação'>
               {formatCurrencyBR(total_liquidado)}
             </Descriptions.Item>
+
             <Descriptions.Item label='Data de Pagamento'>-</Descriptions.Item>
-            <Descriptions.Item label='Valor do Pagamento'>-</Descriptions.Item>
+
+            <Descriptions.Item label='Valor do Pagamento'>
+              {formatCurrencyBR(totalPago)}
+            </Descriptions.Item>
+
             <Descriptions.Item label='Identificação da Licitação'>
               -
             </Descriptions.Item>
@@ -210,7 +218,11 @@ export default function ModalContent({ id }) {
           {/** Tables */}
           <LiquidacaoTable data={liquidacao} />
 
-          <PagamentosTable data={pagamentos} id={id} />
+          <PagamentosTable
+            data={pagamentos}
+            id={id}
+            setTotalPago={setTotalPago}
+          />
         </Space>
       )}
     </div>

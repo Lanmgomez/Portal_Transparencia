@@ -6,7 +6,7 @@ import {
   mapEmpenhos,
 } from '../../../components/commons/utils'
 
-export default function useSearchQuery(filters) {
+export default function useSearchQuery(filters, page, perPage) {
   const query = useMemo(() => {
     const params = new URLSearchParams()
 
@@ -27,13 +27,19 @@ export default function useSearchQuery(filters) {
   }, [filters])
 
   const { data, isLoading: searchLoading } = useQuery({
-    queryKey: ['search_empenho', query],
-    queryFn: () => HttpRequest('GET', `${empenhos_api}?${query}`),
+    queryKey: ['search_empenho', query, page, perPage],
+    queryFn: () =>
+      HttpRequest(
+        'GET',
+        `${empenhos_api}?${query}&page=${page}&per_page=${perPage}`,
+      ),
     enabled: Object.values(filters).some((v) => v), // ativa se tiver algum filtro
   })
 
   const searchedRaw = data?.data?.data || []
   const searched = useMemo(() => mapEmpenhos(searchedRaw), [searchedRaw])
 
-  return { searched, searchLoading }
+  const searchedTotal = data?.data?.total || 0
+
+  return { searched, searchLoading, searchedTotal }
 }

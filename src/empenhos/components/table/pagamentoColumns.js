@@ -37,18 +37,19 @@ const columns = [
   },
 ]
 
-export default function PagamentosTable({ data, id }) {
+export default function PagamentosTable({ data, id, setTotalPago }) {
   const { valor_parcela } = useEmpenhoDataByID({ id })
 
   const newData = data?.map((item, index) => ({
     ...item,
-    valor_pago: valor_parcela?.[index]?.valor_pago ?? null,
+    valor_pago: valor_parcela?.[index]?.valor_pago ?? 0,
   }))
 
   const totalPago = newData.reduce(
     (acc, item) => acc + Number(item.valor_pago || 0),
     0,
   )
+  setTotalPago(totalPago)
 
   return (
     <Row>
