@@ -1,10 +1,10 @@
 import { Button, Card, Form, Input, Radio } from 'antd'
 import { mask } from 'remask'
 
-export default function FornecedorForm({ form, onFinish }) {
+export default function FornecedorForm({ form, onFinish, loading, saving }) {
   return (
     <>
-      <Form form={form} onFinish={onFinish} /* disabled={loading}*/>
+      <Form form={form} onFinish={onFinish} disabled={loading}>
         <Card title='Dados do fornecedor'>
           <Form.Item
             name='cpf_cnpj'
@@ -36,7 +36,7 @@ export default function FornecedorForm({ form, onFinish }) {
             rules={[{ message: 'Nome é obirgatório!', required: true }]}
           >
             <Input
-              style={{ width: 300, marginLeft: '-120px' }}
+              style={{ width: 400, marginLeft: '-120px' }}
               placeholder='Digite o nome...'
             />
           </Form.Item>
@@ -71,8 +71,8 @@ export default function FornecedorForm({ form, onFinish }) {
             type='primary'
             htmlType='submit'
             className='save-btn'
-            //   loading={saving || loading}
-            //   disabled={saving}
+            loading={saving || loading}
+            disabled={saving}
           >
             Salvar
           </Button>

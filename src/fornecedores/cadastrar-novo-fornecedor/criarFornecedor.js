@@ -25,7 +25,11 @@ export default function CriarFornecedor() {
       <h1>Cadastre um novo fornecedor</h1>
       <p>Preencha o formulário abaixo para cadastrar um novo fornecedor</p>
 
-      <FornecedorForm form={form} onFinish={onFinish} />
+      <FornecedorForm
+        form={form}
+        saving={createFornecedor.isPending}
+        onFinish={onFinish}
+      />
     </Container>
   )
 }

@@ -18,6 +18,7 @@ import EmpenhosPublicPage from '../empenhos/public-route/empenhosPublic'
 import CadastrarRemessa from '../empenhos/cadastrar-nova-remessa/cadastrarRemessa'
 import FornecedoresPage from '../fornecedores/fornecedores'
 import CriarFornecedor from '../fornecedores/cadastrar-novo-fornecedor/criarFornecedor'
+import EditarFornecedor from '../fornecedores/editar-fornecedor/editarFornecedor'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -142,6 +143,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <CriarFornecedor />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/editar-fornecedor/:id'
+          element={
+            <PrivateRoutesAuth>
+              <EditarFornecedor />
             </PrivateRoutesAuth>
           }
         />

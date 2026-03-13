@@ -93,6 +93,7 @@ export function HttpRequest(request_method, url, values) {
     GET: () => axios.get(url, Headers),
     POST: () => axios.post(url, values, Headers),
     PUT: () => axios.put(url, values, Headers),
+    PATCH: () => axios.patch(url, values, Headers),
     DELETE: () => axios.delete(url, Headers),
   }
 

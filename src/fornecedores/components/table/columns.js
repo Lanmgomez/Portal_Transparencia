@@ -1,7 +1,7 @@
-import { Button, Table, Space } from 'antd'
-import { BarsOutlined } from '@ant-design/icons'
+import { Button, Table, Space, Popconfirm } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
-const columns = ({ setId, openModal }) => [
+const columns = ({ onEdit, onDelete }) => [
   {
     title: 'Nome',
     dataIndex: 'nome',
@@ -39,14 +39,22 @@ const columns = ({ setId, openModal }) => [
     render: (_, record) => (
       <Space>
         <Button
-          icon={<BarsOutlined />}
-          onClick={() => {
-            setId?.(record.id)
-            openModal?.(true)
-          }}
+          icon={<EditOutlined />}
+          onClick={() => onEdit?.(`/editar-fornecedor/${record.id}`)}
         >
-          Ver mais
+          Editar
         </Button>
+
+        <Popconfirm
+          title='Tem certeza que deseja excluir?'
+          okText='Sim'
+          cancelText='Cancelar'
+          onConfirm={() => onDelete?.(record.id)}
+        >
+          <Button danger icon={<DeleteOutlined />}>
+            Excluir
+          </Button>
+        </Popconfirm>
       </Space>
     ),
   },
@@ -59,13 +67,13 @@ export default function FornecedoresTable({
   perPage,
   total,
   onChange,
-  setId,
-  openModal,
+  onEdit,
+  onDelete,
 }) {
   return (
     <Table
       dataSource={data}
-      columns={columns({ setId, openModal })}
+      columns={columns({ onEdit, onDelete })}
       loading={loading}
       scroll={{ x: 'max-content', y: 600 }}
       onChange={onChange}
