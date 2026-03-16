@@ -19,6 +19,7 @@ import CadastrarRemessa from '../empenhos/cadastrar-nova-remessa/cadastrarRemess
 import FornecedoresPage from '../fornecedores/fornecedores'
 import CriarFornecedor from '../fornecedores/cadastrar-novo-fornecedor/criarFornecedor'
 import EditarFornecedor from '../fornecedores/editar-fornecedor/editarFornecedor'
+import ExcluirRemessa from '../empenhos/excluir-remessa/excluirRemessa'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -87,6 +88,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <CadastrarRemessa />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/excluir-remessa'
+          element={
+            <PrivateRoutesAuth>
+              <ExcluirRemessa />
             </PrivateRoutesAuth>
           }
         />

@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Dropdown, Space } from 'antd'
-import { PlusOutlined, DownOutlined, SnippetsOutlined } from '@ant-design/icons'
+import {
+  PlusOutlined,
+  DownOutlined,
+  SnippetsOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons'
 import '../../../receitas/components/hoverMe/hoverMe.css'
 
 const items = [
@@ -17,6 +22,11 @@ const items = [
     key: '2',
     icon: <PlusOutlined />,
     label: <Link to='/cadastrar-nova-remessa'>Cadastrar nova Remessa</Link>,
+  },
+  {
+    key: '3',
+    icon: <DeleteOutlined />,
+    label: <Link to='/excluir-remessa'>Excluir Remessa</Link>,
   },
 ]
 
