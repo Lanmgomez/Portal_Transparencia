@@ -1,5 +1,6 @@
 import { Button, Table, Space, Popconfirm } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { RouterContextProvider } from 'react-router-dom'
 
 const columns = ({ onEdit, onDelete }) => [
   {
@@ -40,7 +41,10 @@ const columns = ({ onEdit, onDelete }) => [
       <Space>
         <Button
           icon={<EditOutlined />}
-          onClick={() => onEdit?.(`/editar-fornecedor/${record.id}`)}
+          onClick={() => {
+            onEdit?.(`/editar-fornecedor/${record.id}`)
+            console.log(record.id)
+          }}
         >
           Editar
         </Button>

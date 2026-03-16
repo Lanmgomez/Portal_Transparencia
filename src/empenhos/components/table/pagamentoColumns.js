@@ -45,7 +45,7 @@ export default function PagamentosTable({ data, id, setTotalPago }) {
     valor_pago: valor_parcela?.[index]?.valor_pago ?? 0,
   }))
 
-  const totalPago = newData.reduce(
+  const totalPago = newData?.reduce(
     (acc, item) => acc + Number(item.valor_pago || 0),
     0,
   )
