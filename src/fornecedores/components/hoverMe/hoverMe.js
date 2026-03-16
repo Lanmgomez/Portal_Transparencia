@@ -1,32 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Dropdown, Space } from 'antd'
-import {
-  PlusOutlined,
-  DownOutlined,
-  SnippetsOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons'
+import { PlusOutlined, DownOutlined } from '@ant-design/icons'
 import '../../../receitas/components/hoverMe/hoverMe.css'
 
 const items = [
   {
     key: '1',
-    icon: <SnippetsOutlined />,
-    label: (
-      <a target='_blank' rel='noopener noreferrer' href='/public-empenhos'>
-        Ir para página pública
-      </a>
-    ),
-  },
-  {
-    key: '2',
     icon: <PlusOutlined />,
-    label: <Link to='/cadastrar-nova-remessa'>Cadastrar nova Remessa</Link>,
-  },
-  {
-    key: '3',
-    icon: <DeleteOutlined />,
-    label: <Link to='/excluir-remessa'>Excluir Remessa</Link>,
+    label: <Link to='/criar-fornecedores'>Cadastrar novo Fornecedor</Link>,
   },
 ]
 

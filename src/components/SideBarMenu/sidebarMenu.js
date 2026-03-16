@@ -10,6 +10,7 @@ import {
   MailOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ShopOutlined,
 } from '@ant-design/icons'
 import Cookies from 'js-cookie'
 import './sidebarMenu.css'
@@ -41,6 +42,14 @@ const items = [
   },
   {
     key: 'sub4',
+    label: 'Fornecedores',
+    icon: <ShopOutlined />,
+    children: [
+      { key: '4', label: 'Fornecedores / Beneficiários', url: '/fornecedores' },
+    ],
+  },
+  {
+    key: 'sub5',
     label: 'Usuários',
     icon: <UserOutlined />,
     children: [
@@ -66,7 +75,7 @@ const items = [
     ],
   },
   {
-    key: 'sub5',
+    key: 'sub6',
     label: 'Configurações',
     icon: <SettingOutlined />,
     children: [

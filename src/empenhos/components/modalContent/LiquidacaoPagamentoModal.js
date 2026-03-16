@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Skeleton, Typography, Descriptions, Divider, Space } from 'antd'
 import LiquidacaoTable from '../table/liquidacaoColumns'
 import useEmpenhoDataByID from '../hooks/useEmpenhoDataByID'
@@ -10,6 +11,8 @@ import {
 const { Paragraph } = Typography
 
 export default function LiquidacaoPagamentoModal({ id }) {
+  const [_, setTotalPago] = useState()
+
   const {
     fornecedor,
     numero_empenho,
@@ -73,7 +76,11 @@ export default function LiquidacaoPagamentoModal({ id }) {
           {/** Tables */}
           <LiquidacaoTable data={liquidacao} />
 
-          <PagamentosTable data={pagamentos} id={id} />
+          <PagamentosTable
+            data={pagamentos}
+            id={id}
+            setTotalPago={setTotalPago}
+          />
         </Space>
       )}
     </div>

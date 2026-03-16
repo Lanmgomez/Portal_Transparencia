@@ -16,6 +16,10 @@ import EditarReceita from '../receitas/editar-receita/editarReceita'
 import EmpenhosPage from '../empenhos/empenhos'
 import EmpenhosPublicPage from '../empenhos/public-route/empenhosPublic'
 import CadastrarRemessa from '../empenhos/cadastrar-nova-remessa/cadastrarRemessa'
+import FornecedoresPage from '../fornecedores/fornecedores'
+import CriarFornecedor from '../fornecedores/cadastrar-novo-fornecedor/criarFornecedor'
+import EditarFornecedor from '../fornecedores/editar-fornecedor/editarFornecedor'
+import ExcluirRemessa from '../empenhos/excluir-remessa/excluirRemessa'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -88,6 +92,14 @@ export default function AppRoutes() {
           }
         />
         <Route
+          path='/excluir-remessa'
+          element={
+            <PrivateRoutesAuth>
+              <ExcluirRemessa />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
           path='/configuracoes'
           element={
             <PrivateRoutesAuth>
@@ -124,6 +136,30 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <EditarUsuario />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/fornecedores'
+          element={
+            <PrivateRoutesAuth>
+              <FornecedoresPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/criar-fornecedores'
+          element={
+            <PrivateRoutesAuth>
+              <CriarFornecedor />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/editar-fornecedor/:id'
+          element={
+            <PrivateRoutesAuth>
+              <EditarFornecedor />
             </PrivateRoutesAuth>
           }
         />
