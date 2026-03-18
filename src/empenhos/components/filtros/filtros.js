@@ -125,7 +125,7 @@ export default function Filtros({ onSearch, setFilters }) {
         />
       </Form.Item>
 
-      <Form.Item name='q' style={{ fontWeight: 'bold' }} label='Texto Livre'>
+      <Form.Item name='q' style={{ fontWeight: 'bold' }} label='Histórico'>
         <Input
           style={{ minHeight: 40, width: 235 }}
           placeholder='Pesquise algo...'

@@ -268,19 +268,29 @@ const formatEmpenho = (item) => {
     ano,
     mes: nomeMes(item.mes),
     beneficiario: item.fornecedor.nome,
-    cpf_cnpj_credor: maskCNPJ(item.cpf_cnpj_credor),
+    cpf_cnpj_credor: hideCpf(item.cpf_cnpj_credor),
     data_empenho: formatDateBR(item.data_empenho),
     valor_empenhado: formatCurrencyBR(item.valor_empenhado),
+    pagamento: formatCurrencyBR(item.resumo_pagamento.total_pago),
+    dataPagamento: formatDateBR(item.pagamentos[0]?.data_pagamento),
     receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
+    licitacao: item.modalidade_licitacao_descricao,
+    elemento: item.natureza_despesa_detalhada.elemento.descricao,
+    funcao: item.funcao_descricao,
+    subFuncao: item.subfuncao_descricao,
+    fonte_recurso: item.fonte_recurso_descricao,
+    natureza_despesa: item.natureza_despesa_detalhada.grupo.descricao,
+    categoriaEconomica: item.natureza_despesa_detalhada.categoria.descricao,
     receita_realizada: formatCurrencyBR(item.receita_realizada),
     receita_acumulada: formatCurrencyBR(item.receita_acumulada),
-    valor_liquidaçao: formatCurrencyBR(item.resumo_liquidacao.saldo_a_liquidar),
+    valor_liquidaçao: formatCurrencyBR(item.resumo_liquidacao.total_liquidado),
     acumulada_com_extra_orcamentaria: formatCurrencyBR(
       item.acumulada_com_extra_orcamentaria,
     ),
     receita_extra_orcamentaria: formatCurrencyBR(
       item.receita_extra_orcamentaria,
     ),
+    unidade_codigo: item.liquidacoes[0]?.unidade_codigo,
   }
 }
 
@@ -315,7 +325,13 @@ export const hideCpf = (value) => {
   if (!value) return ''
 
   if (value.length === 11) {
-    return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.***.$3-**')
+    if (window.location.pathname === '/public-empenhos') {
+      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.***.$3-**')
+    }
+
+    if (window.location.pathname === '/empenhos') {
+      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4')
+    }
   }
 
   return maskCNPJ(value)
