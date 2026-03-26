@@ -48,9 +48,11 @@ export default function useEmpenhosData(page, perPage) {
       receita_extra_orcamentaria: formatCurrencyBR(
         item.receita_extra_orcamentaria,
       ),
-      unidade_codigo: item.liquidacoes[0]?.unidade_codigo,
+      unidade_orcamentaria: item.unidade_orcamentaria.denominacao,
     }
   })
+
+  console.log(empenhos)
 
   const total = data?.data?.total || 0
 

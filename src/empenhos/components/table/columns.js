@@ -170,8 +170,8 @@ const columns = ({ setId, openModal, openLiqPgtModal }) => [
   },
   {
     title: 'Unidade Orçamentária',
-    dataIndex: 'unidade_codigo',
-    key: 'unidade_codigo',
+    dataIndex: 'unidade_orcamentaria',
+    key: 'unidade_orcamentaria',
     align: 'center',
   },
 ]

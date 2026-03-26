@@ -20,6 +20,8 @@ import FornecedoresPage from '../fornecedores/fornecedores'
 import CriarFornecedor from '../fornecedores/cadastrar-novo-fornecedor/criarFornecedor'
 import EditarFornecedor from '../fornecedores/editar-fornecedor/editarFornecedor'
 import ExcluirRemessa from '../empenhos/excluir-remessa/excluirRemessa'
+import Despesas from '../despesas-diarias/despesas'
+import DespesasPublicPage from '../despesas-diarias/public-route/despesasPublic'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -42,6 +44,11 @@ export default function AppRoutes() {
           path='/public-receitas-transferencias'
           element={<ReceitasPublicPage />}
         />
+        <Route
+          path='/public-despesas-diarias'
+          element={<DespesasPublicPage />}
+        />
+
         {/** Private routes */}
         <Route
           path='/home'
@@ -160,6 +167,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <EditarFornecedor />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/despesas-diarias'
+          element={
+            <PrivateRoutesAuth>
+              <Despesas />
             </PrivateRoutesAuth>
           }
         />

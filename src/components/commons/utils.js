@@ -14,12 +14,14 @@ export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
 export const remessas_api = `${BASE_URL}/remessas`
 export const empenhos_api = `${BASE_URL}/empenhos`
 export const fornecedores_api = `${BASE_URL}/fornecedores`
+export const despesas_api = `${BASE_URL}/despesas-diarias`
 
 const PUBLIC_ROUTES = [
   '/',
   '/despesas',
   '/public-receitas-transferencias',
   '/public-empenhos',
+  '/public-despesas-diarias',
 ]
 
 export function isPublicRoute(pathname) {
@@ -290,7 +292,7 @@ const formatEmpenho = (item) => {
     receita_extra_orcamentaria: formatCurrencyBR(
       item.receita_extra_orcamentaria,
     ),
-    unidade_codigo: item.liquidacoes[0]?.unidade_codigo,
+    unidade_orcamentaria: item.unidade_orcamentaria.denominacao,
   }
 }
 
