@@ -1,17 +1,27 @@
 import { useState } from 'react'
+import { Skeleton } from 'antd'
+import DownloadsButtons from '../downloads/buttons'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import HoverMe from '../../../empenhos/components/hoverMe/hoverMe'
 import OrdemCronologicaTable from '../table/columns'
 import useOrdemCronologicaData from '../hooks/useOrdemCronologicaData'
 import Filtros from '../filtros/filtros'
-import { Skeleton } from 'antd'
 
 export default function MainPage() {
   const [filters, setFilters] = useState({
     elemento_despesa: null,
+    ano: null,
+    data_ini: null,
+    data_fim: null,
   })
 
-  const { ordem_cronologica, isLoading } = useOrdemCronologicaData({
+  const {
+    ordem_cronologica,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useOrdemCronologicaData({
     filters,
   })
 
@@ -28,13 +38,20 @@ export default function MainPage() {
           setFilters(values)
         }}
         setFilters={setFilters}
-        data={ordem_cronologica}
       />
+
+      <DownloadsButtons data={ordem_cronologica} />
 
       {isLoading ? (
         <Skeleton />
       ) : (
-        <OrdemCronologicaTable data={ordem_cronologica} />
+        <OrdemCronologicaTable
+          data={ordem_cronologica}
+          loading={isLoading}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       )}
     </div>
   )

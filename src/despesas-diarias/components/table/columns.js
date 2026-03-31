@@ -17,13 +17,13 @@ const columns = () => [
     title: 'Beneficiário',
     dataIndex: 'beneficiario',
     key: 'beneficiario',
-    width: 120,
+    width: 200,
   },
   {
     title: 'CPF',
     dataIndex: 'CPF',
     key: 'CPF',
-    width: 120,
+    width: 150,
   },
   {
     title: 'Histórico',
@@ -31,6 +31,18 @@ const columns = () => [
     key: 'descricao',
     align: 'center',
     width: 400,
+    render: (text) => (
+      <div
+        style={{
+          textAlign: 'justify',
+          textJustify: 'inter-word',
+          whiteSpace: 'normal',
+          wordBreak: 'break-word',
+        }}
+      >
+        {text}
+      </div>
+    ),
   },
   {
     title: 'Valor Empenhado',

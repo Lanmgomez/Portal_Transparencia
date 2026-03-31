@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import {
   empenhos_api,
   formatDateBR,
@@ -7,10 +7,12 @@ import {
 } from '../../../components/commons/utils'
 
 export default function useOrdemCronologicaData({ filters }) {
-  const { data, isLoading, isError, refetch } = useQuery({
+  const query = useInfiniteQuery({
     queryKey: ['ordem_cronologica', filters],
-    queryFn: () => {
+    queryFn: async ({ pageParam = 1 }) => {
       const params = new URLSearchParams()
+
+      params.set('page', pageParam)
 
       if (
         filters?.elemento_despesa !== null &&
@@ -20,18 +22,26 @@ export default function useOrdemCronologicaData({ filters }) {
         params.set('elemento_despesa', String(filters.elemento_despesa))
       }
 
-      const url = params.toString()
-        ? `${empenhos_api}?${params.toString()}`
-        : empenhos_api
-
-      // api/empenhos?elemento_despesa={numero_elemento}
+      const url = `${empenhos_api}?${params.toString()}`
       return HttpRequest('GET', url)
     },
-    enabled: true,
+
+    getNextPageParam: (lastPage, allPages) => {
+      const currentPage = lastPage?.data?.current_page
+      const lastPageNumber = lastPage?.data?.last_page
+
+      if (currentPage < lastPageNumber) {
+        return currentPage + 1
+      }
+
+      return undefined
+    },
+
     keepPreviousData: true,
   })
 
-  const raw = data?.data?.data ?? []
+  // Junta todas as páginas
+  const raw = query.data?.pages.flatMap((page) => page?.data?.data ?? []) ?? []
 
   const ordem_cronologica = raw.flatMap((item) => {
     const liquidacoes = item.liquidacoes ?? []
@@ -45,6 +55,7 @@ export default function useOrdemCronologicaData({ filters }) {
 
       return {
         key: `${item.id}-${index}`,
+        ano: liquidacao?.ano,
         data_liquidacao: liquidacao?.data_liquidacao
           ? formatDateBR(liquidacao.data_liquidacao)
           : '-',
@@ -68,13 +79,12 @@ export default function useOrdemCronologicaData({ filters }) {
     })
   })
 
-  const total = raw.length
-
   return {
     ordem_cronologica,
-    total,
-    isLoading,
-    isError,
-    refetch,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: query.hasNextPage,
+    isFetchingNextPage: query.isFetchingNextPage,
   }
 }
