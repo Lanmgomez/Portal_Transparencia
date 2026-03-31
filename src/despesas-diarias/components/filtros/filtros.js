@@ -1,58 +1,44 @@
-import { Input, Select, Form, Button, DatePicker, Dropdown } from 'antd'
+import { Input, Select, Form, Button, Dropdown } from 'antd'
 import { CalendarOutlined, DownOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
-import { mask } from 'remask'
-import { TXT_Download_Empenhos } from '../downloads/txt-download'
-import { WORD_Download_Empenho } from '../downloads/word-download'
-import { PDF_Download_Empenho } from '../downloads/pdf-download'
-import { Excel_Download_Empenho } from '../downloads/excel-download'
+import { PDF_Download_Despesas } from '../downloads/pdf-download'
+import { Excel_Download_Despesas } from '../downloads/excel-download'
+import { ODT_Download_Despesas } from '../downloads/word-download'
+import { TXT_Download_Despesas } from '../downloads/txt-download'
 import './filtros.css'
 
 export const FiltersOptions = {
   ano: null,
   mes: null,
-  unidade_codigo: null,
-  numero_empenho: null,
-  cpf_cnpj: null,
-  data_ini: null,
-  data_fim: null,
+  beneficiario: null,
   q: null,
 }
 
-const resetFilters = [
-  'q',
-  'ano',
-  'mes',
-  'unidade_codigo',
-  'numero_empenho',
-  'cpf_cnpj',
-  'data_ini',
-  'data_fim',
-]
+const resetFilters = ['q', 'ano', 'mes', 'beneficiario']
 
-export default function Filtros({ onSearch, setFilters, data }) {
+export default function Filtros({ onSearch, setFilters, setPage, data }) {
   const [form] = Form.useForm()
 
   const items = [
     {
       key: '1',
       label: 'Baixar em .CSV',
-      onClick: () => Excel_Download_Empenho(data),
+      onClick: () => Excel_Download_Despesas(data),
     },
     {
       key: '2',
       label: 'Baixar em PDF',
-      onClick: () => PDF_Download_Empenho(data),
+      onClick: () => PDF_Download_Despesas(data),
     },
     {
       key: '3',
       label: 'Baixar em .ODT',
-      onClick: () => WORD_Download_Empenho(data),
+      onClick: () => ODT_Download_Despesas(data),
     },
     {
       key: '4',
       label: 'Baixar em .TXT',
-      onClick: () => TXT_Download_Empenhos(data),
+      onClick: () => TXT_Download_Despesas(data),
     },
   ]
 
@@ -89,70 +75,16 @@ export default function Filtros({ onSearch, setFilters, data }) {
       </Form.Item>
 
       <Form.Item
-        name='unidade_codigo'
+        name='beneficiario'
         style={{ fontWeight: 'bold' }}
-        label='Unidade Código'
+        label='Beneficiário'
         labelCol={{ style: { width: 180 } }}
         wrapperCol={{ style: { width: 200 } }}
       >
         <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
       </Form.Item>
 
-      <Form.Item
-        name='numero_empenho'
-        style={{ fontWeight: 'bold' }}
-        label='N° Empenho'
-        wrapperCol={{ style: { width: 300 } }}
-      >
-        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
-      </Form.Item>
-
-      <Form.Item
-        name='cpf_cnpj'
-        style={{ fontWeight: 'bold' }}
-        label='CPF ou CNPJ'
-      >
-        <Input
-          style={{ minHeight: 40 }}
-          placeholder='Pesquise...'
-          onChange={(e) => {
-            const digits = e.target.value.replace(/\D/g, '')
-
-            const masked = mask(
-              digits,
-              digits.length <= 11 ? '999.999.999-99' : '99.999.999/9999-99',
-            )
-
-            form.setFieldValue('cpf_cnpj', masked)
-          }}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name='data_ini'
-        style={{ fontWeight: 'bold' }}
-        label='Data Inicial'
-      >
-        <DatePicker
-          style={{ minHeight: 40 }}
-          format='DD/MM/YYYY'
-          placeholder='Pesquisar...'
-        />
-      </Form.Item>
-
-      <Form.Item
-        name='data_fim'
-        style={{ fontWeight: 'bold' }}
-        label='Data Final'
-      >
-        <DatePicker
-          style={{ minHeight: 40 }}
-          format='DD/MM/YYYY'
-          placeholder='Pesquisar...'
-        />
-      </Form.Item>
-
-      <Form.Item name='q' style={{ fontWeight: 'bold' }} label='Histórico'>
+      <Form.Item name='q' style={{ fontWeight: 'bold' }} label='Texto Livre'>
         <Input
           style={{ minHeight: 40, width: 235 }}
           placeholder='Pesquise algo...'
@@ -180,6 +112,7 @@ export default function Filtros({ onSearch, setFilters, data }) {
           onClick={() => {
             form.resetFields(resetFilters)
             setFilters(FiltersOptions)
+            setPage(1)
           }}
         >
           Limpar Filtros

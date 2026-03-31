@@ -20,6 +20,10 @@ import FornecedoresPage from '../fornecedores/fornecedores'
 import CriarFornecedor from '../fornecedores/cadastrar-novo-fornecedor/criarFornecedor'
 import EditarFornecedor from '../fornecedores/editar-fornecedor/editarFornecedor'
 import ExcluirRemessa from '../empenhos/excluir-remessa/excluirRemessa'
+import Despesas from '../despesas-diarias/despesas'
+import DespesasPublicPage from '../despesas-diarias/public-route/despesasPublic'
+import OrdemCronologicaPublic from '../ordem_cronologica/public-route/ordemCronologicaPublic'
+import OrdemCronologicaPage from '../ordem_cronologica/ordemCronologica'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -42,6 +46,15 @@ export default function AppRoutes() {
           path='/public-receitas-transferencias'
           element={<ReceitasPublicPage />}
         />
+        <Route
+          path='/public-despesas-diarias'
+          element={<DespesasPublicPage />}
+        />
+        <Route
+          path='/public-ordem-cronologica'
+          element={<OrdemCronologicaPublic />}
+        />
+
         {/** Private routes */}
         <Route
           path='/home'
@@ -160,6 +173,22 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <EditarFornecedor />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/despesas-diarias'
+          element={
+            <PrivateRoutesAuth>
+              <Despesas />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/ordem-cronologica'
+          element={
+            <PrivateRoutesAuth>
+              <OrdemCronologicaPage />
             </PrivateRoutesAuth>
           }
         />

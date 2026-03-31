@@ -38,7 +38,11 @@ const items = [
     key: 'sub3',
     label: 'Despesas',
     icon: <DollarOutlined />,
-    children: [{ key: '3', label: 'Empenhos', url: '/empenhos' }],
+    children: [
+      { key: '3', label: 'Empenhos', url: '/empenhos' },
+      { key: '10', label: 'Despesas Diárias', url: '/despesas-diarias' },
+      { key: '11', label: 'Ordem Cronológica', url: '/ordem-cronologica' },
+    ],
   },
   {
     key: 'sub4',

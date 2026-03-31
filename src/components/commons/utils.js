@@ -14,12 +14,15 @@ export const receitas_prevista_url = `${BASE_URL}/receitas-previstas`
 export const remessas_api = `${BASE_URL}/remessas`
 export const empenhos_api = `${BASE_URL}/empenhos`
 export const fornecedores_api = `${BASE_URL}/fornecedores`
+export const despesas_api = `${BASE_URL}/empenhos?somente_diarias=1`
 
 const PUBLIC_ROUTES = [
   '/',
   '/despesas',
   '/public-receitas-transferencias',
   '/public-empenhos',
+  '/public-despesas-diarias',
+  '/public-ordem-cronologica',
 ]
 
 export function isPublicRoute(pathname) {
@@ -290,7 +293,7 @@ const formatEmpenho = (item) => {
     receita_extra_orcamentaria: formatCurrencyBR(
       item.receita_extra_orcamentaria,
     ),
-    unidade_codigo: item.liquidacoes[0]?.unidade_codigo,
+    unidade_orcamentaria: item.unidade_orcamentaria.denominacao,
   }
 }
 
@@ -322,16 +325,18 @@ export const nomeMes = (value) => {
 }
 
 export const hideCpf = (value) => {
-  if (!value) return ''
+  const onlyNumbers = String(value).replace(/\D/g, '')
+  const path = window.location.pathname
 
-  if (value.length === 11) {
-    if (window.location.pathname === '/public-empenhos') {
-      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '***.***.$3-**')
+  if (onlyNumbers.length === 11) {
+    if (isPublicRoute(path)) {
+      return onlyNumbers.replace(
+        /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
+        '***.***.$3-**',
+      )
     }
 
-    if (window.location.pathname === '/empenhos') {
-      return value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4')
-    }
+    return onlyNumbers.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4')
   }
 
   return maskCNPJ(value)
