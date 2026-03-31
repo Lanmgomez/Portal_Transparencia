@@ -1,6 +1,12 @@
 import { Table } from 'antd'
+import { useRef } from 'react'
 
 const columns = () => [
+  {
+    title: 'Ano',
+    dataIndex: 'ano',
+    key: 'ano',
+  },
   {
     title: 'Data Liquidação',
     dataIndex: 'data_liquidacao',
@@ -55,16 +61,38 @@ const columns = () => [
   },
 ]
 
-export default function OrdemCronologicaTable({ data, loading, onChange }) {
+export default function OrdemCronologicaTable({
+  data,
+  loading,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+}) {
+  const containerRef = useRef(null)
+
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+
+    const isBottom = scrollTop + clientHeight >= scrollHeight - 50
+
+    if (isBottom && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
+
   return (
-    <Table
-      style={{ marginBottom: 30 }}
-      dataSource={data}
-      columns={columns()}
-      loading={loading}
-      scroll={{ x: 'max-content', y: 600 }}
-      onChange={onChange}
-      pagination={false}
-    />
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      style={{ height: 600, overflow: 'auto', marginBottom: 50 }}
+    >
+      <Table
+        style={{ marginBottom: 30 }}
+        dataSource={data}
+        columns={columns()}
+        loading={loading || isFetchingNextPage}
+        pagination={false}
+      />
+    </div>
   )
 }

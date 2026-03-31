@@ -1,11 +1,7 @@
-import { Input, Select, Form, Button, DatePicker, Dropdown } from 'antd'
-import { CalendarOutlined, DownOutlined } from '@ant-design/icons'
+import { Input, Select, Form, Button, DatePicker } from 'antd'
+import { CalendarOutlined } from '@ant-design/icons'
 import { mouthOption, yearOption } from '../../../components/commons/utils'
 import { mask } from 'remask'
-import { TXT_Download_Empenhos } from '../downloads/txt-download'
-import { WORD_Download_Empenho } from '../downloads/word-download'
-import { PDF_Download_Empenho } from '../downloads/pdf-download'
-import { Excel_Download_Empenho } from '../downloads/excel-download'
 import './filtros.css'
 
 export const FiltersOptions = {
@@ -30,31 +26,8 @@ const resetFilters = [
   'data_fim',
 ]
 
-export default function Filtros({ onSearch, setFilters, data }) {
+export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()
-
-  const items = [
-    {
-      key: '1',
-      label: 'Baixar em .CSV',
-      onClick: () => Excel_Download_Empenho(data),
-    },
-    {
-      key: '2',
-      label: 'Baixar em PDF',
-      onClick: () => PDF_Download_Empenho(data),
-    },
-    {
-      key: '3',
-      label: 'Baixar em .ODT',
-      onClick: () => WORD_Download_Empenho(data),
-    },
-    {
-      key: '4',
-      label: 'Baixar em .TXT',
-      onClick: () => TXT_Download_Empenhos(data),
-    },
-  ]
 
   return (
     <Form
@@ -184,14 +157,6 @@ export default function Filtros({ onSearch, setFilters, data }) {
         >
           Limpar Filtros
         </Button>
-      </div>
-
-      <div>
-        <Dropdown menu={{ items }}>
-          <a onClick={(e) => e.preventDefault()}>
-            Downloads <DownOutlined />
-          </a>
-        </Dropdown>
       </div>
     </Form>
   )

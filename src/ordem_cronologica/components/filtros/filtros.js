@@ -1,29 +1,21 @@
-import { Form, Button, Radio, Dropdown } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
-import { Excel_Download_Ordem_Cronologica } from '../downloads/excel-download'
-import { PDF_Download_Ordem_Cronologica } from '../downloads/pdf-download'
-import { ODT_Download_Ordem_Cronologica } from '../downloads/word-download'
-import { TXT_Download_Ordem_Cronologica } from '../downloads/txt-download'
+import { Form, Button, Radio, DatePicker, Select } from 'antd'
+import dayjs from 'dayjs'
 import './filtros.css'
 
 export const CATEGORY_OPTIONS = [
-  {
-    label: 'Fornecimento de bens',
-    value: 30,
-  },
-  {
-    label: 'Locações',
-    value: 38,
-  },
-  {
-    label: 'Prestação de serviços',
-    value: 37,
-  },
-  {
-    label: 'Obras e Edificações',
-    value: 51,
-  },
+  { label: 'Fornecimento de bens', value: 30 },
+  { label: 'Locações', value: 38 },
+  { label: 'Prestação de serviços', value: 37 },
+  { label: 'Obras e Edificações', value: 51 },
 ]
+
+const generateYears = () => {
+  const currentYear = new Date().getFullYear()
+  return Array.from({ length: 5 }, (_, i) => ({
+    label: currentYear - i,
+    value: currentYear - i,
+  }))
+}
 
 /* 
 Fornecimento de bens
@@ -45,36 +37,50 @@ Obras e Edificações
 51 — Obras e Instalações
 */
 
-export default function Filtros({ onSearch, setFilters, data }) {
+export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()
 
-  const items = [
-    {
-      key: '1',
-      label: 'Baixar em .CSV',
-      onClick: () => Excel_Download_Ordem_Cronologica(data),
-    },
-    {
-      key: '2',
-      label: 'Baixar em PDF',
-      onClick: () => PDF_Download_Ordem_Cronologica(data),
-    },
-    {
-      key: '3',
-      label: 'Baixar em .ODT',
-      onClick: () => ODT_Download_Ordem_Cronologica(data),
-    },
-    {
-      key: '4',
-      label: 'Baixar em .TXT',
-      onClick: () => TXT_Download_Ordem_Cronologica(data),
-    },
-  ]
+  const handleChange = (e) => {
+    const value = e.target.value
+
+    const currentValues = form.getFieldsValue()
+
+    const formatted = {
+      ...currentValues,
+      elemento_despesa: value,
+      data_ini: currentValues.data_ini
+        ? dayjs(currentValues.data_ini).format('YYYY-MM-DD')
+        : null,
+      data_fim: currentValues.data_fim
+        ? dayjs(currentValues.data_fim).format('YYYY-MM-DD')
+        : null,
+    }
+
+    form.setFieldsValue({ elemento_despesa: value })
+
+    setFilters(formatted)
+    onSearch(formatted)
+  }
+
+  const handleFinish = (values) => {
+    const formatted = {
+      ...values,
+      data_ini: values.data_ini
+        ? dayjs(values.data_ini).format('YYYY-MM-DD')
+        : null,
+      data_fim: values.data_fim
+        ? dayjs(values.data_fim).format('YYYY-MM-DD')
+        : null,
+    }
+
+    setFilters(formatted)
+    onSearch(formatted)
+  }
 
   return (
     <Form
       form={form}
-      onFinish={onSearch}
+      onFinish={handleFinish}
       layout='vertical'
       style={{
         display: 'flex',
@@ -85,6 +91,26 @@ export default function Filtros({ onSearch, setFilters, data }) {
         flexWrap: 'wrap',
       }}
     >
+      {/* Ano */}
+      <Form.Item label='Ano' name='ano'>
+        <Select
+          placeholder='Ano'
+          style={{ width: 120 }}
+          options={generateYears()}
+          allowClear
+        />
+      </Form.Item>
+
+      {/* Data inicial */}
+      <Form.Item label='Data Inicial' name='data_ini'>
+        <DatePicker format='DD/MM/YYYY' />
+      </Form.Item>
+
+      {/* Data final */}
+      <Form.Item label='Data Final' name='data_fim'>
+        <DatePicker format='DD/MM/YYYY' />
+      </Form.Item>
+
       <Form.Item
         label='Categoria'
         name='elemento_despesa'
@@ -94,6 +120,7 @@ export default function Filtros({ onSearch, setFilters, data }) {
           options={CATEGORY_OPTIONS}
           optionType='button'
           buttonStyle='solid'
+          onChange={handleChange}
         />
       </Form.Item>
 
@@ -114,24 +141,23 @@ export default function Filtros({ onSearch, setFilters, data }) {
 
         <Button
           htmlType='button'
-          style={{ width: 120, height: 40 }}
+          style={{ width: 140, height: 40 }}
           onClick={() => {
-            form.resetFields(['elemento_despesa'])
-            setFilters({
+            form.resetFields()
+
+            const cleared = {
               elemento_despesa: null,
-            })
+              ano: null,
+              data_ini: null,
+              data_fim: null,
+            }
+
+            setFilters(cleared)
+            onSearch(cleared)
           }}
         >
           Limpar Filtros
         </Button>
-      </div>
-
-      <div>
-        <Dropdown menu={{ items }}>
-          <a onClick={(e) => e.preventDefault()}>
-            Downloads <DownOutlined />
-          </a>
-        </Dropdown>
       </div>
     </Form>
   )

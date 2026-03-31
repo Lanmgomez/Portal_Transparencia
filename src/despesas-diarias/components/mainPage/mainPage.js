@@ -5,6 +5,7 @@ import HoverMe from '../../../empenhos/components/hoverMe/hoverMe'
 import Filtros, { FiltersOptions } from '../filtros/filtros'
 import DespesasDiariasTable from '../table/columns'
 import useDespesasData from '../hooks/useDespesasData'
+import DownloadsButtons from '../downloads/buttons'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
@@ -55,6 +56,8 @@ export default function MainPage() {
         setPage={setPage}
         data={despesas}
       />
+
+      <DownloadsButtons data={despesas} />
 
       {isLoading ? (
         <Skeleton />

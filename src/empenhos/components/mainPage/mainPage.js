@@ -8,6 +8,7 @@ import EmpenhosTable from '../table/columns'
 import useSearchQuery from '../hooks/useSearchQuery'
 import ModalContent from '../modalContent/modalContent'
 import LiquidacaoPagamentoModal from '../modalContent/LiquidacaoPagamentoModal'
+import DownloadsButtons from '../downloads/buttons'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
@@ -84,11 +85,9 @@ export default function MainPage() {
         pesquisada
       </h4>
 
-      <Filtros
-        onSearch={onSearch}
-        setFilters={setFilters}
-        data={empenhos || searched}
-      />
+      <Filtros onSearch={onSearch} setFilters={setFilters} />
+
+      <DownloadsButtons data={empenhos || searched} />
 
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>
