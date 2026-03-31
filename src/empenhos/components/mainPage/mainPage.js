@@ -84,7 +84,11 @@ export default function MainPage() {
         pesquisada
       </h4>
 
-      <Filtros onSearch={onSearch} setFilters={setFilters} />
+      <Filtros
+        onSearch={onSearch}
+        setFilters={setFilters}
+        data={empenhos || searched}
+      />
 
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>

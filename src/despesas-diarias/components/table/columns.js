@@ -21,15 +21,16 @@ const columns = () => [
   },
   {
     title: 'CPF',
-    dataIndex: 'competencia',
-    key: 'competencia',
+    dataIndex: 'CPF',
+    key: 'CPF',
     width: 120,
   },
   {
     title: 'Histórico',
-    dataIndex: 'historico',
-    key: 'historico',
+    dataIndex: 'descricao',
+    key: 'descricao',
     align: 'center',
+    width: 400,
   },
   {
     title: 'Valor Empenhado',

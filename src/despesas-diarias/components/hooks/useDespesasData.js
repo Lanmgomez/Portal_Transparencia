@@ -1,5 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { HttpRequest, despesas_api } from '../../../components/commons/utils'
+import {
+  HttpRequest,
+  despesas_api,
+  nomeMes,
+  hideCpf,
+  formatDateBR,
+  formatCurrencyBR,
+} from '../../../components/commons/utils'
 
 export default function useDespesasData({ page, per_page, filters }) {
   const { data, isLoading, isError } = useQuery({
@@ -16,12 +23,25 @@ export default function useDespesasData({ page, per_page, filters }) {
         }
       })
 
-      return HttpRequest('GET', `${despesas_api}?${params.toString()}`)
+      return HttpRequest('GET', `${despesas_api}&${params.toString()}`)
     },
   })
 
-  const despesas = data?.data?.data ?? []
   const total = data?.data?.total ?? 0
+
+  const despesas =
+    data?.data?.data?.flatMap((item) =>
+      (item.pagamentos ?? []).map((pagamento) => ({
+        ...item,
+        mes: nomeMes(item.mes),
+        CPF: hideCpf(item.fornecedor.cpf_cnpj),
+        beneficiario: item.fornecedor.nome,
+        valor_empenhado: formatCurrencyBR(item.valor_empenhado),
+        data_pagamento: formatDateBR(pagamento.data_pagamento),
+        valor_pago: formatCurrencyBR(pagamento.valor_pago),
+        elemento: item.natureza_despesa_detalhada.elemento.descricao,
+      })),
+    ) ?? []
 
   return { despesas, total, isLoading, isError }
 }

@@ -49,7 +49,12 @@ export default function MainPage() {
       {!hide && <HoverMe />}
       <PageTitle title='Despesas Diárias' />
 
-      <Filtros onSearch={onSearch} setFilters={setFilters} setPage={setPage} />
+      <Filtros
+        onSearch={onSearch}
+        setFilters={setFilters}
+        setPage={setPage}
+        data={despesas}
+      />
 
       {isLoading ? (
         <Skeleton />

@@ -33,11 +33,24 @@ const items = [
   },
   {
     key: '3',
+    icon: <SnippetsOutlined />,
+    label: (
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href='/public-ordem-cronologica'
+      >
+        Ir para página pública - Ordem Cronológica
+      </a>
+    ),
+  },
+  {
+    key: '4',
     icon: <PlusOutlined />,
     label: <Link to='/cadastrar-nova-remessa'>Cadastrar nova Remessa</Link>,
   },
   {
-    key: '4',
+    key: '5',
     icon: <DeleteOutlined />,
     label: <Link to='/excluir-remessa'>Excluir Remessa</Link>,
   },
