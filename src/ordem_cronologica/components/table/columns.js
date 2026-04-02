@@ -1,5 +1,5 @@
 import { Table } from 'antd'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 
 const columns = () => [
   {
@@ -68,30 +68,36 @@ export default function OrdemCronologicaTable({
   hasNextPage,
   isFetchingNextPage,
 }) {
-  const containerRef = useRef(null)
+  const tableRef = useRef(null)
 
-  const handleScroll = (e) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
+  useEffect(() => {
+    const el = tableRef.current?.querySelector('.ant-table-body')
 
-    const isBottom = scrollTop + clientHeight >= scrollHeight - 50
+    if (!el) return
 
-    if (isBottom && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage()
+    const handleScroll = (e) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.target
+
+      const isBottom = scrollTop + clientHeight >= scrollHeight - 50
+
+      if (isBottom && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage()
+      }
     }
-  }
+
+    el.addEventListener('scroll', handleScroll)
+
+    return () => el.removeEventListener('scroll', handleScroll)
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
   return (
-    <div
-      ref={containerRef}
-      onScroll={handleScroll}
-      style={{ height: 600, overflow: 'auto', marginBottom: 50 }}
-    >
+    <div ref={tableRef} style={{ marginBottom: '50px' }}>
       <Table
-        style={{ marginBottom: 30 }}
         dataSource={data}
         columns={columns()}
         loading={loading || isFetchingNextPage}
         pagination={false}
+        scroll={{ y: 600 }}
       />
     </div>
   )

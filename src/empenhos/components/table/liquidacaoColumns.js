@@ -38,7 +38,7 @@ export default function LiquidacaoTable({ data }) {
 
   return (
     <Row>
-      <Col>
+      <Col style={{ width: '100%' }}>
         <Card
           size='small'
           title={

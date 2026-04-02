@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import './filtros.css'
 
 export const CATEGORY_OPTIONS = [
-  { label: 'Fornecimento de bens', value: 30 },
+  { label: 'Fornecimento de bens', value: '30,39,14' },
   { label: 'Locações', value: 38 },
   { label: 'Prestação de serviços', value: 37 },
   { label: 'Obras e Edificações', value: 51 },
@@ -47,7 +47,7 @@ export default function Filtros({ onSearch, setFilters }) {
 
     const formatted = {
       ...currentValues,
-      elemento_despesa: value,
+      elementos: value,
       data_ini: currentValues.data_ini
         ? dayjs(currentValues.data_ini).format('YYYY-MM-DD')
         : null,
@@ -113,7 +113,7 @@ export default function Filtros({ onSearch, setFilters }) {
 
       <Form.Item
         label='Categoria'
-        name='elemento_despesa'
+        name='elementos'
         style={{ minWidth: '100%' }}
       >
         <Radio.Group
@@ -146,7 +146,7 @@ export default function Filtros({ onSearch, setFilters }) {
             form.resetFields()
 
             const cleared = {
-              elemento_despesa: null,
+              elementos: null,
               ano: null,
               data_ini: null,
               data_fim: null,

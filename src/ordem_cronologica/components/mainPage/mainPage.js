@@ -9,7 +9,7 @@ import Filtros from '../filtros/filtros'
 
 export default function MainPage() {
   const [filters, setFilters] = useState({
-    elemento_despesa: null,
+    elementos: null,
     ano: null,
     data_ini: null,
     data_fim: null,
@@ -31,7 +31,7 @@ export default function MainPage() {
   return (
     <div>
       {!hide && <HoverMe />}
-      <PageTitle title='Ordem Cronológica' />
+      <PageTitle title='Ordem Cronológica de Pagamentos' />
 
       <Filtros
         onSearch={(values) => {

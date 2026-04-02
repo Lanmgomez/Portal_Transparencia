@@ -13,13 +13,15 @@ import {
 export default function DownloadsButtons({ data }) {
   return (
     <Space style={{ marginBottom: 50 }} size='large' wrap>
+      <span>Exportar arquivo para:</span>
+
       <Button
         style={{ color: 'green' }}
         size='large'
         icon={<FileExcelOutlined />}
         onClick={() => Excel_Download_Ordem_Cronologica(data)}
       >
-        Exportar CSV
+        Formato CSV
       </Button>
 
       <Button
@@ -28,7 +30,7 @@ export default function DownloadsButtons({ data }) {
         icon={<FilePdfOutlined />}
         onClick={() => PDF_Download_Ordem_Cronologica(data)}
       >
-        Exportar PDF
+        Formato PDF
       </Button>
 
       <Button
@@ -37,7 +39,7 @@ export default function DownloadsButtons({ data }) {
         icon={<FileWordOutlined />}
         onClick={() => ODT_Download_Ordem_Cronologica(data)}
       >
-        Exportar ODT
+        Formato ODT
       </Button>
 
       <Button
@@ -45,7 +47,7 @@ export default function DownloadsButtons({ data }) {
         icon={<FileTextOutlined />}
         onClick={() => TXT_Download_Ordem_Cronologica(data)}
       >
-        Exportar TXT
+        Formato TXT
       </Button>
     </Space>
   )

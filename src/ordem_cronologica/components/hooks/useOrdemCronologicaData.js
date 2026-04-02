@@ -15,14 +15,15 @@ export default function useOrdemCronologicaData({ filters }) {
       params.set('page', pageParam)
 
       if (
-        filters?.elemento_despesa !== null &&
-        filters?.elemento_despesa !== undefined &&
-        filters?.elemento_despesa !== ''
+        filters?.elementos !== null &&
+        filters?.elementos !== undefined &&
+        filters?.elementos !== ''
       ) {
-        params.set('elemento_despesa', String(filters.elemento_despesa))
+        params.set('elementos', String(filters.elementos))
       }
 
       const url = `${empenhos_api}?${params.toString()}`
+      console.log(url)
       return HttpRequest('GET', url)
     },
 

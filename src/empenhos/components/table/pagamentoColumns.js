@@ -53,7 +53,7 @@ export default function PagamentosTable({ data, id, setTotalPago }) {
 
   return (
     <Row>
-      <Col>
+      <Col style={{ width: '100%' }}>
         <Card
           size='small'
           title={
