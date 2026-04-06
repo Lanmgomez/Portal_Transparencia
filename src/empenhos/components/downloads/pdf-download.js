@@ -1,7 +1,6 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import { normalizeData } from '../../../components/commons/utils'
-import { columns } from './utils'
+import { columns, normalizeData } from './utils'
 
 function formatValue(key, value) {
   if (value == null) return ''
@@ -11,7 +10,7 @@ function formatValue(key, value) {
 export function PDF_Download_Empenho(data) {
   const rowsData = normalizeData(data)
 
-  const doc = new jsPDF({ orientation: 'landscape' })
+  const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a3' })
 
   doc.setFontSize(14)
   doc.text('Relatório de Empenhos', 14, 12)
@@ -24,7 +23,6 @@ export function PDF_Download_Empenho(data) {
       columns.map((c) => {
         let value = row?.[c.key]
 
-        // ✅ regra do beneficiário
         if (c.key === 'beneficiario' && !value) {
           value = 'Cadastrar beneficiário'
         }
@@ -34,14 +32,12 @@ export function PDF_Download_Empenho(data) {
     ),
 
     theme: 'grid',
-    tableWidth: 'auto',
-    margin: { left: 6, right: 6 },
+    horizontalPageBreak: true,
+    horizontalPageBreakRepeat: 0,
 
     styles: {
-      fontSize: 7, // 👈 menor pra caber tudo
+      fontSize: 9,
       cellPadding: 1.5,
-      valign: 'middle',
-      overflow: 'linebreak',
     },
 
     headStyles: {

@@ -40,7 +40,7 @@ export default function MainPage() {
         setFilters={setFilters}
       />
 
-      <DownloadsButtons data={ordem_cronologica} />
+      <DownloadsButtons filters={filters} />
 
       {isLoading ? (
         <Skeleton />

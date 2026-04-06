@@ -1,3 +1,8 @@
+import {
+  formatCurrencyBR,
+  formatDateBR,
+} from '../../../components/commons/utils'
+
 export function TXT_Download_Despesas(data) {
   const texto = data
     .map((item, index) => {
@@ -6,13 +11,13 @@ Registro ${index + 1}
 --------------------
 Ano: ${item.ano ?? ''}
 Mês: ${item.mes ?? ''}
-Beneficiário: ${item.beneficiario ?? ''}
+Beneficiário: ${item.fornecedor?.nome ?? ''}
 CPF: ${item.cpf_cnpj_credor ?? ''}
 Histórico: ${item.descricao ?? ''}
-Valor Empenhado: ${item.valor_empenhado ?? ''}
-Data/Pagamento: ${item.dataPagamento ?? ''}
-Valor/Pagamento: ${item.pagamento ?? ''}
-Elemento: ${item.elemento ?? ''}
+Valor Empenhado: ${formatCurrencyBR(item.valor_empenhado ?? '')}
+Data/Pagamento: ${formatDateBR(item.pagamentos?.[0]?.data_pagamento ?? '')}
+Valor/Pagamento: ${formatCurrencyBR(item.valor_empenhado ?? '')}
+Elemento: ${item.natureza_despesa_detalhada?.elemento?.descricao ?? ''}
 `.trim()
     })
     .join('\n\n')

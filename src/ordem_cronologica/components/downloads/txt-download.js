@@ -1,18 +1,20 @@
+import { formatDateBR } from '../../../components/commons/utils'
+
 export function TXT_Download_Ordem_Cronologica(data) {
   const texto = data
     .map((item, index) => {
       return `
 Registro ${index + 1}
 --------------------
-Data Liquidação: ${item.data_liquidacao ?? ''}
-Data Pagamento: ${item.data_pagamento ?? ''}
-Beneficiário: ${item.beneficiario ?? ''}
-Empenho: ${item.numero_empenho ?? ''}
-Parcela: ${item.numero_parcela ?? ''}
-Valor Pago: ${item.valor_pago ?? ''}
-Unidade Orçamentária: ${item.unidade_orcamentaria ?? ''}
+Data Liquidação: ${formatDateBR(item.liquidacoes?.[0]?.data_liquidacao ?? '')}
+Data Pagamento: ${formatDateBR(item.pagamentos?.[0]?.data_pagamento ?? '')}
+Beneficiário: ${item.fornecedor?.nome ?? ''}
+Empenho: ${item.tipo_empenho_descricao ?? ''}
+Parcela: ${item.pagamentos?.[0]?.numero_parcela ?? ''}
+Valor Pago: ${item.valor_empenhado ?? ''}
+Unidade Orçamentária: ${item.unidade_orcamentaria?.denominacao ?? ''}
 Origem Recurso: ${item.fonte_recurso_descricao ?? ''}
-Elemento: ${item.elemento ?? ''}
+Elemento: ${item.natureza_despesa_detalhada?.elemento?.descricao ?? ''}
 `.trim()
     })
     .join('\n\n')

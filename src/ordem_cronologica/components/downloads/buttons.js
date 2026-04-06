@@ -3,6 +3,7 @@ import { Excel_Download_Ordem_Cronologica } from './excel-download'
 import { PDF_Download_Ordem_Cronologica } from './pdf-download'
 import { ODT_Download_Ordem_Cronologica } from './word-download'
 import { TXT_Download_Ordem_Cronologica } from './txt-download'
+import { useOrdemCronologicaExport } from '../hooks/useOrdemCronologicaExport'
 import {
   FileExcelOutlined,
   FilePdfOutlined,
@@ -10,7 +11,26 @@ import {
   FileWordOutlined,
 } from '@ant-design/icons'
 
-export default function DownloadsButtons({ data }) {
+export default function DownloadsButtons({ filters }) {
+  const { export_data } = useOrdemCronologicaExport(filters)
+
+  const handleExport = async (type, export_data) => {
+    switch (type) {
+      case 'csv':
+        Excel_Download_Ordem_Cronologica(export_data)
+        break
+      case 'pdf':
+        PDF_Download_Ordem_Cronologica(export_data)
+        break
+      case 'odt':
+        ODT_Download_Ordem_Cronologica(export_data)
+        break
+      case 'txt':
+        TXT_Download_Ordem_Cronologica(export_data)
+        break
+    }
+  }
+
   return (
     <Space style={{ marginBottom: 50 }} size='large' wrap>
       <span>Exportar arquivo para:</span>
@@ -19,7 +39,7 @@ export default function DownloadsButtons({ data }) {
         style={{ color: 'green' }}
         size='large'
         icon={<FileExcelOutlined />}
-        onClick={() => Excel_Download_Ordem_Cronologica(data)}
+        onClick={() => handleExport('csv', export_data)}
       >
         Formato CSV
       </Button>
@@ -28,7 +48,7 @@ export default function DownloadsButtons({ data }) {
         style={{ color: 'red' }}
         size='large'
         icon={<FilePdfOutlined />}
-        onClick={() => PDF_Download_Ordem_Cronologica(data)}
+        onClick={() => handleExport('pdf', export_data)}
       >
         Formato PDF
       </Button>
@@ -37,7 +57,7 @@ export default function DownloadsButtons({ data }) {
         style={{ color: 'blue' }}
         size='large'
         icon={<FileWordOutlined />}
-        onClick={() => ODT_Download_Ordem_Cronologica(data)}
+        onClick={() => handleExport('odt', export_data)}
       >
         Formato ODT
       </Button>
@@ -45,7 +65,7 @@ export default function DownloadsButtons({ data }) {
       <Button
         size='large'
         icon={<FileTextOutlined />}
-        onClick={() => TXT_Download_Ordem_Cronologica(data)}
+        onClick={() => handleExport('txt', export_data)}
       >
         Formato TXT
       </Button>

@@ -2,7 +2,6 @@ import { message } from 'antd'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { mask } from 'remask'
 
 export const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
 
@@ -31,13 +30,13 @@ export function isPublicRoute(pathname) {
 
 export function setAuthCookies({ token, id, name, email, role }) {
   Cookies.set('token', token, {
-    expires: 7,
+    expires: 1,
     secure: true,
     sameSite: 'Strict',
   })
 
   Cookies.set('user', JSON.stringify({ id, name, email, role }), {
-    expires: 7,
+    expires: 1,
     secure: true,
     sameSite: 'Strict',
   })

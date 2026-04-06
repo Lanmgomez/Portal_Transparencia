@@ -17,28 +17,31 @@ export default function useEmpenhoDataByID({ id }) {
   const fornecedor = empenho?.fornecedor?.nome
   const competencia = empenho?.competencia
   const unidade_codigo = empenho?.unidade_codigo
-  const funcao = empenho?.funcao
-  const subfuncao = empenho?.subfuncao
+  const funcao = empenho?.funcao_descricao
+  const subfuncao = empenho?.subfuncao_descricao
   const numero_empenho = empenho?.numero_empenho
-  const tipo_empenho = empenho?.tipo_empenho
-  const modalidade_licitacao = empenho?.modalidade_licitacao
-  const empenho_key = empenho?.empenho_key
+  const tipo_empenho = empenho?.tipo_empenho_descricao
+  const modalidade_licitacao = empenho?.modalidade_licitacao_descricao
   const data_empenho = empenho?.data_empenho
   const valor_empenhado = empenho?.valor_empenhado
   const cpf_cnpj_credor = empenho?.cpf_cnpj_credor
-  const proced_licitacao_ref = empenho?.proced_licitacao_ref
   const descricao = empenho?.descricao
-  const natureza_despesa = empenho?.natureza_despesa
-  const fonte_recurso = empenho?.fonte_recurso
+  const natureza_despesa =
+    empenho?.natureza_despesa_detalhada?.categoria?.descricao
+  const fonte_recurso = empenho?.fonte_recurso_descricao
   const cpf_ordenador = empenho?.cpf_ordenador
-  const elemento_despesa_emp = empenho?.elemento_despesa_emp
+  const elemento_despesa_emp =
+    empenho?.natureza_despesa_detalhada?.elemento?.descricao
   const programa_codigo = empenho?.programa_codigo
   const acao_codigo = empenho?.acao_codigo
   const categoria_economica = empenho?.categoria_economica
-  const grupo_natureza = empenho?.grupo_natureza
-  const modalidade_aplicacao = empenho?.modalidade_aplicacao
-  const elemento_despesa = empenho?.elemento_despesa
-  const subelemento_despesa = empenho?.subelemento_despesa
+  const grupo_natureza = empenho?.natureza_despesa_detalhada?.grupo?.descricao
+  const modalidade_aplicacao =
+    empenho?.natureza_despesa_detalhada?.modalidade?.descricao
+  const elemento_despesa =
+    empenho?.natureza_despesa_detalhada?.elemento?.descricao
+  const subelemento_despesa =
+    empenho?.natureza_despesa_detalhada?.subelemento?.descricao
   const created_at = empenho?.created_at
 
   const total_liquidado = empenho?.liquidacoes?.reduce(
@@ -79,11 +82,9 @@ export default function useEmpenhoDataByID({ id }) {
     numero_empenho,
     tipo_empenho,
     modalidade_licitacao,
-    empenho_key,
     data_empenho,
     valor_empenhado,
     cpf_cnpj_credor,
-    proced_licitacao_ref,
     descricao,
     natureza_despesa,
     fonte_recurso,

@@ -57,7 +57,7 @@ export default function MainPage() {
         data={despesas}
       />
 
-      <DownloadsButtons data={despesas} />
+      <DownloadsButtons filters={filters} />
 
       {isLoading ? (
         <Skeleton />

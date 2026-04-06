@@ -87,7 +87,7 @@ export default function MainPage() {
 
       <Filtros onSearch={onSearch} setFilters={setFilters} />
 
-      <DownloadsButtons data={empenhos || searched} />
+      <DownloadsButtons filters={filters} />
 
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>

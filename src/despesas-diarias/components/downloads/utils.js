@@ -34,3 +34,21 @@ export function formatValue(key, value) {
   if (dateKeys.has(key)) return formatDateBR(value)
   return value ?? ''
 }
+
+export function normalizeData(data) {
+  return data.map((item) => {
+    const pagamento = item.pagamentos?.[0] || {}
+
+    return {
+      ano: item.ano,
+      mes: item.mes,
+      beneficiario: item.fornecedor?.nome || '',
+      CPF: item.fornecedor?.cpf_cnpj || '',
+      descricao: item.descricao || '',
+      valor_empenhado: item.valor_empenhado || '',
+      data_pagamento: formatDateBR(pagamento.data_pagamento) || '',
+      valor_pago: formatCurrencyBR(item.valor_empenhado || ''),
+      elemento: item.natureza_despesa_detalhada?.elemento?.descricao || '',
+    }
+  })
+}
