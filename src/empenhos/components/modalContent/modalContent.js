@@ -22,7 +22,7 @@ export default function ModalContent({ id }) {
     mes,
     competencia,
     fornecedor,
-    unidade_codigo,
+    unidade_orçamentaria,
     funcao,
     subfuncao,
     numero_empenho,
@@ -31,18 +31,13 @@ export default function ModalContent({ id }) {
     data_empenho,
     valor_empenhado,
     cpf_cnpj_credor,
-    proced_licitacao_ref,
     descricao,
     natureza_despesa,
     fonte_recurso,
     cpf_ordenador,
     elemento_despesa_emp,
-    programa_codigo,
-    acao_codigo,
-    categoria_economica,
     grupo_natureza,
     modalidade_aplicacao,
-    elemento_despesa,
     subelemento_despesa,
     liquidacao,
     total_liquidado,
@@ -131,8 +126,8 @@ export default function ModalContent({ id }) {
               {competencia ? formatYearMonth(competencia) : '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Unidade Código'>
-              {unidade_codigo || '-'}
+            <Descriptions.Item label='Unidade Orçamentária'>
+              {unidade_orçamentaria || '-'}
             </Descriptions.Item>
 
             <Descriptions.Item label='Função'>

@@ -16,7 +16,7 @@ export default function useEmpenhoDataByID({ id }) {
   const mes = empenho?.mes
   const fornecedor = empenho?.fornecedor?.nome
   const competencia = empenho?.competencia
-  const unidade_codigo = empenho?.unidade_codigo
+  const unidade_orçamentaria = empenho?.unidade_orcamentaria?.denominacao
   const funcao = empenho?.funcao_descricao
   const subfuncao = empenho?.subfuncao_descricao
   const numero_empenho = empenho?.numero_empenho
@@ -76,7 +76,7 @@ export default function useEmpenhoDataByID({ id }) {
     mes,
     competencia,
     fornecedor,
-    unidade_codigo,
+    unidade_orçamentaria,
     funcao,
     subfuncao,
     numero_empenho,
