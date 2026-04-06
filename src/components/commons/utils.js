@@ -29,14 +29,16 @@ export function isPublicRoute(pathname) {
 }
 
 export function setAuthCookies({ token, id, name, email, role }) {
+  const expires = new Date(new Date().getTime() + 3 * 60 * 60 * 1000) // 3 horas
+
   Cookies.set('token', token, {
-    expires: 1,
+    expires,
     secure: true,
     sameSite: 'Strict',
   })
 
   Cookies.set('user', JSON.stringify({ id, name, email, role }), {
-    expires: 1,
+    expires,
     secure: true,
     sameSite: 'Strict',
   })
