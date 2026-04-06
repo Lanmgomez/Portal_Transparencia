@@ -1,5 +1,4 @@
-import { normalizeData } from '../../../components/commons/utils'
-import { columns } from './utils'
+import { columns, normalizeData } from './utils'
 
 function downloadBlob(filename, content, mime) {
   const blob = new Blob([content], { type: mime })

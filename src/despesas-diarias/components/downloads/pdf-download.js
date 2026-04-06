@@ -1,7 +1,6 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
-import { normalizeData } from '../../../components/commons/utils'
-import { columns } from './utils'
+import { columns, normalizeData } from './utils'
 
 function formatValue(key, value) {
   if (value == null) return ''

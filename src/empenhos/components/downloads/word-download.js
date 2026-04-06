@@ -1,5 +1,5 @@
 import { saveAs } from 'file-saver'
-import { normalizeData } from '../../../components/commons/utils'
+import { columns, normalizeData } from './utils'
 import {
   Document,
   Packer,
@@ -12,7 +12,6 @@ import {
   AlignmentType,
   PageOrientation,
 } from 'docx'
-import { columns } from './utils'
 
 const moneyKeys = new Set(['valor_empenhado', 'valor_liquidacao', 'pagamento'])
 

@@ -28,7 +28,6 @@ export default function ModalContent({ id }) {
     numero_empenho,
     tipo_empenho,
     modalidade_licitacao,
-    empenho_key,
     data_empenho,
     valor_empenhado,
     cpf_cnpj_credor,
@@ -111,14 +110,8 @@ export default function ModalContent({ id }) {
               {formatCurrencyBR(total_liquidado)}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Data de Pagamento'>-</Descriptions.Item>
-
             <Descriptions.Item label='Valor do Pagamento'>
               {formatCurrencyBR(totalPago)}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Identificação da Licitação'>
-              -
             </Descriptions.Item>
           </Descriptions>
 
@@ -158,14 +151,6 @@ export default function ModalContent({ id }) {
               {modalidade_licitacao || '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Chave Empenho'>
-              <Text copyable>{empenho_key || '-'}</Text>
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Procedência Licitação'>
-              {proced_licitacao_ref || '-'}
-            </Descriptions.Item>
-
             <Descriptions.Item label='Natureza Despesa'>
               {natureza_despesa || '-'}
             </Descriptions.Item>
@@ -182,16 +167,8 @@ export default function ModalContent({ id }) {
               {elemento_despesa_emp || '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='Programa Código'>
-              {programa_codigo || '-'}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Ação Código'>
-              {acao_codigo || '-'}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Categoria Econômica'>
-              {categoria_economica || '-'}
+            <Descriptions.Item label='Sub-Elemento Despesa'>
+              {subelemento_despesa || '-'}
             </Descriptions.Item>
 
             <Descriptions.Item label='Grupo Natureza'>
@@ -200,14 +177,6 @@ export default function ModalContent({ id }) {
 
             <Descriptions.Item label='Modalidade Aplicação'>
               {modalidade_aplicacao || '-'}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Elemento Despesa'>
-              {elemento_despesa || '-'}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Sub-Elemento Despesa'>
-              {subelemento_despesa || '-'}
             </Descriptions.Item>
 
             <Descriptions.Item label='Data Criação'>

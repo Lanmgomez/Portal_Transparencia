@@ -46,6 +46,7 @@ const columns = () => [
     dataIndex: 'unidade_orcamentaria',
     key: 'unidade_orcamentaria',
     align: 'center',
+    width: 120,
   },
   {
     title: 'Origem Recurso',

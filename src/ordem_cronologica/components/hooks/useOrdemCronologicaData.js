@@ -23,7 +23,6 @@ export default function useOrdemCronologicaData({ filters }) {
       }
 
       const url = `${empenhos_api}?${params.toString()}`
-      console.log(url)
       return HttpRequest('GET', url)
     },
 

@@ -2,13 +2,6 @@ import { Form, Button, Radio, DatePicker, Select } from 'antd'
 import dayjs from 'dayjs'
 import './filtros.css'
 
-export const CATEGORY_OPTIONS = [
-  { label: 'Fornecimento de bens', value: '30,39,14' },
-  { label: 'Locações', value: 38 },
-  { label: 'Prestação de serviços', value: 37 },
-  { label: 'Obras e Edificações', value: 51 },
-]
-
 const generateYears = () => {
   const currentYear = new Date().getFullYear()
   return Array.from({ length: 5 }, (_, i) => ({
@@ -18,24 +11,36 @@ const generateYears = () => {
 }
 
 /* 
+CÓDIGOS TABELA INTERNA 04
+
 Fornecimento de bens
-30 — Material de Consumo
-32 — Material, Bem ou Serviço para Distribuição Gratuita
 52 — Equipamentos e Material Permanente
 
 Locações
+36 — Outros Serviços de Terceiros – Pessoa Física
+37 — Locação de Mão-de-Obra
 38 — Arrendamento Mercantil
+39 — Outros Serviços de Terceiros – Pessoa Jurídica
 
 Prestação de serviços
 35 — Serviços de Consultoria
 36 — Outros Serviços de Terceiros – Pessoa Física
-37 — Locação de Mão-de-Obra
 39 — Outros Serviços de Terceiros – Pessoa Jurídica
-40 — Serviços de Tecnologia da Informação e Comunicação – Pessoa Jurídica
 
 Obras e Edificações
 51 — Obras e Instalações
+
+Consumo
+30 — Material de Consumo
 */
+
+export const CATEGORY_OPTIONS = [
+  { label: 'Fornecimento de bens', value: '52' },
+  { label: 'Locações', value: '36,37,39' },
+  { label: 'Prestação de serviços', value: '35,36,39' },
+  { label: 'Obras e Edificações', value: '51' },
+  { label: 'Consumo', value: '30' },
+]
 
 export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()

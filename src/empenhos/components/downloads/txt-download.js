@@ -1,3 +1,8 @@
+import {
+  formatCurrencyBR,
+  formatDateBR,
+} from '../../../components/commons/utils'
+
 export function TXT_Download_Empenhos(data) {
   const texto = data
     .map((item, index) => {
@@ -7,21 +12,21 @@ Registro ${index + 1}
 Ano: ${item.ano ?? ''}
 Mês: ${item.mes ?? ''}
 N° Empenho: ${item.numero_empenho ?? ''}
-Beneficiário: ${item.beneficiario ?? ''}
+Beneficiário: ${item.fornecedor?.nome ?? ''}
 CPF/CNPJ: ${item.cpf_cnpj_credor ?? ''}
 Histórico: ${item.descricao ?? ''}
-Valor Empenhado: ${item.valor_empenhado ?? ''}
-Liquidação: ${item.valor_liquidaçao ?? ''}
-Data/Pagamento: ${item.dataPagamento ?? ''}
-Valor/Pagamento: ${item.pagamento ?? ''}
-Identificação/Licitação: ${item.licitacao ?? ''}
-Elemento: ${item.elemento ?? ''}
-Função: ${item.funcao ?? ''}
-Sub-Função: ${item.subFuncao ?? ''}
-Fonte/Recursos: ${item.fonte_recurso ?? ''}
-Grupo/Natureza: ${item.natureza_despesa ?? ''}
-Categoria Econômica: ${item.categoriaEconomica ?? ''}
-Unidade Orçamentária: ${item.unidade_orcamentaria ?? ''}
+Valor Empenhado: ${formatCurrencyBR(item.valor_empenhado ?? '')}
+Liquidação: ${item.liquidacoes[0]?.valor_liquidado ?? ''}
+Data/Pagamento: ${formatDateBR(item.pagamentos?.[0]?.data_pagamento ?? '')}
+Valor/Pagamento: ${formatCurrencyBR(item.valor_empenhado ?? '')}
+Identificação/Licitação: ${item.modalidade_licitacao_descricao ?? ''}
+Elemento: ${item.natureza_despesa_detalhada?.elemento?.descricao ?? ''}
+Função: ${item.funcao_descricao ?? ''}
+Sub-Função: ${item.subfuncao_descricao ?? ''}
+Fonte/Recursos: ${item.fonte_recurso_descricao ?? ''}
+Grupo/Natureza: ${item.natureza_despesa_detalhada?.grupo?.descricao ?? ''}
+Categoria Econômica: ${item.natureza_despesa_detalhada?.categoria?.descricao ?? ''}
+Unidade Orçamentária: ${item.unidade_orcamentaria?.denominacao ?? ''}
 `.trim()
     })
     .join('\n\n')
