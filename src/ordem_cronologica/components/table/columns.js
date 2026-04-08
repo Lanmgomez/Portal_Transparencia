@@ -1,5 +1,6 @@
-import { Table } from 'antd'
+import { Empty, Table } from 'antd'
 import { useRef, useEffect } from 'react'
+import getCurrentDate from '../../../components/commons/utils'
 
 const columns = () => [
   {
@@ -99,6 +100,15 @@ export default function OrdemCronologicaTable({
         loading={loading || isFetchingNextPage}
         pagination={false}
         scroll={{ y: 600 }}
+        locale={{
+          emptyText: (
+            <span>
+              <Empty description={false} />
+              Não há despesas nessa dotação no período informado - dados
+              atualizados em {getCurrentDate()}
+            </span>
+          ),
+        }}
       />
     </div>
   )

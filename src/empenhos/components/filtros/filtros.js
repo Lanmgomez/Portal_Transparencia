@@ -64,7 +64,7 @@ export default function Filtros({ onSearch, setFilters }) {
       <Form.Item
         name='unidade_codigo'
         style={{ fontWeight: 'bold' }}
-        label='Unidade Código'
+        label='Unidade Orçamentário'
         labelCol={{ style: { width: 180 } }}
         wrapperCol={{ style: { width: 200 } }}
       >

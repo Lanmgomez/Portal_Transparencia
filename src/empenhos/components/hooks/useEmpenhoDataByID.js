@@ -24,7 +24,7 @@ export default function useEmpenhoDataByID({ id }) {
   const modalidade_licitacao = empenho?.modalidade_licitacao_descricao
   const data_empenho = empenho?.data_empenho
   const valor_empenhado = empenho?.valor_empenhado
-  const cpf_cnpj_credor = empenho?.cpf_cnpj_credor
+  const cpf_cnpj_credor = empenho?.fornecedor?.cpf_cnpj
   const descricao = empenho?.descricao
   const natureza_despesa =
     empenho?.natureza_despesa_detalhada?.categoria?.descricao

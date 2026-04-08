@@ -192,7 +192,7 @@ export default function EmpenhosTable({
       dataSource={data}
       columns={columns({ setId, openModal, openLiqPgtModal })}
       loading={loading}
-      scroll={{ x: 'max-content', y: 600 }}
+      scroll={{ x: 'max-content', y: 700 }}
       onChange={onChange}
       pagination={{
         current: page,

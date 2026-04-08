@@ -6,13 +6,12 @@ import PagamentosTable from '../table/pagamentoColumns'
 import {
   formatYearMonth,
   formatDateBR,
-  maskCNPJ,
-  maskCPF,
   formatCurrencyBR,
   nomeMes,
+  hideCpf,
 } from '../../../components/commons/utils'
 
-const { Text, Paragraph } = Typography
+const { Paragraph } = Typography
 
 export default function ModalContent({ id }) {
   const [totalPago, setTotalPago] = useState()
@@ -42,7 +41,6 @@ export default function ModalContent({ id }) {
     liquidacao,
     total_liquidado,
     pagamentos,
-    created_at,
     isLoading,
     isError,
   } = useEmpenhoDataByID({
@@ -81,7 +79,7 @@ export default function ModalContent({ id }) {
             </Descriptions.Item>
 
             <Descriptions.Item label='CPF/CNPJ'>
-              {cpf_cnpj_credor ? maskCNPJ(cpf_cnpj_credor) : '-'}
+              {cpf_cnpj_credor ? hideCpf(cpf_cnpj_credor) : '-'}
             </Descriptions.Item>
 
             <Descriptions.Item label='Descrição'>
@@ -155,7 +153,7 @@ export default function ModalContent({ id }) {
             </Descriptions.Item>
 
             <Descriptions.Item label='CPF Ordenador'>
-              {cpf_ordenador ? maskCPF(cpf_ordenador) : '-'}
+              {cpf_ordenador ? hideCpf(cpf_ordenador) : '-'}
             </Descriptions.Item>
 
             <Descriptions.Item label='Elemento Despesa'>
@@ -172,10 +170,6 @@ export default function ModalContent({ id }) {
 
             <Descriptions.Item label='Modalidade Aplicação'>
               {modalidade_aplicacao || '-'}
-            </Descriptions.Item>
-
-            <Descriptions.Item label='Data Criação'>
-              {created_at ? formatDateBR(created_at) : '-'}
             </Descriptions.Item>
           </Descriptions>
 
