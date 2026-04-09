@@ -1,18 +1,15 @@
+import { useMemo } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import {
-  empenhos_api,
-  formatDateBR,
-  formatCurrencyBR,
   HttpRequest,
+  ordem_cronologica_api,
 } from '../../../components/commons/utils'
 
 export default function useOrdemCronologicaData({ filters }) {
   const query = useInfiniteQuery({
     queryKey: ['ordem_cronologica', filters],
-    queryFn: async ({ pageParam = 1 }) => {
+    queryFn: async () => {
       const params = new URLSearchParams()
-
-      params.set('page', pageParam)
 
       if (
         filters?.elementos !== null &&
@@ -22,11 +19,23 @@ export default function useOrdemCronologicaData({ filters }) {
         params.set('elementos', String(filters.elementos))
       }
 
-      const url = `${empenhos_api}?${params.toString()}`
+      if (filters?.ano) {
+        params.set('ano', filters.ano)
+      }
+
+      if (filters?.data_liquidacao_ini) {
+        params.set('data_liquidacao_ini', filters.data_liquidacao_ini)
+      }
+
+      if (filters?.data_liquidacao_fim) {
+        params.set('data_liquidacao_fim', filters.data_liquidacao_fim)
+      }
+
+      const url = `${ordem_cronologica_api}?${params.toString()}`
       return HttpRequest('GET', url)
     },
 
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       const currentPage = lastPage?.data?.current_page
       const lastPageNumber = lastPage?.data?.last_page
 
@@ -36,48 +45,15 @@ export default function useOrdemCronologicaData({ filters }) {
 
       return undefined
     },
-
-    keepPreviousData: true,
   })
 
-  // Junta todas as páginas
-  const raw = query.data?.pages.flatMap((page) => page?.data?.data ?? []) ?? []
-
-  const ordem_cronologica = raw.flatMap((item) => {
-    const liquidacoes = item.liquidacoes ?? []
-    const pagamentos = item.pagamentos ?? []
-
-    const totalLinhas = Math.max(liquidacoes.length, pagamentos.length, 1)
-
-    return Array.from({ length: totalLinhas }, (_, index) => {
-      const liquidacao = liquidacoes[index]
-      const pagamento = pagamentos[index]
-
-      return {
-        key: `${item.id}-${index}`,
-        ano: liquidacao?.ano,
-        data_liquidacao: liquidacao?.data_liquidacao
-          ? formatDateBR(liquidacao.data_liquidacao)
-          : '-',
-
-        data_pagamento: pagamento?.data_pagamento
-          ? formatDateBR(pagamento.data_pagamento)
-          : '-',
-
-        beneficiario: item.fornecedor?.nome ?? '-',
-        numero_empenho: item.numero_empenho ?? '-',
-        numero_parcela: pagamento?.numero_parcela ?? '-',
-
-        valor_pago: pagamento?.valor_pago
-          ? formatCurrencyBR(pagamento.valor_pago)
-          : formatCurrencyBR(0),
-
-        unidade_orcamentaria: item.unidade_orcamentaria?.denominacao ?? '-',
-        fonte_recurso_descricao: item.fonte_recurso_descricao ?? '-',
-        elemento: item.natureza_despesa_detalhada?.elemento?.descricao ?? '-',
-      }
-    })
-  })
+  const ordem_cronologica = useMemo(() => {
+    return (
+      query.data?.pages.reduce((acc, page) => {
+        return [...acc, ...(page?.data?.data ?? [])]
+      }, []) ?? []
+    )
+  }, [query.data])
 
   return {
     ordem_cronologica,

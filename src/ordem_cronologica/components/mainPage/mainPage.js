@@ -11,8 +11,8 @@ export default function MainPage() {
   const [filters, setFilters] = useState({
     elementos: null,
     ano: null,
-    data_ini: null,
-    data_fim: null,
+    data_liquidacao_ini: null,
+    data_liquidacao_fim: null,
   })
 
   const {

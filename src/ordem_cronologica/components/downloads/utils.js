@@ -22,10 +22,10 @@ export const columns = [
   { header: 'Data Pagamento', key: 'data_pagamento' },
   { header: 'Beneficiário', key: 'beneficiario' },
   { header: 'Empenho', key: 'numero_empenho' },
-  { header: 'Parcela', key: 'numero_parcela' },
+  { header: 'Parcela', key: 'parcela' },
   { header: 'Valor Pago', key: 'valor_pago' },
   { header: 'Unidade Orçamentária', key: 'unidade_orcamentaria' },
-  { header: 'Origem Recurso', key: 'fonte_recurso_descricao' },
+  { header: 'Origem Recurso', key: 'origem_recurso' },
   { header: 'Elemento', key: 'elemento' },
 ]
 
@@ -37,19 +37,12 @@ export function formatValue(key, value) {
 
 export function normalizeData(data) {
   return data.map((item) => {
-    const pagamento = item.pagamentos?.[0] || {}
-    const liquidacao = item.liquidacoes?.[0] || {}
-
     return {
-      data_liquidacao: formatDateBR(liquidacao.data_liquidacao || ''),
-      data_pagamento: formatDateBR(pagamento.data_pagamento) || '',
-      beneficiario: item.fornecedor?.nome || '',
-      numero_empenho: item.numero_empenho || '',
-      numero_parcela: pagamento.numero_parcela || '',
-      valor_pago: formatCurrencyBR(item.valor_empenhado || ''),
-      unidade_orcamentaria: item.unidade_orcamentaria?.denominacao || '',
-      fonte_recurso_descricao: item.fonte_recurso_descricao || '',
-      elemento: item.natureza_despesa_detalhada?.elemento?.descricao || '',
+      ...item,
+      data_liquidacao: formatDateBR(item.data_liquidacao),
+      data_pagamento: formatDateBR(item.data_pagamento),
+      valor_pago: formatCurrencyBR(item.valor_pago),
+      elemento: item.elemento_despesa?.elemento?.descricao,
     }
   })
 }
