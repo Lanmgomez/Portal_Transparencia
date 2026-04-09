@@ -1,6 +1,9 @@
 import { Empty, Table } from 'antd'
 import { useRef, useEffect } from 'react'
-import getCurrentDate from '../../../components/commons/utils'
+import getCurrentDate, {
+  formatCurrencyBR,
+  formatDateBR,
+} from '../../../components/commons/utils'
 
 const columns = () => [
   {
@@ -12,11 +15,13 @@ const columns = () => [
     title: 'Data Liquidação',
     dataIndex: 'data_liquidacao',
     key: 'data_liquidacao',
+    render: (value) => formatDateBR(value),
   },
   {
     title: 'Data Pagamento',
     dataIndex: 'data_pagamento',
     key: 'data_pagamento',
+    render: (value) => formatDateBR(value),
   },
   {
     title: 'Beneficiário',
@@ -32,8 +37,8 @@ const columns = () => [
   },
   {
     title: 'Parcela',
-    dataIndex: 'numero_parcela',
-    key: 'numero_parcela',
+    dataIndex: 'parcela',
+    key: 'parcela',
     align: 'center',
   },
   {
@@ -41,6 +46,7 @@ const columns = () => [
     dataIndex: 'valor_pago',
     key: 'valor_pago',
     align: 'center',
+    render: (value) => formatCurrencyBR(value),
   },
   {
     title: 'Unidade Orçamentária',
@@ -51,14 +57,14 @@ const columns = () => [
   },
   {
     title: 'Origem Recurso',
-    dataIndex: 'fonte_recurso_descricao',
-    key: 'fonte_recurso_descricao',
+    dataIndex: 'origem_recurso',
+    key: 'origem_recurso',
     align: 'center',
   },
   {
     title: 'Elemento',
-    dataIndex: 'elemento',
-    key: 'elemento',
+    dataIndex: ['elemento_despesa', 'elemento', 'descricao'],
+    key: 'elemento_despesa',
     align: 'center',
   },
 ]

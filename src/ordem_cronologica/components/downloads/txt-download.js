@@ -1,4 +1,7 @@
-import { formatDateBR } from '../../../components/commons/utils'
+import {
+  formatCurrencyBR,
+  formatDateBR,
+} from '../../../components/commons/utils'
 
 export function TXT_Download_Ordem_Cronologica(data) {
   const texto = data
@@ -6,15 +9,16 @@ export function TXT_Download_Ordem_Cronologica(data) {
       return `
 Registro ${index + 1}
 --------------------
-Data Liquidação: ${formatDateBR(item.liquidacoes?.[0]?.data_liquidacao ?? '')}
-Data Pagamento: ${formatDateBR(item.pagamentos?.[0]?.data_pagamento ?? '')}
-Beneficiário: ${item.fornecedor?.nome ?? ''}
-Empenho: ${item.tipo_empenho_descricao ?? ''}
-Parcela: ${item.pagamentos?.[0]?.numero_parcela ?? ''}
-Valor Pago: ${item.valor_empenhado ?? ''}
-Unidade Orçamentária: ${item.unidade_orcamentaria?.denominacao ?? ''}
-Origem Recurso: ${item.fonte_recurso_descricao ?? ''}
-Elemento: ${item.natureza_despesa_detalhada?.elemento?.descricao ?? ''}
+Ano: ${item.ano}
+Data Liquidação: ${formatDateBR(item.data_liquidacao)}
+Data Pagamento: ${formatDateBR(item.data_pagamento)}
+Beneficiário: ${item.beneficiario}
+Empenho: ${item.numero_empenho}
+Parcela: ${item.parcela}
+Valor Pago: ${formatCurrencyBR(item.valor_pago)}
+Unidade Orçamentária: ${item.unidade_orcamentaria}
+Origem Recurso: ${item.origem_recurso}
+Elemento: ${item.elemento_despesa?.elemento?.descricao}
 `.trim()
     })
     .join('\n\n')

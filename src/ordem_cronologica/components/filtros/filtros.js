@@ -53,11 +53,11 @@ export default function Filtros({ onSearch, setFilters }) {
     const formatted = {
       ...currentValues,
       elementos: value,
-      data_ini: currentValues.data_ini
-        ? dayjs(currentValues.data_ini).format('YYYY-MM-DD')
+      data_liquidacao_ini: currentValues.data_liquidacao_ini
+        ? dayjs(currentValues.data_liquidacao_ini).format('YYYY-MM-DD')
         : null,
-      data_fim: currentValues.data_fim
-        ? dayjs(currentValues.data_fim).format('YYYY-MM-DD')
+      data_liquidacao_fim: currentValues.data_liquidacao_fim
+        ? dayjs(currentValues.data_liquidacao_fim).format('YYYY-MM-DD')
         : null,
     }
 
@@ -70,11 +70,11 @@ export default function Filtros({ onSearch, setFilters }) {
   const handleFinish = (values) => {
     const formatted = {
       ...values,
-      data_ini: values.data_ini
-        ? dayjs(values.data_ini).format('YYYY-MM-DD')
+      data_liquidacao_ini: values.data_liquidacao_ini
+        ? dayjs(values.data_liquidacao_ini).format('YYYY-MM-DD')
         : null,
-      data_fim: values.data_fim
-        ? dayjs(values.data_fim).format('YYYY-MM-DD')
+      data_liquidacao_fim: values.data_liquidacao_fim
+        ? dayjs(values.data_liquidacao_fim).format('YYYY-MM-DD')
         : null,
     }
 
@@ -106,13 +106,13 @@ export default function Filtros({ onSearch, setFilters }) {
         />
       </Form.Item>
 
-      {/* Data inicial */}
-      <Form.Item label='Data Inicial' name='data_ini'>
+      {/* Data liquidação inicial */}
+      <Form.Item label='Data Inicial' name='data_liquidacao_ini'>
         <DatePicker format='DD/MM/YYYY' />
       </Form.Item>
 
       {/* Data final */}
-      <Form.Item label='Data Final' name='data_fim'>
+      <Form.Item label='Data Final' name='data_liquidacao_fim'>
         <DatePicker format='DD/MM/YYYY' />
       </Form.Item>
 
@@ -153,8 +153,8 @@ export default function Filtros({ onSearch, setFilters }) {
             const cleared = {
               elementos: null,
               ano: null,
-              data_ini: null,
-              data_fim: null,
+              data_liquidacao_ini: null,
+              data_liquidacao_fim: null,
             }
 
             setFilters(cleared)
