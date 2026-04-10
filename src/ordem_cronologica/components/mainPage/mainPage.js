@@ -9,7 +9,7 @@ import Filtros from '../filtros/filtros'
 
 export default function MainPage() {
   const [filters, setFilters] = useState({
-    elementos: null,
+    elemento_despesa: null,
     ano: null,
     data_liquidacao_ini: null,
     data_liquidacao_fim: null,

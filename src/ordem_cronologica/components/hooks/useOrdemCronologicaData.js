@@ -8,15 +8,17 @@ import {
 export default function useOrdemCronologicaData({ filters }) {
   const query = useInfiniteQuery({
     queryKey: ['ordem_cronologica', filters],
-    queryFn: async () => {
+    queryFn: async ({ pageParam = 1 }) => {
       const params = new URLSearchParams()
 
+      params.set('page', String(pageParam))
+
       if (
-        filters?.elementos !== null &&
-        filters?.elementos !== undefined &&
-        filters?.elementos !== ''
+        filters?.elemento_despesa !== null &&
+        filters?.elemento_despesa !== undefined &&
+        filters?.elemento_despesa !== ''
       ) {
-        params.set('elementos', String(filters.elementos))
+        params.set('elemento_despesa', String(filters.elemento_despesa))
       }
 
       if (filters?.ano) {

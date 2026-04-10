@@ -52,7 +52,7 @@ export default function Filtros({ onSearch, setFilters }) {
 
     const formatted = {
       ...currentValues,
-      elementos: value,
+      elemento_despesa: value,
       data_liquidacao_ini: currentValues.data_liquidacao_ini
         ? dayjs(currentValues.data_liquidacao_ini).format('YYYY-MM-DD')
         : null,
@@ -118,7 +118,7 @@ export default function Filtros({ onSearch, setFilters }) {
 
       <Form.Item
         label='Categoria'
-        name='elementos'
+        name='elemento_despesa'
         style={{ minWidth: '100%' }}
       >
         <Radio.Group
@@ -151,7 +151,7 @@ export default function Filtros({ onSearch, setFilters }) {
             form.resetFields()
 
             const cleared = {
-              elementos: null,
+              elemento_despesa: null,
               ano: null,
               data_liquidacao_ini: null,
               data_liquidacao_fim: null,
