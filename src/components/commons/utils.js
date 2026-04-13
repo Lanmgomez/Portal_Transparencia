@@ -4,6 +4,13 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 export const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
+/* :
+api teste: https://transparencia-api.viniciusm.com.br/api
+
+em prod:
+api iguaracy https://transparencia-api.iguaracy.pe.leg.br
+api itacuruba: https://transparencia-api.itacuruba.pe.leg.br
+*/
 
 const login_url = `${BASE_URL}/login`
 export const logout_url = `${BASE_URL}/logout`
