@@ -1,4 +1,5 @@
-import { Table } from 'antd'
+import { Empty, Table } from 'antd'
+import getCurrentDate from '../../../components/commons/utils'
 
 const columns = () => [
   {
@@ -92,6 +93,15 @@ export default function DespesasDiariasTable({
         showSizeChanger: true,
         pageSizeOptions: ['5', '10', '20', '50'],
         showTotal: (t, range) => `${range[0]}-${range[1]} de ${t}`,
+      }}
+      locale={{
+        emptyText: (
+          <span>
+            <Empty description={false} />
+            Não houve diárias para o período consultado - dados atualizados em{' '}
+            {getCurrentDate()}
+          </span>
+        ),
       }}
     />
   )
