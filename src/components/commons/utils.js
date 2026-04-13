@@ -3,13 +3,15 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://transparencia-api.iguaracy.pe.leg.br/api'
+export const BASE_URL = 'https://transparencia-api-iprein.novacaoweb.com.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
 em prod:
 api iguaracy https://transparencia-api.iguaracy.pe.leg.br/api
 api itacuruba: https://transparencia-api.itacuruba.pe.leg.br/api
+api iprein: https://transparencia-api-iprein.novacaoweb.com.br/api
+api funprevi: https://transparencia-api.funprevi.pe.gov.br/api
 */
 
 const login_url = `${BASE_URL}/login`
