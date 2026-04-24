@@ -1,7 +1,9 @@
 import { Card, Row, Col } from 'antd'
-import { DollarOutlined } from '@ant-design/icons'
+import { DollarOutlined, HomeOutlined } from '@ant-design/icons'
 
-const CardResumo = ({ titulo, valor, cor, porcentagem }) => {
+const CardResumo = ({ titulo, valor, cor, porcentagem, icon }) => {
+  const Icon = icon || DollarOutlined
+
   return (
     <Card
       style={{
@@ -10,7 +12,6 @@ const CardResumo = ({ titulo, valor, cor, porcentagem }) => {
       }}
       bodyStyle={{ display: 'flex', alignItems: 'center', gap: 16 }}
     >
-      {/* badge percentual */}
       {porcentagem && (
         <div
           style={{
@@ -29,7 +30,6 @@ const CardResumo = ({ titulo, valor, cor, porcentagem }) => {
         </div>
       )}
 
-      {/* ícone */}
       <div
         style={{
           width: 50,
@@ -41,13 +41,14 @@ const CardResumo = ({ titulo, valor, cor, porcentagem }) => {
           justifyContent: 'center',
         }}
       >
-        <DollarOutlined style={{ fontSize: 24, color: cor }} />
+        <Icon style={{ fontSize: 24, color: cor }} />
       </div>
 
-      {/* conteúdo */}
       <div>
         <div style={{ fontSize: 14, color: '#555' }}>{titulo}</div>
-        <div style={{ fontSize: 20, fontWeight: 'bold' }}>{valor}</div>
+        <div style={{ fontSize: 20, fontWeight: 'bold' }}>
+          {valor || 'Não informado'}
+        </div>
       </div>
     </Card>
   )
@@ -68,15 +69,14 @@ export default function DashboardCards({
         style={{
           width: '100%',
           marginBottom: '30px',
-          //   display: 'flex',
-          //   justifyContent: 'center',
         }}
       >
         <Col span={8}>
           <CardResumo
             titulo='Unidade Orçamentária'
             valor={unidade_orcamentaria}
-            cor='#e6e9fa'
+            cor='#3f51b5'
+            icon={HomeOutlined}
           />
         </Col>
       </Row>
