@@ -42,6 +42,7 @@ const items = [
       { key: '3', label: 'Empenhos', url: '/empenhos' },
       { key: '10', label: 'Despesas Diárias', url: '/despesas-diarias' },
       { key: '11', label: 'Ordem Cronológica', url: '/ordem-cronologica' },
+      { key: '12', label: 'Consolidada', url: '/despesas-consolidadas' },
     ],
   },
   {

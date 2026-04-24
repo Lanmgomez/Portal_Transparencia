@@ -46,11 +46,24 @@ const items = [
   },
   {
     key: '4',
+    icon: <SnippetsOutlined />,
+    label: (
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href='/public-despesas-consolidadas'
+      >
+        Ir para página pública - Despesas Consolidadas
+      </a>
+    ),
+  },
+  {
+    key: '5',
     icon: <PlusOutlined />,
     label: <Link to='/cadastrar-nova-remessa'>Cadastrar nova Remessa</Link>,
   },
   {
-    key: '5',
+    key: '6',
     icon: <DeleteOutlined />,
     label: <Link to='/excluir-remessa'>Excluir Remessa</Link>,
   },

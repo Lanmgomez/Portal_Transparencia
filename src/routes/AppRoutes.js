@@ -24,6 +24,8 @@ import Despesas from '../despesas-diarias/despesas'
 import DespesasPublicPage from '../despesas-diarias/public-route/despesasPublic'
 import OrdemCronologicaPublic from '../ordem_cronologica/public-route/ordemCronologicaPublic'
 import OrdemCronologicaPage from '../ordem_cronologica/ordemCronologica'
+import DespesasConsolidadas from '../despesas-consolidadas/despesas'
+import DespesasConsolidadasPublicPage from '../despesas-consolidadas/public-route/despesasPublic'
 
 function SidebarWrapper() {
   const location = useLocation()
@@ -53,6 +55,10 @@ export default function AppRoutes() {
         <Route
           path='/public-ordem-cronologica'
           element={<OrdemCronologicaPublic />}
+        />
+        <Route
+          path='/public-despesas-consolidadas'
+          element={<DespesasConsolidadasPublicPage />}
         />
 
         {/** Private routes */}
@@ -189,6 +195,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoutesAuth>
               <OrdemCronologicaPage />
+            </PrivateRoutesAuth>
+          }
+        />
+        <Route
+          path='/despesas-consolidadas'
+          element={
+            <PrivateRoutesAuth>
+              <DespesasConsolidadas />
             </PrivateRoutesAuth>
           }
         />

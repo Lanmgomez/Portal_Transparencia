@@ -1,0 +1,49 @@
+import { columns, normalizeData, formatValue } from './utils'
+
+function downloadBlob(filename, content, mime) {
+  const blob = new Blob([content], { type: mime })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+
+  a.href = url
+  a.download = filename
+  a.click()
+
+  URL.revokeObjectURL(url)
+}
+
+function escapeCSV(value) {
+  if (value == null) return ''
+
+  const str = String(value)
+
+  if (str.includes(';') || str.includes('\n') || str.includes('"')) {
+    return `"${str.replace(/"/g, '""')}"`
+  }
+
+  return str
+}
+
+function convertToExcel(data = []) {
+  const rowsData = normalizeData(data)
+  const sep = ';'
+
+  const header = columns.map((c) => c.header).join(sep)
+
+  const rows = rowsData.map((row) =>
+    columns
+      .map((c) => {
+        const value = formatValue(c.key, row?.[c.key])
+        return escapeCSV(value)
+      })
+      .join(sep),
+  )
+
+  return '\uFEFF' + [header, ...rows].join('\n')
+}
+
+export const Excel_Download_Despesas = (data = []) => {
+  const csv = convertToExcel(data)
+
+  downloadBlob('despesas_consolidadas.csv', csv, 'text/csv;charset=utf-8;')
+}
