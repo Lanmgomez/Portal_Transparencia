@@ -24,6 +24,7 @@ export const empenhos_api = `${BASE_URL}/empenhos`
 export const fornecedores_api = `${BASE_URL}/fornecedores`
 export const despesas_api = `${BASE_URL}/empenhos?somente_diarias=1`
 export const ordem_cronologica_api = `${BASE_URL}/empenhos/ordem-cronologica-pagamentos`
+export const despesas_consolidadas_api = `${BASE_URL}/despesas-consolidadas`
 
 const PUBLIC_ROUTES = [
   '/',
@@ -31,6 +32,7 @@ const PUBLIC_ROUTES = [
   '/public-receitas-transferencias',
   '/public-empenhos',
   '/public-despesas-diarias',
+  '/public-despesas-consolidadas',
   '/public-ordem-cronologica',
 ]
 

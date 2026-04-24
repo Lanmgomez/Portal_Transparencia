@@ -7,7 +7,7 @@ export const useTheme = () => useContext(ThemeContext)
 function ThemeProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('theme_mode')
-    return savedMode !== null ? JSON.parse(savedMode) : true
+    return savedMode !== null ? JSON.parse(savedMode) : false
   })
 
   const [primaryColor, setPrimaryColor] = useState(() => {
