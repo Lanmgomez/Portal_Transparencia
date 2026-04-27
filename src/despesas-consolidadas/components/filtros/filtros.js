@@ -6,14 +6,14 @@ import './filtros.css'
 const { RangePicker } = DatePicker
 
 export const FiltersOptions = {
-  ano: null,
+  ano: 2026,
   mes: null,
   periodo: null,
   data_ini: null,
   data_fim: null,
 }
 
-const resetFilters = ['q', 'ano', 'mes', 'periodo', 'data_ini', 'data_fim']
+const resetFilters = ['ano', 'mes', 'periodo', 'data_ini', 'data_fim']
 
 export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()

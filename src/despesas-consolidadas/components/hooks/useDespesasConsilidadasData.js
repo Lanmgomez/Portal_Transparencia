@@ -28,7 +28,7 @@ export default function useDespesasConsolidadasData({ filters }) {
   })
 
   const despesas_consolidadas = data?.data?.total_geral
-  const unidade_orcamentaria = data?.unidade_orcamentaria
+  const unidade_orcamentaria = data?.data?.unidade_orcamentaria
 
   const valor_total_empenhado = formatCurrencyBR(
     despesas_consolidadas?.valor_total_empenhado,
