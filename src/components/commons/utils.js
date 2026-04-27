@@ -83,16 +83,102 @@ export async function LoginRequest(email, password) {
   }
 }
 
-export default function getCurrentDate() {
+export default function getCurrentDate(feriadosExtras = []) {
   const hoje = new Date()
+  let data = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate())
 
-  const dia = String(hoje.getDate()).padStart(2, '0')
-  const mes = String(hoje.getMonth() + 1).padStart(2, '0')
-  const ano = hoje.getFullYear()
+  let diasUteisParaVoltar = 10
 
-  const dataAtual = `${dia}/${mes}/${ano}`
+  while (diasUteisParaVoltar > 0) {
+    data.setDate(data.getDate() - 1)
 
-  return dataAtual
+    if (isDiaUtil(data, feriadosExtras)) {
+      diasUteisParaVoltar--
+    }
+  }
+
+  const dia = String(data.getDate()).padStart(2, '0')
+  const mes = String(data.getMonth() + 1).padStart(2, '0')
+  const ano = data.getFullYear()
+
+  return `${dia}/${mes}/${ano}`
+}
+
+function isDiaUtil(data, feriadosExtras = []) {
+  const diaDaSemana = data.getDay()
+
+  const isFinalDeSemana = diaDaSemana === 0 || diaDaSemana === 6
+  const isFeriado = getFeriadosBrasil(
+    data.getFullYear(),
+    feriadosExtras,
+  ).includes(formatDate(data))
+
+  return !isFinalDeSemana && !isFeriado
+}
+
+function getFeriadosBrasil(ano, feriadosExtras = []) {
+  const pascoa = getDataPascoa(ano)
+
+  const sextaFeiraSanta = addDays(pascoa, -2)
+  const carnavalSegunda = addDays(pascoa, -48)
+  const carnavalTerca = addDays(pascoa, -47)
+  const corpusChristi = addDays(pascoa, 60)
+
+  return [
+    // Feriados nacionais fixos
+    `01/01/${ano}`, // Confraternização Universal
+    `21/04/${ano}`, // Tiradentes
+    `01/05/${ano}`, // Dia do Trabalho
+    `07/09/${ano}`, // Independência do Brasil
+    `12/10/${ano}`, // Nossa Senhora Aparecida
+    `02/11/${ano}`, // Finados
+    `15/11/${ano}`, // Proclamação da República
+    `20/11/${ano}`, // Consciência Negra
+    `25/12/${ano}`, // Natal
+
+    // Feriados móveis / datas normalmente não úteis
+    formatDate(sextaFeiraSanta),
+    formatDate(carnavalSegunda),
+    formatDate(carnavalTerca),
+    formatDate(corpusChristi),
+
+    // Feriados estaduais ou municipais
+    ...feriadosExtras,
+  ]
+}
+
+function getDataPascoa(ano) {
+  const a = ano % 19
+  const b = Math.floor(ano / 100)
+  const c = ano % 100
+  const d = Math.floor(b / 4)
+  const e = b % 4
+  const f = Math.floor((b + 8) / 25)
+  const g = Math.floor((b - f + 1) / 3)
+  const h = (19 * a + b - d - g + 15) % 30
+  const i = Math.floor(c / 4)
+  const k = c % 4
+  const l = (32 + 2 * e + 2 * i - h - k) % 7
+  const m = Math.floor((a + 11 * h + 22 * l) / 451)
+
+  const mes = Math.floor((h + l - 7 * m + 114) / 31) - 1
+  const dia = ((h + l - 7 * m + 114) % 31) + 1
+
+  return new Date(ano, mes, dia)
+}
+
+function addDays(data, dias) {
+  const novaData = new Date(data)
+  novaData.setDate(novaData.getDate() + dias)
+  return novaData
+}
+
+function formatDate(data) {
+  const dia = String(data.getDate()).padStart(2, '0')
+  const mes = String(data.getMonth() + 1).padStart(2, '0')
+  const ano = data.getFullYear()
+
+  return `${dia}/${mes}/${ano}`
 }
 
 export function HttpRequest(request_method, url, values) {
