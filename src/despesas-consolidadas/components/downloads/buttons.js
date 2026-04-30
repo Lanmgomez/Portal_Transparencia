@@ -32,30 +32,30 @@ export default function DownloadsButtons({ filters, export_data }) {
     <Space style={{ marginBottom: 50 }} size='large' wrap>
       <span>Exportar arquivo para:</span>
       <Button
-        style={{ color: 'green' }}
+        style={{ color: '#1D6F42', borderColor: '#1D6F42' }}
         size='large'
         icon={<FileExcelOutlined />}
         onClick={() => handleExport('csv', export_data)}
       >
-        Formato CSV
+        Formato .CSV
       </Button>
 
       <Button
-        style={{ color: 'red' }}
+        style={{ color: '#FF0000', borderColor: '#FF0000' }}
         size='large'
         icon={<FilePdfOutlined />}
         onClick={() => handleExport('pdf', export_data)}
       >
-        Formato PDF
+        Formato .PDF
       </Button>
 
       <Button
-        style={{ color: 'blue' }}
+        style={{ color: '#4472C4', borderColor: '#4472C4' }}
         size='large'
         icon={<FileWordOutlined />}
         onClick={() => handleExport('odt', export_data)}
       >
-        Formato ODT
+        Formato .ODT
       </Button>
 
       <Button

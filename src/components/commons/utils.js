@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://transparencia-api.tuparetama.pe.leg.br/api'
+export const BASE_URL = 'https://transparencia-api.viniciusm.com.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
@@ -260,6 +260,22 @@ export const yearOption = [
   { value: 2024, label: '2024' },
   { value: 2023, label: '2023' },
   { value: 2022, label: '2022' },
+]
+
+export const categoriaEconomica = [
+  { value: 3, label: 'Despesa Corrente' },
+  { value: 4, label: 'Despesa de Capital' },
+  { value: 9, label: 'Reserva de Contingência' },
+]
+
+export const gruposNatureza = [
+  { value: 1, label: 'Pessoal e Encargos Sociais' },
+  { value: 2, label: 'Juros e Encargos da Dívida' },
+  { value: 3, label: 'Outras Despesas Correntes' },
+  { value: 4, label: 'Investimentos' },
+  { value: 5, label: 'Inversões Financeiras' },
+  { value: 6, label: 'Amortização da Dívida' },
+  { value: 9, label: 'Reserva de Contingência/Reserva RPPS' },
 ]
 
 export const mouthOption = [

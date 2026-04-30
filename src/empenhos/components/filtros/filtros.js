@@ -1,17 +1,26 @@
 import { Input, Select, Form, Button, DatePicker } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
-import { mouthOption, yearOption } from '../../../components/commons/utils'
+import {
+  categoriaEconomica,
+  gruposNatureza,
+  mouthOption,
+  yearOption,
+} from '../../../components/commons/utils'
 import { mask } from 'remask'
 import './filtros.css'
+import useEmpenhosData from '../hooks/useEmpenhosData'
 
 export const FiltersOptions = {
   ano: null,
   mes: null,
-  unidade_codigo: null,
+  unidade_orcamentaria: null,
   numero_empenho: null,
+  beneficiario: null,
   cpf_cnpj: null,
   data_ini: null,
   data_fim: null,
+  categoria_economica: null,
+  grupo_natureza: null,
   q: null,
 }
 
@@ -19,15 +28,23 @@ const resetFilters = [
   'q',
   'ano',
   'mes',
-  'unidade_codigo',
+  'unidade_orcamentaria',
   'numero_empenho',
+  'beneficiario',
   'cpf_cnpj',
   'data_ini',
+  'categoria_economica',
+  'grupo_natureza',
   'data_fim',
 ]
 
 export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()
+
+  // TODO - refazer com a api quando vinicius montar
+  const { empenhos } = useEmpenhosData(1, 20)
+  const unidade_orcamentaria_label = empenhos[0]?.unidade_orcamentaria
+  const unidade_orcamentaria_codigo = empenhos[0]?.unidade_orcamentaria_codigo
 
   return (
     <Form
@@ -62,22 +79,36 @@ export default function Filtros({ onSearch, setFilters }) {
       </Form.Item>
 
       <Form.Item
-        name='unidade_codigo'
-        style={{ fontWeight: 'bold' }}
-        label='Unidade Orçamentário'
-        labelCol={{ style: { width: 180 } }}
-        wrapperCol={{ style: { width: 200 } }}
+        name='unidade_orcamentaria'
+        label={
+          <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+            Uni. Orçamentária
+          </span>
+        }
+        style={{ width: 300 }}
       >
-        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
+        <Select
+          style={{ minHeight: 40, width: '100%' }}
+          placeholder='Escolher natureza...'
+          // TODO - refazer com a api quando vinicius montar
+          options={[
+            {
+              value: `${unidade_orcamentaria_label}`,
+              label: `${unidade_orcamentaria_label}`,
+            },
+          ]}
+        />
       </Form.Item>
 
       <Form.Item
-        name='numero_empenho'
+        name='beneficiario'
         style={{ fontWeight: 'bold' }}
-        label='N° Empenho'
-        wrapperCol={{ style: { width: 300 } }}
+        label='Beneficiário'
       >
-        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
+        <Input
+          style={{ minHeight: 40, width: 235 }}
+          placeholder='Pesquisar nome beneficiário...'
+        />
       </Form.Item>
 
       <Form.Item
@@ -102,6 +133,15 @@ export default function Filtros({ onSearch, setFilters }) {
       </Form.Item>
 
       <Form.Item
+        name='numero_empenho'
+        style={{ fontWeight: 'bold' }}
+        label='N° Empenho'
+        wrapperCol={{ style: { width: 250 } }}
+      >
+        <Input style={{ minHeight: 40 }} placeholder='Pesquise algo...' />
+      </Form.Item>
+
+      <Form.Item
         name='data_ini'
         style={{ fontWeight: 'bold' }}
         label='Data Inicial'
@@ -122,6 +162,38 @@ export default function Filtros({ onSearch, setFilters }) {
           style={{ minHeight: 40 }}
           format='DD/MM/YYYY'
           placeholder='Pesquisar...'
+        />
+      </Form.Item>
+
+      <Form.Item
+        name='categoria_economica'
+        label={
+          <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+            Cat. Econômica
+          </span>
+        }
+        style={{ width: 200 }}
+      >
+        <Select
+          style={{ minHeight: 40, width: '100%' }}
+          placeholder='Escolher categoria...'
+          options={categoriaEconomica}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name='grupo_natureza'
+        label={
+          <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
+            Grupos Natureza
+          </span>
+        }
+        style={{ width: 300 }}
+      >
+        <Select
+          style={{ minHeight: 40, width: '100%' }}
+          placeholder='Escolher natureza...'
+          options={gruposNatureza}
         />
       </Form.Item>
 

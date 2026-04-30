@@ -1,6 +1,7 @@
-import { Button, Table, Space } from 'antd'
+import { Button, Table, Space, Empty } from 'antd'
 import { BarsOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import getCurrentDate from '../../../components/commons/utils'
 
 const columns = ({ setId, openModal, openLiqPgtModal }) => [
   {
@@ -201,6 +202,15 @@ export default function EmpenhosTable({
         showSizeChanger: true,
         pageSizeOptions: ['5', '10', '20', '50'],
         showTotal: (t, range) => `${range[0]}-${range[1]} de ${t}`,
+      }}
+      locale={{
+        emptyText: (
+          <span>
+            <Empty description={false} />
+            Não houve empenhos/liquidação/pagamentos para o período consultado -
+            dados atualizados em {getCurrentDate()}
+          </span>
+        ),
       }}
     />
   )

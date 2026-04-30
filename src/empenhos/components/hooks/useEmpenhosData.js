@@ -49,10 +49,9 @@ export default function useEmpenhosData(page, perPage) {
         item.receita_extra_orcamentaria,
       ),
       unidade_orcamentaria: item.unidade_orcamentaria.denominacao,
+      unidade_orcamentaria_codigo: item.unidade_orcamentaria.codigo,
     }
   })
-
-  console.log(empenhos)
 
   const total = data?.data?.total || 0
 

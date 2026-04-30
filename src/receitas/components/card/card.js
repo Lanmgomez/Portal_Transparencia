@@ -149,10 +149,6 @@ export function ReceitaPrevistaCard({ hide }) {
 
             <div style={{ textAlign: 'right' }}>
               <Statistic value={valor_estimado} precision={2} />
-
-              <Text>
-                <ArrowUpOutlined /> atualizado hoje
-              </Text>
             </div>
           </div>
         </Card>
