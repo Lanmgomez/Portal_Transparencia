@@ -185,7 +185,7 @@ export default function Filtros({ onSearch, setFilters }) {
         name='grupo_natureza'
         label={
           <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold' }}>
-            Grupos Natureza
+            Grupo/Natureza
           </span>
         }
         style={{ width: 300 }}
