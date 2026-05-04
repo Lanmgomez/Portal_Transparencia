@@ -387,7 +387,7 @@ const formatEmpenho = (item) => {
     ano,
     mes: nomeMes(item.mes),
     beneficiario: item.fornecedor.nome,
-    cpf_cnpj_credor: hideCpf(item.cpf_cnpj_credor),
+    cpf_cnpj_credor: hideCpf(item.fornecedor.cpf_cnpj),
     data_empenho: formatDateBR(item.data_empenho),
     valor_empenhado: formatCurrencyBR(item.valor_empenhado),
     pagamento: formatCurrencyBR(item.resumo_pagamento.total_pago),
