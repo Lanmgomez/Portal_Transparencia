@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ArrowUpOutlined, CalendarOutlined } from '@ant-design/icons'
 import useCardReceitasData from '../hooks/useCardReceitasData.js'
 import {
@@ -34,12 +34,18 @@ export function ReceitaPrevistaCard({ hide }) {
   const [openForm, setOpenForm] = useState(false)
   const [btnMsg, setBtnMsg] = useState('Editar')
 
+  const queryClient = useQueryClient()
+
   const { id, ano, titulo, valor_estimado } = useCardReceitasData()
 
   const createTitleReceita = useMutation({
     mutationFn: (values) =>
       HttpRequest('PUT', `${receitas_prevista_url}/${id}`, values),
-    onSuccess: () => message.success('Salvo com sucesso!'),
+    onSuccess: () => {
+      message.success('Salvo com sucesso!')
+      setBtnMsg('Editar')
+      queryClient.invalidateQueries({ queryKey: ['receitas-previstas'] })
+    },
     onError: (err) => ErrorMessage(err),
   })
 
