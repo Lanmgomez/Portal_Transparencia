@@ -128,7 +128,13 @@ const columns = ({ setId, openModal, openLiqPgtModal }) => [
     align: 'center',
   },
   {
-    title: 'Identificação/Licitação',
+    title: 'N° do Processo Licitatório',
+    dataIndex: 'numero_procedimento',
+    key: 'numero_procedimento',
+    align: 'center',
+  },
+  {
+    title: 'Modalidade',
     dataIndex: 'licitacao',
     key: 'licitacao',
     align: 'center',

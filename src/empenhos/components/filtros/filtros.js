@@ -21,6 +21,7 @@ export const FiltersOptions = {
   data_fim: null,
   categoria_economica: null,
   grupo_natureza: null,
+  modalidade_licitacao: null,
   q: null,
 }
 
@@ -36,6 +37,7 @@ const resetFilters = [
   'categoria_economica',
   'grupo_natureza',
   'data_fim',
+  'modalidade_licitacao',
 ]
 
 export default function Filtros({ onSearch, setFilters }) {
@@ -45,6 +47,17 @@ export default function Filtros({ onSearch, setFilters }) {
   const { empenhos } = useEmpenhosData(1, 20)
   const unidade_orcamentaria_label = empenhos[0]?.unidade_orcamentaria
   const unidade_orcamentaria_codigo = empenhos[0]?.unidade_orcamentaria_codigo
+
+  const modalidades = [
+    { nome: 'Pregão Eletrônico', valor: 0 },
+    { nome: 'Concorrência', valor: 1 },
+    { nome: 'Concurso', valor: 4 },
+    { nome: 'Leilão', valor: 5 },
+    { nome: 'Dispensa', valor: 6 },
+    { nome: 'Inexigibilidade', valor: 8 },
+    { nome: 'Sem Licitação', valor: 9 },
+    { nome: 'Adesão a Registro de Preço', valor: 10 },
+  ]
 
   return (
     <Form
@@ -130,6 +143,33 @@ export default function Filtros({ onSearch, setFilters }) {
             form.setFieldValue('cpf_cnpj', masked)
           }}
         />
+      </Form.Item>
+
+      <Form.Item
+        name='modalidade_licitacao'
+        style={{ fontWeight: 'bold' }}
+        label='Mod. Licitação'
+        wrapperCol={{ style: { width: 250 } }}
+      >
+        <select
+          style={{
+            minHeight: 40,
+            width: '100%',
+            border: '1px solid #d9d9d9',
+            borderRadius: 6,
+            padding: '4px 11px',
+            fontSize: 14,
+            backgroundColor: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          <option value=''>Selecione...</option>
+          {modalidades.map((m) => (
+            <option key={m.valor} value={m.valor}>
+              {m.nome}
+            </option>
+          ))}
+        </select>
       </Form.Item>
 
       <Form.Item

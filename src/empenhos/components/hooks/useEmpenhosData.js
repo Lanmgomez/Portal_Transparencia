@@ -5,6 +5,7 @@ import {
   formatDateBR,
   hideCpf,
   formatCurrencyBR,
+  formatModalidadeLicitacao,
   nomeMes,
 } from '../../../components/commons/utils'
 
@@ -29,11 +30,12 @@ export default function useEmpenhosData(page, perPage) {
       valor_empenhado: formatCurrencyBR(item.valor_empenhado),
       pagamento: formatCurrencyBR(item.resumo_pagamento.total_pago),
       dataPagamento: formatDateBR(item.pagamentos[0]?.data_pagamento),
-      licitacao: item.modalidade_licitacao_descricao,
+      licitacao: formatModalidadeLicitacao(item.modalidade_licitacao_descricao),
       elemento: item.natureza_despesa_detalhada.elemento.descricao,
       funcao: item.funcao_descricao,
       subFuncao: item.subfuncao_descricao,
       fonte_recurso: item.fonte_recurso_descricao,
+      numero_procedimento: item.numero_procedimento ?? '-',
       natureza_despesa: item.natureza_despesa_detalhada.grupo.descricao,
       categoriaEconomica: item.natureza_despesa_detalhada.categoria.descricao,
       receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),

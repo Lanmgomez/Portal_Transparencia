@@ -33,6 +33,7 @@ export default function useEmpenhoDataByID({ id }) {
   const elemento_despesa_emp =
     empenho?.natureza_despesa_detalhada?.elemento?.descricao
   const programa_codigo = empenho?.programa_codigo
+  const numero_procedimento = empenho?.numero_procedimento
   const acao_codigo = empenho?.acao_codigo
   const categoria_economica = empenho?.categoria_economica
   const grupo_natureza = empenho?.natureza_despesa_detalhada?.grupo?.descricao

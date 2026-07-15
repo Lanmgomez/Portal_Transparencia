@@ -379,6 +379,21 @@ export function maskCPF(value) {
     .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
 }
 
+export const formatModalidadeLicitacao = (descricao) => {
+  const modalidades = {
+    'Pregão (Eletrônico e Presencial)': 'Pregão Eletrônico',
+    Concorrência: 'Concorrência',
+    Concurso: 'Concurso',
+    Leilão: 'Leilão',
+    'Dispensa por valor': 'Dispensa',
+    Inexigível: 'Inexigibilidade',
+    'Sem licitação': 'Sem Licitação',
+    'Adesão a Registro de Preço': 'Adesão a Registro de Preço',
+  }
+
+  return modalidades[descricao] ?? descricao
+}
+
 const formatEmpenho = (item) => {
   const [ano] = item.data_empenho.split('-')
 
@@ -393,11 +408,12 @@ const formatEmpenho = (item) => {
     pagamento: formatCurrencyBR(item.resumo_pagamento.total_pago),
     dataPagamento: formatDateBR(item.pagamentos[0]?.data_pagamento),
     receita_mensal_prevista: formatCurrencyBR(item.receita_mensal_prevista),
-    licitacao: item.modalidade_licitacao_descricao,
+    licitacao: formatModalidadeLicitacao(item.modalidade_licitacao_descricao),
     elemento: item.natureza_despesa_detalhada.elemento.descricao,
     funcao: item.funcao_descricao,
     subFuncao: item.subfuncao_descricao,
     fonte_recurso: item.fonte_recurso_descricao,
+    numero_procedimento: item.numero_procedimento ?? '-',
     natureza_despesa: item.natureza_despesa_detalhada.grupo.descricao,
     categoriaEconomica: item.natureza_despesa_detalhada.categoria.descricao,
     receita_realizada: formatCurrencyBR(item.receita_realizada),

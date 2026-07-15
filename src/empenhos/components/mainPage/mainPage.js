@@ -12,7 +12,7 @@ import DownloadsButtons from '../downloads/buttons'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(20)
+  const [perPage, setPerPage] = useState(100)
   const [filters, setFilters] = useState(FiltersOptions)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [liqPgtModal, setIsLiqPgtModal] = useState(false)

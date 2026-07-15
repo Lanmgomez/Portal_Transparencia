@@ -7,6 +7,7 @@ import {
   formatYearMonth,
   formatDateBR,
   formatCurrencyBR,
+  formatModalidadeLicitacao,
   nomeMes,
   hideCpf,
 } from '../../../components/commons/utils'
@@ -40,6 +41,7 @@ export default function ModalContent({ id }) {
     subelemento_despesa,
     liquidacao,
     total_liquidado,
+    numero_procedimento,
     pagamentos,
     isLoading,
     isError,
@@ -140,8 +142,12 @@ export default function ModalContent({ id }) {
               {tipo_empenho || '-'}
             </Descriptions.Item>
 
+            <Descriptions.Item label='N° Procedimento Licitatório'>
+              {numero_procedimento || '-'}
+            </Descriptions.Item>
+
             <Descriptions.Item label='Modalidade Licitação'>
-              {modalidade_licitacao || '-'}
+              {formatModalidadeLicitacao(modalidade_licitacao || '-')}
             </Descriptions.Item>
 
             <Descriptions.Item label='Natureza Despesa'>
