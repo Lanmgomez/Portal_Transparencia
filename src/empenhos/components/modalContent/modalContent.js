@@ -142,7 +142,7 @@ export default function ModalContent({ id }) {
               {tipo_empenho || '-'}
             </Descriptions.Item>
 
-            <Descriptions.Item label='N° Procedimento Licitatório'>
+            <Descriptions.Item label='N° do Processo Licitatório'>
               {numero_procedimento || '-'}
             </Descriptions.Item>
 

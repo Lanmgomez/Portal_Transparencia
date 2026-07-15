@@ -83,6 +83,7 @@ export default function useEmpenhoDataByID({ id }) {
     numero_empenho,
     tipo_empenho,
     modalidade_licitacao,
+    numero_procedimento,
     data_empenho,
     valor_empenhado,
     cpf_cnpj_credor,

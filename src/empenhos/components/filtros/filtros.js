@@ -49,14 +49,14 @@ export default function Filtros({ onSearch, setFilters }) {
   const unidade_orcamentaria_codigo = empenhos[0]?.unidade_orcamentaria_codigo
 
   const modalidades = [
-    { nome: 'Pregão Eletrônico', valor: 0 },
-    { nome: 'Concorrência', valor: 1 },
-    { nome: 'Concurso', valor: 4 },
-    { nome: 'Leilão', valor: 5 },
-    { nome: 'Dispensa', valor: 6 },
-    { nome: 'Inexigibilidade', valor: 8 },
-    { nome: 'Sem Licitação', valor: 9 },
-    { nome: 'Adesão a Registro de Preço', valor: 10 },
+    { nome: 'Pregão Eletrônico', valor: '0' },
+    { nome: 'Concorrência', valor: '01' },
+    { nome: 'Concurso', valor: '04' },
+    { nome: 'Leilão', valor: '05' },
+    { nome: 'Dispensa', valor: '06' },
+    { nome: 'Inexigibilidade', valor: '08' },
+    { nome: 'Sem Licitação', valor: '09' },
+    { nome: 'Adesão a Registro de Preço', valor: '10' },
   ]
 
   return (
