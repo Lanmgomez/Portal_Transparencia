@@ -49,7 +49,7 @@ export default function Filtros({ onSearch, setFilters }) {
   const unidade_orcamentaria_codigo = empenhos[0]?.unidade_orcamentaria_codigo
 
   const modalidades = [
-    { nome: 'Pregão Eletrônico', valor: '0' },
+    { nome: 'Pregão Eletrônico', valor: '00' },
     { nome: 'Concorrência', valor: '01' },
     { nome: 'Concurso', valor: '04' },
     { nome: 'Leilão', valor: '05' },
