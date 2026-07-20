@@ -5,7 +5,6 @@ import Filtros, { FiltersOptions } from '../filtros/filtros'
 import useEmpenhosData from '../hooks/useEmpenhosData'
 import HoverMe from '../hoverMe/hoverMe'
 import EmpenhosTable from '../table/columns'
-import useSearchQuery from '../hooks/useSearchQuery'
 import ModalContent from '../modalContent/modalContent'
 import LiquidacaoPagamentoModal from '../modalContent/LiquidacaoPagamentoModal'
 import DownloadsButtons from '../downloads/buttons'
@@ -18,12 +17,7 @@ export default function MainPage() {
   const [liqPgtModal, setIsLiqPgtModal] = useState(false)
   const [id, setId] = useState('')
 
-  const { empenhos, total, isLoading } = useEmpenhosData(page, perPage)
-  const { searched, searchLoading, searchedTotal } = useSearchQuery(
-    filters,
-    page,
-    perPage,
-  )
+  const { empenhos, total, isLoading } = useEmpenhosData(filters, page, perPage)
 
   const handleTableChange = (pagination) => {
     const nextPage = pagination.current
@@ -40,36 +34,8 @@ export default function MainPage() {
 
   const onSearch = (values) => {
     if (!values) return
-
-    setFilters((prev) => ({
-      ...prev,
-      ...values,
-    }))
-
+    setFilters(values)
     setPage(1)
-  }
-
-  const renderEmpenhosTable = () => {
-    const isSearching = Object.values(filters).some(
-      (v) => v !== undefined && v !== null && v !== '',
-    )
-
-    const tableData = isSearching ? searched : empenhos
-    const tableTotal = isSearching ? searchedTotal : total
-
-    return (
-      <EmpenhosTable
-        data={tableData}
-        loading={isLoading || searchLoading}
-        page={page}
-        perPage={perPage}
-        total={tableTotal}
-        onChange={handleTableChange}
-        openModal={setIsModalOpen}
-        openLiqPgtModal={setIsLiqPgtModal}
-        setId={setId}
-      />
-    )
   }
 
   const hide = window.location.pathname === '/public-empenhos' ? true : false
@@ -92,7 +58,17 @@ export default function MainPage() {
       <h3>Informações</h3>
       <p>Para visualizar melhor as informações, arraste para a direita</p>
 
-      {renderEmpenhosTable()}
+      <EmpenhosTable
+        data={empenhos}
+        loading={isLoading}
+        page={page}
+        perPage={perPage}
+        total={total}
+        onChange={handleTableChange}
+        openModal={setIsModalOpen}
+        openLiqPgtModal={setIsLiqPgtModal}
+        setId={setId}
+      />
 
       <Modal
         title='Informações Gerais'

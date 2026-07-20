@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://transparencia-api.iguaracy.pe.leg.br/api'
+export const BASE_URL = 'https://transparencia-api.tuparetama.pe.leg.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
@@ -392,6 +392,28 @@ export const formatModalidadeLicitacao = (descricao) => {
   }
 
   return modalidades[descricao] ?? descricao
+}
+
+const isEmpty = (v) => v === undefined || v === null || v === ''
+
+export function buildEmpenhosQuery(filters, page, perPage) {
+  const params = new URLSearchParams()
+  params.set('page', page)
+  params.set('per_page', perPage)
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (isEmpty(value)) return
+
+    const isDate = key === 'data_ini' || key === 'data_fim'
+    if (isDate && typeof value?.format === 'function') {
+      params.set(key, value.format('YYYY-MM-DD'))
+      return
+    }
+
+    params.set(key, value)
+  })
+
+  return params.toString()
 }
 
 const formatEmpenho = (item) => {
