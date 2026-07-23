@@ -55,7 +55,7 @@ export default function Filtros({ onSearch, setFilters }) {
     { nome: 'Leilão', valor: '05' },
     { nome: 'Dispensa', valor: '06' },
     { nome: 'Inexigibilidade', valor: '08' },
-    { nome: 'Sem Licitação', valor: '09' },
+    // { nome: 'Sem Licitação', valor: '09' },
     { nome: 'Adesão a Registro de Preço', valor: '10' },
   ]
 
