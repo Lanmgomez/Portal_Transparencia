@@ -3,6 +3,11 @@ import { BarsOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import getCurrentDate from '../../../components/commons/utils'
 
+const MODALIDADE_DISPENSADA =
+  'Processo licitatório dispensado Art.95, §2º da Lei 14.133/2021'
+
+const normalize = (v) => String(v).replace(/\s+/g, ' ').trim()
+
 const columns = ({ setId, openModal, openLiqPgtModal }) => [
   {
     title: 'Ações',
@@ -138,6 +143,20 @@ const columns = ({ setId, openModal, openLiqPgtModal }) => [
     dataIndex: 'licitacao',
     key: 'licitacao',
     align: 'center',
+    render: (value) => {
+      if (!value) return <span style={{ color: 'rgba(0,0,0,.45)' }}>—</span>
+
+      if (normalize(value) !== normalize(MODALIDADE_DISPENSADA)) {
+        return <span>{value}</span>
+      }
+
+      return (
+        <div style={{ lineHeight: 1.4, textAlign: 'center' }}>
+          <div>Processo licitatório dispensado</div>
+          <div style={{ fontWeight: 600 }}>Art. 95, §2º - Lei 14.133/2021</div>
+        </div>
+      )
+    },
   },
   {
     title: 'Elemento',

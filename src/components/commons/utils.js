@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://transparencia-api-iprein.novacaoweb.com.br/api'
+export const BASE_URL = 'https://transparencia-api.tuparetama.pe.leg.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
@@ -387,7 +387,8 @@ export const formatModalidadeLicitacao = (descricao) => {
     Leilão: 'Leilão',
     'Dispensa por valor': 'Dispensa',
     Inexigível: 'Inexigibilidade',
-    'Sem licitação': 'Sem Licitação',
+    'Sem licitação':
+      'Processo licitatório dispensado Art.95, §2º da Lei 14.133/2021',
     'Adesão a Registro de Preço': 'Adesão a Registro de Preço',
   }
 
