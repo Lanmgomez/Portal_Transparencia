@@ -1,7 +1,83 @@
+import { useEffect, useRef, useState } from 'react'
 import { Button, Table, Space, Empty } from 'antd'
 import { BarsOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import getCurrentDate from '../../../components/commons/utils'
+
+function TableWithTopScroll(props) {
+  const wrapperRef = useRef(null)
+  const topScrollRef = useRef(null)
+  const [scrollWidth, setScrollWidth] = useState(0)
+  const [showTop, setShowTop] = useState(false)
+
+  useEffect(() => {
+    const body = wrapperRef.current?.querySelector('.ant-table-body')
+    const top = topScrollRef.current
+    if (!body || !top) return
+
+    const updateWidth = () => {
+      setScrollWidth(body.scrollWidth)
+      setShowTop(body.scrollWidth > body.clientWidth)
+    }
+    updateWidth()
+
+    const ro = new ResizeObserver(updateWidth)
+    ro.observe(body)
+    const innerTable = body.querySelector('table')
+    if (innerTable) ro.observe(innerTable)
+
+    // Quem está sendo usado pelo usuário no momento
+    let source = null
+    const setTop = () => {
+      source = 'top'
+    }
+    const setBody = () => {
+      source = 'body'
+    }
+
+    const onTopScroll = () => {
+      if (source !== 'top') return
+      body.scrollLeft = top.scrollLeft
+    }
+    const onBodyScroll = () => {
+      if (source !== 'body') return
+      top.scrollLeft = body.scrollLeft
+    }
+
+    ;['mouseenter', 'pointerdown', 'touchstart', 'wheel'].forEach((evt) => {
+      top.addEventListener(evt, setTop, { passive: true })
+      body.addEventListener(evt, setBody, { passive: true })
+    })
+    top.addEventListener('scroll', onTopScroll, { passive: true })
+    body.addEventListener('scroll', onBodyScroll, { passive: true })
+
+    return () => {
+      ro.disconnect()
+      ;['mouseenter', 'pointerdown', 'touchstart', 'wheel'].forEach((evt) => {
+        top.removeEventListener(evt, setTop)
+        body.removeEventListener(evt, setBody)
+      })
+      top.removeEventListener('scroll', onTopScroll)
+      body.removeEventListener('scroll', onBodyScroll)
+    }
+  }, [props.dataSource, props.loading])
+
+  return (
+    <div ref={wrapperRef}>
+      <div
+        ref={topScrollRef}
+        style={{
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          display: showTop ? 'block' : 'none',
+        }}
+      >
+        <div style={{ width: scrollWidth, height: 1 }} />
+      </div>
+      <Table {...props} />
+    </div>
+  )
+}
 
 const MODALIDADE_DISPENSADA =
   'Processo licitatório dispensado Art.95, §2º da Lei 14.133/2021'
@@ -214,7 +290,7 @@ export default function EmpenhosTable({
   openLiqPgtModal,
 }) {
   return (
-    <Table
+    <TableWithTopScroll
       dataSource={data}
       columns={columns({ setId, openModal, openLiqPgtModal })}
       loading={loading}
