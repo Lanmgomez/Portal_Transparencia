@@ -3,7 +3,8 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://transparencia-api.camaradecarnaiba.pe.gov.br'
+export const BASE_URL =
+  'https://transparencia-api.camaradecarnaiba.pe.gov.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
@@ -13,7 +14,7 @@ api itacuruba: https://transparencia-api.itacuruba.pe.leg.br/api
 api iprein: https://transparencia-api-iprein.novacaoweb.com.br/api
 api funprevi: https://transparencia-api.funprevi.pe.gov.br/api
 api tuparetama: https://transparencia-api.tuparetama.pe.leg.br/api
-api carnaíba: https://transparencia-api.camaradecarnaiba.pe.gov.br
+api carnaíba: https://transparencia-api.camaradecarnaiba.pe.gov.br/api
 */
 
 const login_url = `${BASE_URL}/login`
