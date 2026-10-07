@@ -59,6 +59,14 @@ export default function MainPage() {
 
       <DownloadsButtons filters={filters} />
 
+      <h3>Informações</h3>
+      <p>
+        Para acessar todas as informações disponíveis, utilize a barra de
+        rolagem horizontal localizada na parte inferior da tela de detalhamento
+        do empenho. Deslize a barra para os lados para visualizar integralmente
+        os dados de cada informação pesquisada.
+      </p>
+
       {isLoading ? (
         <Skeleton />
       ) : (

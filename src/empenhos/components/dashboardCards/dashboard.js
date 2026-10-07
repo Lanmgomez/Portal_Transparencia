@@ -1,7 +1,7 @@
-import { Card, Row, Col } from 'antd'
-import { DollarOutlined, HomeOutlined } from '@ant-design/icons'
+import { Row, Col, Card } from 'antd'
+import { DollarOutlined } from '@ant-design/icons'
 
-export const CardResumo = ({ titulo, valor, cor, porcentagem, icon }) => {
+const CardResumo = ({ titulo, valor, cor, porcentagem, icon }) => {
   const Icon = icon || DollarOutlined
 
   return (
@@ -55,53 +55,40 @@ export const CardResumo = ({ titulo, valor, cor, porcentagem, icon }) => {
 }
 
 export default function DashboardCards({
-  despesas_consolidadas,
-  unidade_orcamentaria,
-  valor_total_empenhado,
-  valor_total_liquidado,
-  valor_total_pago,
-  saldo_a_liquidar,
-  saldo_a_pagar,
+  total_empenhado,
+  total_liquidado,
+  total_pago,
 }) {
   return (
-    <>
+    <div>
       <Row
         style={{
           width: '100%',
           marginBottom: '30px',
         }}
-      >
-        <Col span={8}>
-          <CardResumo
-            titulo='Unidade Orçamentária'
-            valor={unidade_orcamentaria}
-            cor='#3f51b5'
-            icon={HomeOutlined}
-          />
-        </Col>
-      </Row>
+      ></Row>
 
       <Row gutter={16}>
         <Col span={8}>
           <CardResumo
-            titulo='EMPENHADO'
-            valor={valor_total_empenhado}
+            titulo='TOTAL EMPENHADO'
+            valor={total_empenhado}
             cor='#3f51b5'
           />
         </Col>
 
         <Col span={8}>
           <CardResumo
-            titulo='LIQUIDADO'
-            valor={valor_total_liquidado}
+            titulo='TOTAL LIQUIDADO'
+            valor={total_liquidado}
             cor='#fa8c16'
           />
         </Col>
 
         <Col span={8}>
-          <CardResumo titulo='PAGO' valor={valor_total_pago} cor='#52c41a' />
+          <CardResumo titulo='TOTAL PAGO' valor={total_pago} cor='#52c41a' />
         </Col>
       </Row>
-    </>
+    </div>
   )
 }

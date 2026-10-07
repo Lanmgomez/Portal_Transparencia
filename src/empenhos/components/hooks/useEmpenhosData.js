@@ -24,6 +24,7 @@ export default function useEmpenhosData(filters, page, perPage) {
   return {
     empenhos,
     total: data?.data?.total || 0,
+    totais: data?.data?.totais || 0, // somente itacuruba funciona, por enquanto...
     isLoading,
     isError,
     refetch,

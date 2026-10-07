@@ -32,7 +32,7 @@ export default function DownloadsButtons({ filters }) {
   }
 
   return (
-    <Space style={{ marginBottom: 50 }} size='large' wrap>
+    <Space style={{ marginBottom: 50, marginTop: 30 }} size='large' wrap>
       <span>Exportar arquivo para:</span>
 
       <Button

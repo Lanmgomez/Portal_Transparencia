@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Modal } from 'antd'
+import { formatCurrencyBR } from '../../../components/commons/utils'
 import PageTitle from '../../../components/PageTitle/pageTitle'
 import Filtros, { FiltersOptions } from '../filtros/filtros'
 import useEmpenhosData from '../hooks/useEmpenhosData'
@@ -8,6 +9,7 @@ import EmpenhosTable from '../table/columns'
 import ModalContent from '../modalContent/modalContent'
 import LiquidacaoPagamentoModal from '../modalContent/LiquidacaoPagamentoModal'
 import DownloadsButtons from '../downloads/buttons'
+import DashboardCards from '../dashboardCards/dashboard'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
@@ -17,7 +19,11 @@ export default function MainPage() {
   const [liqPgtModal, setIsLiqPgtModal] = useState(false)
   const [id, setId] = useState('')
 
-  const { empenhos, total, isLoading } = useEmpenhosData(filters, page, perPage)
+  const { empenhos, total, totais, isLoading } = useEmpenhosData(
+    filters,
+    page,
+    perPage,
+  )
 
   const handleTableChange = (pagination) => {
     const nextPage = pagination.current
@@ -43,27 +49,33 @@ export default function MainPage() {
   return (
     <div>
       {!hide && <HoverMe />}
+
       <PageTitle title='Empenhos' />
 
-      <h4>
-        Para acessar mais informações vá até o final da página, existe uma barra
-        de rolagem horizontal para mais detalhes sobre cada informação
-        pesquisada
-      </h4>
-
       <Filtros onSearch={onSearch} setFilters={setFilters} />
+
+      <DashboardCards
+        total_empenhado={formatCurrencyBR(totais?.total_empenhado)}
+        total_liquidado={formatCurrencyBR(totais?.total_liquidado)}
+        total_pago={formatCurrencyBR(totais?.total_pago)}
+      />
 
       <DownloadsButtons filters={filters} />
 
       <h3>Informações</h3>
-      <p>Para visualizar melhor as informações, arraste para a direita</p>
+      <p>
+        Para acessar todas as informações disponíveis, utilize as barras de
+        rolagem horizontais localizadas na parte superior e inferior da tela de
+        detalhamento do empenho. Deslize a barra para os lados para visualizar
+        integralmente os dados de cada informação pesquisada.
+      </p>
 
       <EmpenhosTable
         data={empenhos}
         loading={isLoading}
         page={page}
         perPage={perPage}
-        total={total}
+        total={total || totais}
         onChange={handleTableChange}
         openModal={setIsModalOpen}
         openLiqPgtModal={setIsLiqPgtModal}

@@ -1,14 +1,14 @@
 import { Input, Select, Form, Button, DatePicker } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
+import { mask } from 'remask'
+import './filtros.css'
+import useEmpenhosData from '../hooks/useEmpenhosData'
 import {
   categoriaEconomica,
   gruposNatureza,
   mouthOption,
   yearOption,
 } from '../../../components/commons/utils'
-import { mask } from 'remask'
-import './filtros.css'
-import useEmpenhosData from '../hooks/useEmpenhosData'
 
 export const FiltersOptions = {
   ano: null,
@@ -44,13 +44,13 @@ export default function Filtros({ onSearch, setFilters }) {
   const [form] = Form.useForm()
 
   // TODO - refazer com a api quando vinicius montar
-  const { empenhos } = useEmpenhosData(1, 20)
+  const { empenhos } = useEmpenhosData({}, 1, 20)
   const unidade_orcamentaria_label = empenhos[0]?.unidade_orcamentaria
-  const unidade_orcamentaria_codigo = empenhos[0]?.unidade_orcamentaria_codigo
 
   const modalidades = [
     { nome: 'Pregão Eletrônico', valor: '00' },
     { nome: 'Concorrência', valor: '01' },
+    { nome: 'Convite', valor: '03' },
     { nome: 'Concurso', valor: '04' },
     { nome: 'Leilão', valor: '05' },
     { nome: 'Dispensa', valor: '06' },
@@ -68,7 +68,6 @@ export default function Filtros({ onSearch, setFilters }) {
         display: 'flex',
         gap: 20,
         marginTop: 30,
-        marginBottom: 50,
         alignItems: 'center',
         flexWrap: 'wrap',
       }}
