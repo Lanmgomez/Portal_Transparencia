@@ -3,8 +3,7 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-export const BASE_URL =
-  'https://transparencia-api.camaradecarnaiba.pe.gov.br/api'
+export const BASE_URL = 'https://transparencia-api.itacuruba.pe.leg.br/api'
 /* :
 api teste: https://transparencia-api.viniciusm.com.br/api
 
