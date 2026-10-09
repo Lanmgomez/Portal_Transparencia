@@ -3,6 +3,7 @@ import { Button, Table, Space, Empty } from 'antd'
 import { BarsOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import getCurrentDate from '../../../components/commons/utils'
+import TableProvider from '../../../components/Providers/tableProvider'
 
 function TableWithTopScroll(props) {
   const wrapperRef = useRef(null)
@@ -290,29 +291,32 @@ export default function EmpenhosTable({
   openLiqPgtModal,
 }) {
   return (
-    <TableWithTopScroll
-      dataSource={data}
-      columns={columns({ setId, openModal, openLiqPgtModal })}
-      loading={loading}
-      scroll={{ x: 'max-content', y: 700 }}
-      onChange={onChange}
-      pagination={{
-        current: page,
-        pageSize: perPage,
-        total,
-        showSizeChanger: true,
-        pageSizeOptions: ['5', '10', '20', '50'],
-        showTotal: (t, range) => `${range[0]}-${range[1]} de ${t}`,
-      }}
-      locale={{
-        emptyText: (
-          <span>
-            <Empty description={false} />
-            Não houve empenhos/liquidação/pagamentos para o período consultado -
-            dados atualizados em {getCurrentDate()}
-          </span>
-        ),
-      }}
-    />
+    <TableProvider>
+      <TableWithTopScroll
+        bordered
+        dataSource={data}
+        columns={columns({ setId, openModal, openLiqPgtModal })}
+        loading={loading}
+        scroll={{ x: 'max-content', y: 700 }}
+        onChange={onChange}
+        pagination={{
+          current: page,
+          pageSize: perPage,
+          total,
+          showSizeChanger: true,
+          pageSizeOptions: ['5', '10', '20', '50'],
+          showTotal: (t, range) => `${range[0]}-${range[1]} de ${t}`,
+        }}
+        locale={{
+          emptyText: (
+            <span>
+              <Empty description={false} />
+              Não houve empenhos/liquidação/pagamentos para o período consultado
+              - dados atualizados em {getCurrentDate()}
+            </span>
+          ),
+        }}
+      />
+    </TableProvider>
   )
 }

@@ -36,7 +36,11 @@ export default function DownloadsButtons({ filters }) {
       <span>Exportar arquivo para:</span>
 
       <Button
-        style={{ color: '#1D6F42', borderColor: '#1D6F42' }}
+        style={{
+          backgroundColor: '#1D6F42',
+          borderColor: '#1D6F42',
+          color: 'white',
+        }}
         size='large'
         icon={<FileExcelOutlined />}
         onClick={() => handleExport('csv', export_data)}
@@ -45,7 +49,11 @@ export default function DownloadsButtons({ filters }) {
       </Button>
 
       <Button
-        style={{ color: '#FF0000', borderColor: '#FF0000' }}
+        style={{
+          backgroundColor: '#FF0000',
+          borderColor: '#FF0000',
+          color: 'white',
+        }}
         size='large'
         icon={<FilePdfOutlined />}
         onClick={() => handleExport('pdf', export_data)}
@@ -54,7 +62,11 @@ export default function DownloadsButtons({ filters }) {
       </Button>
 
       <Button
-        style={{ color: '#4472C4', borderColor: '#4472C4' }}
+        style={{
+          backgroundColor: '#4472C4',
+          borderColor: '#4472C4',
+          color: 'white',
+        }}
         size='large'
         icon={<FileWordOutlined />}
         onClick={() => handleExport('odt', export_data)}
@@ -63,6 +75,10 @@ export default function DownloadsButtons({ filters }) {
       </Button>
 
       <Button
+        style={{
+          backgroundColor: 'lightgray',
+          borderColor: 'lightgray',
+        }}
         size='large'
         icon={<FileTextOutlined />}
         onClick={() => handleExport('txt', export_data)}

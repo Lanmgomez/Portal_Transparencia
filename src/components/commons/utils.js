@@ -497,3 +497,15 @@ export const hideCpf = (value) => {
 
   return maskCNPJ(value)
 }
+
+export const formatarQuantidade = (valor) => {
+  if (valor === null || valor === undefined || valor === '') return null
+
+  const numero = Number(String(valor).replace(',', '.'))
+  if (Number.isNaN(numero)) return String(valor)
+
+  return numero.toLocaleString('pt-BR', {
+    minimumFractionDigits: 0, // 3.00 → "3"
+    maximumFractionDigits: 2, // 1.5 → "1,5"
+  })
+}

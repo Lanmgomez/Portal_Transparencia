@@ -4,6 +4,7 @@ import getCurrentDate, {
   formatCurrencyBR,
   formatDateBR,
 } from '../../../components/commons/utils'
+import TableProvider from '../../../components/Providers/tableProvider'
 
 const columns = () => [
   {
@@ -99,23 +100,26 @@ export default function OrdemCronologicaTable({
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
   return (
-    <div ref={tableRef} style={{ marginBottom: '50px' }}>
-      <Table
-        dataSource={data}
-        columns={columns()}
-        loading={loading || isFetchingNextPage}
-        pagination={false}
-        scroll={{ y: 600 }}
-        locale={{
-          emptyText: (
-            <span>
-              <Empty description={false} />
-              Não há despesas nessa dotação no período informado - dados
-              atualizados em {getCurrentDate()}
-            </span>
-          ),
-        }}
-      />
-    </div>
+    <TableProvider>
+      <div ref={tableRef} style={{ marginBottom: '50px' }}>
+        <Table
+          bordered
+          dataSource={data}
+          columns={columns()}
+          loading={loading || isFetchingNextPage}
+          pagination={false}
+          scroll={{ y: 600 }}
+          locale={{
+            emptyText: (
+              <span>
+                <Empty description={false} />
+                Não há despesas nessa dotação no período informado - dados
+                atualizados em {getCurrentDate()}
+              </span>
+            ),
+          }}
+        />
+      </div>
+    </TableProvider>
   )
 }

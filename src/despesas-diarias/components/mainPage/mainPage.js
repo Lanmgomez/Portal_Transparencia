@@ -6,17 +6,30 @@ import Filtros, { FiltersOptions } from '../filtros/filtros'
 import DespesasDiariasTable from '../table/columns'
 import useDespesasData from '../hooks/useDespesasData'
 import DownloadsButtons from '../downloads/buttons'
+import ModalCadastroDiaria from '../modal/modalCadastroDiaria'
 
 export default function MainPage() {
   const [page, setPage] = useState(1)
   const [per_page, setPerPage] = useState(20)
   const [filters, setFilters] = useState(FiltersOptions)
+  const [modalAberto, setModalAberto] = useState(false)
+  const [registroSelecionado, setRegistroSelecionado] = useState(null)
 
   const { despesas, total, isLoading } = useDespesasData({
     page,
     per_page,
     filters,
   })
+
+  const abrirModal = (record) => {
+    setRegistroSelecionado(record)
+    setModalAberto(true)
+  }
+
+  const fecharModal = () => {
+    setModalAberto(false)
+    setRegistroSelecionado(null)
+  }
 
   const onSearch = (values) => {
     if (!values) return
@@ -76,6 +89,15 @@ export default function MainPage() {
           page={page}
           per_page={per_page}
           onChange={handleTableChange}
+          onCadastrar={abrirModal}
+        />
+      )}
+
+      {!hide && (
+        <ModalCadastroDiaria
+          open={modalAberto}
+          record={registroSelecionado}
+          onClose={fecharModal}
         />
       )}
     </div>
